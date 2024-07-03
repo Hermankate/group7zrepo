@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
             ? Container(
                 width: double.infinity,
                 height: 8,
-                color: linkedInLightGreyCACCCE,
+                color: cjbLightGreyCACCCE,
               )
             : Container(),
         Expanded(
