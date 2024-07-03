@@ -27,10 +27,10 @@ class _NotificationsPageState extends State<NotificationsPage> {
                     title: "All",
                     bgColor: _selectedCategoryIndex == 0
                         ? Colors.green[800]
-                        : linkedInWhiteFFFFFF,
+                        : cjbWhiteFFFFFF,
                     textColor: _selectedCategoryIndex == 0
-                        ? linkedInWhiteFFFFFF
-                        : linkedInMediumGrey86888A,
+                        ? cjbWhiteFFFFFF
+                        : cjbMediumGrey86888A,
                     border: _selectedCategoryIndex == 0 ? 0 : 1,
                     onTap: () {
                       setState(() {
@@ -44,10 +44,10 @@ class _NotificationsPageState extends State<NotificationsPage> {
                     title: "My posts",
                     bgColor: _selectedCategoryIndex == 1
                         ? Colors.green[800]
-                        : linkedInWhiteFFFFFF,
+                        : cjbWhiteFFFFFF,
                     textColor: _selectedCategoryIndex == 1
-                        ? linkedInWhiteFFFFFF
-                        : linkedInMediumGrey86888A,
+                        ? cjbWhiteFFFFFF
+                        : cjbMediumGrey86888A,
                     border: _selectedCategoryIndex == 1 ? 0 : 1,
                     onTap: () {
                       setState(() {
@@ -61,10 +61,10 @@ class _NotificationsPageState extends State<NotificationsPage> {
                     title: "Mentions",
                     bgColor: _selectedCategoryIndex == 2
                         ? Colors.green[800]
-                        : linkedInWhiteFFFFFF,
+                        : cjbWhiteFFFFFF,
                     textColor: _selectedCategoryIndex == 2
-                        ? linkedInWhiteFFFFFF
-                        : linkedInMediumGrey86888A,
+                        ? cjbWhiteFFFFFF
+                        : cjbMediumGrey86888A,
                     border: _selectedCategoryIndex == 2 ? 0 : 1,
                     onTap: () {
                       setState(() {
@@ -80,7 +80,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
           Container(
             width: double.infinity,
             height: 8,
-            color: linkedInLightGreyCACCCE,
+            color: cjbLightGreyCACCCE,
           ),
           ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -157,7 +157,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                   ),
                   Text(
                     "commented on your post - check out",
-                    style: TextStyle(color: linkedInMediumGrey86888A),
+                    style: TextStyle(color: cjbMediumGrey86888A),
                   )
                 ],
               ),
@@ -168,11 +168,11 @@ class _NotificationsPageState extends State<NotificationsPage> {
             children: [
               Text(
                 "1h",
-                style: TextStyle(color: linkedInMediumGrey86888A, fontSize: 12),
+                style: TextStyle(color: cjbMediumGrey86888A, fontSize: 12),
               ),
               Icon(
                 Icons.more_vert,
-                color: linkedInMediumGrey86888A,
+                color: cjbMediumGrey86888A,
               )
             ],
           )

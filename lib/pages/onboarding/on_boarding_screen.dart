@@ -54,9 +54,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       width: 10,
                       height: 10,
                       decoration: BoxDecoration(
-                          color: index == 0
-                              ? linkedInDarkGrey313335
-                              : linkedInWhiteFFFFFF,
+                          color:
+                              index == 0 ? cjbDarkGrey313335 : cjbWhiteFFFFFF,
                           border: Border.all(width: 1),
                           shape: BoxShape.circle),
                     ),
@@ -67,9 +66,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       width: 10,
                       height: 10,
                       decoration: BoxDecoration(
-                          color: index == 1
-                              ? linkedInDarkGrey313335
-                              : linkedInWhiteFFFFFF,
+                          color:
+                              index == 1 ? cjbDarkGrey313335 : cjbWhiteFFFFFF,
                           border: Border.all(width: 1),
                           shape: BoxShape.circle),
                     ),
@@ -80,9 +78,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       width: 10,
                       height: 10,
                       decoration: BoxDecoration(
-                          color: index == 2
-                              ? linkedInDarkGrey313335
-                              : linkedInWhiteFFFFFF,
+                          color:
+                              index == 2 ? cjbDarkGrey313335 : cjbWhiteFFFFFF,
                           border: Border.all(width: 1),
                           shape: BoxShape.circle),
                     ),
@@ -137,7 +134,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
-                          color: linkedInBlue0077B5),
+                          color: cjbBlue0077B5),
                     ),
                   ),
                 ),
