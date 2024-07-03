@@ -24,22 +24,36 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: linkedInWhiteFFFFFF,
       body: Container(
+        color: linkedInWhiteFFFFFF,
         margin: const EdgeInsets.only(top: 60),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Padding(
-              //   padding: const EdgeInsets.only(left: 5.0),
-              //   child: SvgPicture.asset(
-              //     "assets/app_logo_svg.svg",
-              //     width: 50,
-              //     height: 50,
-              //   ),
+              // SizedBox(
+              //   height: 200,
               // ),
-              const SizedBox(
-                height: 10,
+              Container(
+                  child: Center(
+                child: Image(
+                  image: AssetImage("assets/app_logo.webp"),
+                  width: 300,
+                  height: 300,
+                ),
+              )),
+              // const SizedBox(
+              //   height: 10,
+              // ),
+              Center(
+                child: Text(
+                  'Sign up',
+                  style: TextStyle(fontSize: 35, color: linkedInBlue0077B5),
+                ),
+              ),
+              SizedBox(
+                height: 20,
               ),
               Container(
                 margin: const EdgeInsets.only(left: 20, right: 20),
@@ -49,7 +63,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     Row(
                       children: [
                         const Text(
-                          "Join Our Job Board",
+                          "Join the Job Board",
                           style: TextStyle(
                               fontSize: 35, fontWeight: FontWeight.bold),
                         ),
@@ -104,10 +118,10 @@ class _SignUpPageState extends State<SignUpPage> {
                         }
 
                         // Next operation
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(builder: (_) => const MainPage()),
-                            (route) => false);
+                        // Navigator.pushAndRemoveUntil(
+                        //     context,
+                        //     MaterialPageRoute(builder: (_) => const MainPage()),
+                        //     (route) => false);
                       },
                     ),
                     const SizedBox(

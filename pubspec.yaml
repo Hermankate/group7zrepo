@@ -21,7 +21,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/app_logo.webp
+    - assets/app_logo.png
     - assets/app_logo_svg.svg
     - assets/bg_image_1.jpeg
     - assets/bg_image_2.png

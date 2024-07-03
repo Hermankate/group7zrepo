@@ -14,7 +14,9 @@ class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: linkedInWhiteFFFFFF,
       body: Container(
+        color: linkedInWhiteFFFFFF,
         margin: const EdgeInsets.only(top: 60),
         child: SingleChildScrollView(
           child: Column(
@@ -28,6 +30,14 @@ class SignInPage extends StatelessWidget {
               //     height: 50,
               //   ),
               // ),
+              Container(
+                  child: Center(
+                child: Image(
+                  image: AssetImage("assets/app_logo.webp"),
+                  width: 300,
+                  height: 300,
+                ),
+              )),
               const SizedBox(
                 height: 10,
               ),
@@ -140,7 +150,7 @@ class SignInPage extends StatelessWidget {
                     Center(
                       child: RichText(
                         text: TextSpan(
-                            text: "New to LinkedIn? ",
+                            text: "New to cjb? ",
                             style: const TextStyle(
                                 color: linkedInBlack000000, fontSize: 16),
                             children: [
