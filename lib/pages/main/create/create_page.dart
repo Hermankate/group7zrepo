@@ -61,15 +61,14 @@ class _CreatePageState extends State<CreatePage> {
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     width: double.infinity,
                     height: 110,
-                    decoration: const BoxDecoration(
-                        color: linkedInWhiteFFFFFF,
-                        boxShadow: [
-                          BoxShadow(
-                              offset: Offset(0, 2),
-                              color: linkedInLightGreyCACCCE,
-                              blurRadius: 5,
-                              spreadRadius: 0.1),
-                        ]),
+                    decoration:
+                        const BoxDecoration(color: cjbWhiteFFFFFF, boxShadow: [
+                      BoxShadow(
+                          offset: Offset(0, 2),
+                          color: cjbLightGreyCACCCE,
+                          blurRadius: 5,
+                          spreadRadius: 0.1),
+                    ]),
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 15.0),
                       child: Row(
@@ -92,7 +91,7 @@ class _CreatePageState extends State<CreatePage> {
                                 style: TextStyle(
                                     fontSize: 25,
                                     fontWeight: FontWeight.bold,
-                                    color: linkedInMediumGrey86888A),
+                                    color: cjbMediumGrey86888A),
                               )
                             ],
                           ),
@@ -102,8 +101,8 @@ class _CreatePageState extends State<CreatePage> {
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold,
                                 color: _postBodyController.text.isEmpty
-                                    ? linkedInLightGreyCACCCE
-                                    : linkedInBlue0077B5),
+                                    ? cjbLightGreyCACCCE
+                                    : cjbBlue0077B5),
                           )
                         ],
                       ),
@@ -188,21 +187,21 @@ class _CreatePageState extends State<CreatePage> {
                           children: [
                             const Icon(
                               Icons.camera_alt,
-                              color: linkedInMediumGrey86888A,
+                              color: cjbMediumGrey86888A,
                             ),
                             const SizedBox(
                               width: 15,
                             ),
                             const Icon(
                               Icons.video_call,
-                              color: linkedInMediumGrey86888A,
+                              color: cjbMediumGrey86888A,
                             ),
                             const SizedBox(
                               width: 15,
                             ),
                             const Icon(
                               Icons.image,
-                              color: linkedInMediumGrey86888A,
+                              color: cjbMediumGrey86888A,
                             ),
                             const SizedBox(
                               width: 25,
@@ -213,7 +212,7 @@ class _CreatePageState extends State<CreatePage> {
                                 },
                                 child: const Icon(
                                   Icons.more_horiz,
-                                  color: linkedInMediumGrey86888A,
+                                  color: cjbMediumGrey86888A,
                                 )),
                           ],
                         ),
@@ -221,7 +220,7 @@ class _CreatePageState extends State<CreatePage> {
                           children: [
                             Icon(
                               Icons.message_outlined,
-                              color: linkedInMediumGrey86888A,
+                              color: cjbMediumGrey86888A,
                             ),
                             SizedBox(
                               width: 10,
@@ -230,7 +229,7 @@ class _CreatePageState extends State<CreatePage> {
                               "Anyone",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: linkedInMediumGrey86888A),
+                                  color: cjbMediumGrey86888A),
                             )
                           ],
                         )
@@ -257,12 +256,12 @@ class _CreatePageState extends State<CreatePage> {
       padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(width: 1, color: linkedInMediumGrey86888A)),
+          border: Border.all(width: 1, color: cjbMediumGrey86888A)),
       child: Row(
         children: [
           Icon(
             prefixIcon,
-            color: linkedInMediumGrey86888A,
+            color: cjbMediumGrey86888A,
             size: 18,
           ),
           const SizedBox(
