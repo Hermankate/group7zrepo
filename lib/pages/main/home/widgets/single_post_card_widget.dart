@@ -17,7 +17,7 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
     return Column(
       children: [
         Container(
-          color: linkedInWhiteFFFFFF,
+          color: cjbWhiteFFFFFF,
           margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,7 +62,7 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
-                              fontSize: 12, color: linkedInMediumGrey86888A),
+                              fontSize: 12, color: cjbMediumGrey86888A),
                         ),
                         const SizedBox(
                           height: 2,
@@ -74,13 +74,12 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
-                                  fontSize: 12,
-                                  color: linkedInMediumGrey86888A),
+                                  fontSize: 12, color: cjbMediumGrey86888A),
                             ),
                             const Icon(
                               FontAwesomeIcons.earth,
                               size: 15,
-                              color: linkedInMediumGrey86888A,
+                              color: cjbMediumGrey86888A,
                             )
                           ],
                         ),
@@ -103,7 +102,7 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
                 children: widget.post.tags!.map((tag) {
                   return Text(
                     "$tag ",
-                    style: const TextStyle(color: linkedInBlue0077B5),
+                    style: const TextStyle(color: cjbBlue0077B5),
                   );
                 }).toList(),
               )
@@ -113,7 +112,7 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
         widget.post.postImages!.isEmpty
             ? Container(
                 width: double.infinity,
-                color: linkedInMediumGrey86888A,
+                color: cjbMediumGrey86888A,
                 child: Image.asset("assets/${widget.post.postImage}"),
               )
             : SizedBox(
@@ -124,7 +123,7 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
                       children: widget.post.postImages!.map((image) {
                         return Container(
                           width: double.infinity,
-                          color: linkedInMediumGrey86888A,
+                          color: cjbMediumGrey86888A,
                           child: Image.asset(
                             "assets/$image",
                             fit: BoxFit.cover,
@@ -140,7 +139,7 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
                           height: 35,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: linkedInWhiteFFFFFF,
+                            color: cjbWhiteFFFFFF,
                           ),
                           child: const Center(
                             child: Icon(FontAwesomeIcons.images),
@@ -181,12 +180,12 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
                   Text(
                     "${widget.post.totalComments} comments - ",
                     style: const TextStyle(
-                        color: linkedInMediumGrey86888A, fontSize: 15),
+                        color: cjbMediumGrey86888A, fontSize: 15),
                   ),
                   Text(
                     "${widget.post.totalReposts} reposts",
                     style: const TextStyle(
-                        color: linkedInMediumGrey86888A, fontSize: 15),
+                        color: cjbMediumGrey86888A, fontSize: 15),
                   )
                 ],
               ),
@@ -199,7 +198,7 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
         Container(
           width: double.infinity,
           height: 1,
-          color: linkedInLightGreyCACCCE,
+          color: cjbLightGreyCACCCE,
         ),
         const SizedBox(
           height: 10,
@@ -223,7 +222,7 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
         Container(
           width: double.infinity,
           height: 8,
-          color: linkedInLightGreyCACCCE,
+          color: cjbLightGreyCACCCE,
         ),
       ],
     );
@@ -234,11 +233,11 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
       children: [
         Icon(
           icon,
-          color: linkedInMediumGrey86888A,
+          color: cjbMediumGrey86888A,
         ),
         Text(
           "$title",
-          style: const TextStyle(color: linkedInMediumGrey86888A),
+          style: const TextStyle(color: cjbMediumGrey86888A),
         )
       ],
     );
@@ -250,7 +249,7 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
       decoration: BoxDecoration(
           color: bgColor,
           shape: BoxShape.circle,
-          border: Border.all(width: 2, color: linkedInWhiteFFFFFF)),
+          border: Border.all(width: 2, color: cjbWhiteFFFFFF)),
       child: Image.asset(
         "assets/$image",
         width: 10,
@@ -273,7 +272,7 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           decoration: const BoxDecoration(
-            color: linkedInWhiteFFFFFF,
+            color: cjbWhiteFFFFFF,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),
               topRight: Radius.circular(20),
@@ -289,7 +288,7 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
                     height: 6,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: linkedInMediumGrey86888A),
+                        color: cjbMediumGrey86888A),
                   ),
                 ),
                 const SizedBox(
@@ -341,7 +340,7 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
         Icon(
           iconData,
           size: 25,
-          color: linkedInMediumGrey86888A,
+          color: cjbMediumGrey86888A,
         ),
         const SizedBox(
           width: 10,
@@ -350,7 +349,7 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
           "$title",
           style: const TextStyle(
               fontSize: 16,
-              color: linkedInMediumGrey86888A,
+              color: cjbMediumGrey86888A,
               fontWeight: FontWeight.bold),
         )
       ],

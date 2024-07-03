@@ -294,11 +294,11 @@ class _CreatePageState extends State<CreatePage> {
         return FocusScope(
           node: _subPostBottomModalSheetFocusNode,
           child: Container(
-            decoration: BoxDecoration(color: linkedInWhiteFFFFFF, boxShadow: [
+            decoration: BoxDecoration(color: cjbWhiteFFFFFF, boxShadow: [
               BoxShadow(
                   offset: const Offset(5, 0),
                   blurRadius: 1,
-                  color: linkedInLightGreyCACCCE.withOpacity(.6),
+                  color: cjbLightGreyCACCCE.withOpacity(.6),
                   spreadRadius: 0.5)
             ]),
             child: Padding(
@@ -314,7 +314,7 @@ class _CreatePageState extends State<CreatePage> {
                         height: 6,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: linkedInMediumGrey86888A),
+                            color: cjbMediumGrey86888A),
                       ),
                     ),
                     const SizedBox(
@@ -388,7 +388,7 @@ class _CreatePageState extends State<CreatePage> {
         Icon(
           iconData,
           size: 25,
-          color: linkedInMediumGrey86888A,
+          color: cjbMediumGrey86888A,
         ),
         const SizedBox(
           width: 10,
@@ -397,7 +397,7 @@ class _CreatePageState extends State<CreatePage> {
           "$title",
           style: const TextStyle(
               fontSize: 16,
-              color: linkedInMediumGrey86888A,
+              color: cjbMediumGrey86888A,
               fontWeight: FontWeight.bold),
         )
       ],
