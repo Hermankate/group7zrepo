@@ -41,15 +41,14 @@ class GoogleButtonContainerWidget extends StatelessWidget {
                     Text(
                       title,
                       style: const TextStyle(
-                          color: linkedInBlack000000,
-                          fontWeight: FontWeight.bold),
+                          color: cjbBlack000000, fontWeight: FontWeight.bold),
                     ),
                   ],
                 )
               : Text(
                   title,
                   style: const TextStyle(
-                      color: linkedInBlack000000, fontWeight: FontWeight.bold),
+                      color: cjbBlack000000, fontWeight: FontWeight.bold),
                 ),
         ),
       ),

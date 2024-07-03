@@ -26,14 +26,14 @@ class ButtonContainerWidget extends StatelessWidget {
         width: width,
         height: 45,
         decoration: BoxDecoration(
-            color: linkedInBlue0077B5,
+            color: cjbBlue0077B5,
             borderRadius: BorderRadius.circular(20),
             boxShadow: const [
               BoxShadow(
                   offset: Offset(0, 3),
                   spreadRadius: 0.5,
                   blurRadius: 4.5,
-                  color: linkedInLightGreyCACCCE)
+                  color: cjbLightGreyCACCCE)
             ]),
         child: Center(
           child: hasIcon == true
@@ -43,15 +43,14 @@ class ButtonContainerWidget extends StatelessWidget {
                     Text(
                       title,
                       style: const TextStyle(
-                          color: linkedInWhiteFFFFFF,
-                          fontWeight: FontWeight.bold),
+                          color: cjbWhiteFFFFFF, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
                       width: 5,
                     ),
                     Icon(
                       icon,
-                      color: linkedInWhiteFFFFFF,
+                      color: cjbWhiteFFFFFF,
                       size: 15,
                     ),
                   ],
@@ -59,7 +58,7 @@ class ButtonContainerWidget extends StatelessWidget {
               : Text(
                   title,
                   style: const TextStyle(
-                      color: linkedInWhiteFFFFFF, fontWeight: FontWeight.bold),
+                      color: cjbWhiteFFFFFF, fontWeight: FontWeight.bold),
                 ),
         ),
       ),
