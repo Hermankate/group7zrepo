@@ -11,8 +11,6 @@ import 'package:cjb/widgets/button_container_widget.dart';
 
 import '../../widgets/google_button_container_widget.dart';
 
-import 'package:cjb/pages/onboarding/on_boarding_screen.dart';
-
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
 

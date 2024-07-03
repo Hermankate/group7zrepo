@@ -28,7 +28,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // SvgPicture.asset(
-                //   // "assets/app_logo_svg.svg",,
+                //   "assets/logo.jpg",
                 //   width: 50,
                 //   height: 50,
                 // ),
@@ -123,7 +123,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 const SizedBox(
                   height: 30,
                 ),
-
                 Center(
                   child: GestureDetector(
                     onTap: () {

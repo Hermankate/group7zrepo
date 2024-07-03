@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -33,7 +35,7 @@ class SignInPage extends StatelessWidget {
               Container(
                   child: Center(
                 child: Image(
-                  image: AssetImage("assets/app_logo.webp"),
+                  image: AssetImage("assets/logo.jpg"),
                   width: 300,
                   height: 300,
                 ),
@@ -46,17 +48,21 @@ class SignInPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Sign in",
-                      style:
-                          TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                    Center(
+                      child: const Text(
+                        "Sign in",
+                        style: TextStyle(
+                            fontSize: 40, fontWeight: FontWeight.bold),
+                      ),
                     ),
                     const SizedBox(
                       height: 5,
                     ),
-                    const Text(
-                      "Stay updated on your professional world",
-                      style: TextStyle(fontSize: 14),
+                    Center(
+                      child: const Text(
+                        "Stay updated on your professional world",
+                        style: TextStyle(fontSize: 14),
+                      ),
                     ),
                     const SizedBox(
                       height: 10,
