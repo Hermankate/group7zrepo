@@ -27,7 +27,7 @@ class _SplashPageState extends State<SplashPage> {
     return Scaffold(
       backgroundColor: linkedInWhiteFFFFFF,
       body: Center(
-        child: Image.asset("assets/app_logo.png"),
+        child: Image.asset("assets/app_logo.webp"),
       ),
     );
   }

@@ -20,14 +20,14 @@ class SignInPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 5.0),
-                child: SvgPicture.asset(
-                  "assets/app_logo_svg.svg",
-                  width: 50,
-                  height: 50,
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(left: 5.0),
+              //   child: SvgPicture.asset(
+              //     "assets/app_logo_svg.svg",
+              //     width: 50,
+              //     height: 50,
+              //   ),
+              // ),
               const SizedBox(
                 height: 10,
               ),
