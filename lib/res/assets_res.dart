@@ -5,7 +5,7 @@
 class AssetsRes {
   static const String PLUGIN_NAME = 'linkedin_mobile_ui';
   static const String PLUGIN_VERSION = '1.0.0+1';
-  static const String APP_LOGO = 'assets/app_logo.png';
+  static const String APP_LOGO = 'assets/logo.jpg';
   static const String APP_LOGO_SVG = 'assets/app_logo_svg.svg';
   static const String BG_IMAGE_1 = 'assets/bg_image_1.jpeg';
   static const String BG_IMAGE_2 = 'assets/bg_image_2.png';

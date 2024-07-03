@@ -1,5 +1,3 @@
-
-
 import 'dart:ui';
 
 const linkedInBlue0077B5 = Color(0xFF0077B5);

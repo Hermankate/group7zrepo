@@ -1,4 +1,5 @@
-import 'package:cjb/pages/splash/splash_page.dart';
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,7 +8,7 @@ import 'package:cjb/pages/auth/sign_in_page.dart';
 import 'package:cjb/pages/main/main_page/main_page.dart';
 import 'package:cjb/theme/styles.dart';
 import 'package:cjb/widgets/button_container_widget.dart';
-import 'package:cjb/pages/onboarding/on_boarding_entity.dart';
+
 import '../../widgets/google_button_container_widget.dart';
 
 import 'package:cjb/pages/onboarding/on_boarding_screen.dart';
@@ -38,7 +39,7 @@ class _SignUpPageState extends State<SignUpPage> {
               Container(
                   child: Center(
                 child: Image(
-                  image: AssetImage("assets/app_logo.webp"),
+                  image: AssetImage("assets/logo.jpg"),
                   width: 300,
                   height: 300,
                 ),
@@ -62,28 +63,28 @@ class _SignUpPageState extends State<SignUpPage> {
                   children: [
                     Row(
                       children: [
-                        const Text(
-                          "Join the Job Board",
-                          style: TextStyle(
-                              fontSize: 35, fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        ElevatedButton(
-                            onPressed: () {
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => const OnBoardingScreen()),
-                                (route) => false,
-                              );
-                            },
-                            child: Text('back')),
+                        // const Text(
+                        //   "Join the Job Board",
+                        //   style: TextStyle(
+                        //       fontSize: 35, fontWeight: FontWeight.bold),
+                        // // ),
+                        // SizedBox(
+                        //   width: 10,
+                        // ),
+                        // ElevatedButton(
+                        //     onPressed: () {
+                        //       Navigator.pushAndRemoveUntil(
+                        //         context,
+                        //         MaterialPageRoute(
+                        //             builder: (_) => const OnBoardingScreen()),
+                        //         (route) => false,
+                        //       );
+                        //     },
+                        //     child: Text('back')),
                       ],
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
                     TextFormField(
                       decoration: const InputDecoration(
@@ -116,12 +117,11 @@ class _SignUpPageState extends State<SignUpPage> {
                           });
                           return;
                         }
-
-                        // Next operation
-                        // Navigator.pushAndRemoveUntil(
-                        //     context,
-                        //     MaterialPageRoute(builder: (_) => const MainPage()),
-                        //     (route) => false);
+                        //Next operation
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (_) => const MainPage()),
+                            (route) => false);
                       },
                     ),
                     const SizedBox(
