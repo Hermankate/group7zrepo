@@ -311,14 +311,14 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
                   height: 30,
                 ),
                 _bottomNavigationItem(
-                    title: "Remove connection with Username",
+                    title: "Remove connection with ${widget.post.username}",
                     iconData: Icons.person_remove),
                 const SizedBox(
                   height: 30,
                 ),
                 _bottomNavigationItem(
                     title: "Mute Username",
-                    iconData: FontAwesomeIcons.soundcloud),
+                    iconData: FontAwesomeIcons.volumeXmark),
                 const SizedBox(
                   height: 30,
                 ),

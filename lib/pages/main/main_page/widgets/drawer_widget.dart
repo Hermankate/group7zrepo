@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cjb/theme/styles.dart';
+import 'package:flutter/widgets.dart';
+import 'package:cjb/pages/onboarding/on_boarding_screen.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({Key? key}) : super(key: key);
@@ -36,7 +38,7 @@ class DrawerWidget extends StatelessWidget {
                         height: 10,
                       ),
                       const Text(
-                        "Doug Stevenson",
+                        "Herman Stevens",
                         style: TextStyle(
                             fontSize: 25, fontWeight: FontWeight.bold),
                       ),
@@ -81,6 +83,27 @@ class DrawerWidget extends StatelessWidget {
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 20.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const OnBoardingScreen()),
+                        (route) => false,
+                      );
+                    },
+                    child: Text(
+                      "Exit",
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                )
               ],
             ),
           ),

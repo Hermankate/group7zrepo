@@ -27,11 +27,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SvgPicture.asset(
-                  "assets/app_logo_svg.svg",
-                  width: 50,
-                  height: 50,
-                ),
+                // SvgPicture.asset(
+                //   // "assets/app_logo_svg.svg",,
+                //   width: 50,
+                //   height: 50,
+                // ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -123,23 +123,45 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 const SizedBox(
                   height: 30,
                 ),
-                Center(
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (_) => const SignInPage()),
-                        (route) => false,
-                      );
-                    },
-                    child: const Text(
-                      "Sign In",
-                      style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: linkedInBlue0077B5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (_) => const SignInPage()),
+                          (route) => false,
+                        );
+                      },
+                      child: const Text(
+                        "Sign In",
+                        style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: linkedInBlue0077B5),
+                      ),
                     ),
-                  ),
+                    // SizedBox(
+                    //   width: 20,
+                    // ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (_) => const SignInPage()),
+                          (route) => false,
+                        );
+                      },
+                      child: const Text(
+                        "Create profile",
+                        style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.greenAccent),
+                      ),
+                    )
+                  ],
                 )
               ],
             );

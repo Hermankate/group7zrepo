@@ -1,3 +1,4 @@
+import 'package:cjb/pages/splash/splash_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -6,8 +7,10 @@ import 'package:cjb/pages/auth/sign_in_page.dart';
 import 'package:cjb/pages/main/main_page/main_page.dart';
 import 'package:cjb/theme/styles.dart';
 import 'package:cjb/widgets/button_container_widget.dart';
-
+import 'package:cjb/pages/onboarding/on_boarding_entity.dart';
 import '../../widgets/google_button_container_widget.dart';
+
+import 'package:cjb/pages/onboarding/on_boarding_screen.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -27,14 +30,14 @@ class _SignUpPageState extends State<SignUpPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 5.0),
-                child: SvgPicture.asset(
-                  "assets/app_logo_svg.svg",
-                  width: 50,
-                  height: 50,
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(left: 5.0),
+              //   child: SvgPicture.asset(
+              //     "assets/app_logo_svg.svg",
+              //     width: 50,
+              //     height: 50,
+              //   ),
+              // ),
               const SizedBox(
                 height: 10,
               ),
@@ -43,10 +46,27 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Join LinkedIn",
-                      style:
-                          TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                    Row(
+                      children: [
+                        const Text(
+                          "Join Our Job Board",
+                          style: TextStyle(
+                              fontSize: 35, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => const OnBoardingScreen()),
+                                (route) => false,
+                              );
+                            },
+                            child: Text('back')),
+                      ],
                     ),
                     const SizedBox(
                       height: 10,
@@ -119,7 +139,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     Center(
                       child: RichText(
                         text: TextSpan(
-                            text: "Already on LinkedIn? ",
+                            text: "Have an account?",
                             style: const TextStyle(
                                 color: linkedInBlack000000, fontSize: 16),
                             children: [
