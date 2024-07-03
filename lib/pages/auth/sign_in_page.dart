@@ -52,7 +52,9 @@ class SignInPage extends StatelessWidget {
                       child: const Text(
                         "Sign in",
                         style: TextStyle(
-                            fontSize: 40, fontWeight: FontWeight.bold),
+                            color: cjbBlue0077B5,
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
                     const SizedBox(
