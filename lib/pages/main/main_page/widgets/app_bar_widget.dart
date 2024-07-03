@@ -4,7 +4,7 @@ import 'package:cjb/theme/styles.dart';
 PreferredSizeWidget appBarWidget(BuildContext context,
     {VoidCallback? onLeadingTapClickListener, String? title, bool? isJobsTab}) {
   return AppBar(
-    backgroundColor: linkedInWhiteFFFFFF,
+    backgroundColor: cjbWhiteFFFFFF,
     elevation: 0,
     leading: GestureDetector(
       onTap: onLeadingTapClickListener,
@@ -20,7 +20,7 @@ PreferredSizeWidget appBarWidget(BuildContext context,
     title: Container(
       width: double.infinity,
       decoration: BoxDecoration(
-          color: linkedInLightGreyCACCCE.withOpacity(.5),
+          color: cjbLightGreyCACCCE.withOpacity(.5),
           borderRadius: BorderRadius.circular(10)),
       child: TextFormField(
         decoration: InputDecoration(
@@ -36,7 +36,7 @@ PreferredSizeWidget appBarWidget(BuildContext context,
               child: const Icon(
                 Icons.message_outlined,
                 size: 35,
-                color: linkedInMediumGrey86888A,
+                color: cjbMediumGrey86888A,
               ),
             )
           : const Row(
@@ -44,7 +44,7 @@ PreferredSizeWidget appBarWidget(BuildContext context,
                 Icon(
                   Icons.more_vert,
                   size: 35,
-                  color: linkedInMediumGrey86888A,
+                  color: cjbMediumGrey86888A,
                 ),
                 SizedBox(
                   width: 10,
@@ -52,7 +52,7 @@ PreferredSizeWidget appBarWidget(BuildContext context,
                 Icon(
                   Icons.message_outlined,
                   size: 35,
-                  color: linkedInMediumGrey86888A,
+                  color: cjbMediumGrey86888A,
                 )
               ],
             ),

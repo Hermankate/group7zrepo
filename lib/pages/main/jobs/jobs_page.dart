@@ -28,7 +28,7 @@ class JobsPage extends StatelessWidget {
             Container(
               width: double.infinity,
               height: 14,
-              color: linkedInLightGreyCACCCE,
+              color: cjbLightGreyCACCCE,
             ),
             const SizedBox(
               height: 15,
@@ -56,7 +56,7 @@ class JobsPage extends StatelessWidget {
             Container(
               width: double.infinity,
               height: 8,
-              color: linkedInLightGreyCACCCE,
+              color: cjbLightGreyCACCCE,
             ),
             const SizedBox(
               height: 15,
@@ -102,12 +102,12 @@ class JobsPage extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.all(6),
                       decoration: BoxDecoration(
-                        color: linkedInLightGreyCACCCE.withOpacity(.6),
+                        color: cjbLightGreyCACCCE.withOpacity(.6),
                       ),
                       child: const Icon(
                         Icons.home_work,
                         size: 50,
-                        color: linkedInMediumGrey86888A,
+                        color: cjbMediumGrey86888A,
                       ),
                     ),
                     const SizedBox(
@@ -130,7 +130,7 @@ class JobsPage extends StatelessWidget {
                               Icon(
                                 Icons.bookmark_border,
                                 size: 30,
-                                color: linkedInMediumGrey86888A,
+                                color: cjbMediumGrey86888A,
                               )
                             ],
                           ),
@@ -157,8 +157,7 @@ class JobsPage extends StatelessWidget {
                               Text(
                                 "Actively recruiting",
                                 style: TextStyle(
-                                    fontSize: 12,
-                                    color: linkedInMediumGrey86888A),
+                                    fontSize: 12, color: cjbMediumGrey86888A),
                               ),
                             ],
                           ),
@@ -169,8 +168,7 @@ class JobsPage extends StatelessWidget {
                             text: const TextSpan(
                                 text: "Promoted - ",
                                 style: TextStyle(
-                                    fontSize: 12,
-                                    color: linkedInMediumGrey86888A),
+                                    fontSize: 12, color: cjbMediumGrey86888A),
                                 children: [
                                   TextSpan(
                                       text: "2 applicants",
@@ -182,7 +180,7 @@ class JobsPage extends StatelessWidget {
                             height: 5,
                           ),
                           const Divider(
-                            color: linkedInMediumGrey86888A,
+                            color: cjbMediumGrey86888A,
                           ),
                         ],
                       ),
@@ -198,7 +196,7 @@ class JobsPage extends StatelessWidget {
               "Show all",
               style: TextStyle(
                   fontSize: 18,
-                  color: linkedInBlue0077B5,
+                  color: cjbBlue0077B5,
                   fontWeight: FontWeight.bold),
             ),
             SizedBox(
@@ -207,7 +205,7 @@ class JobsPage extends StatelessWidget {
             Icon(
               Icons.arrow_forward,
               size: 25,
-              color: linkedInBlue0077B5,
+              color: cjbBlue0077B5,
             )
           ],
         )
@@ -227,12 +225,12 @@ class JobsPage extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
-                  color: linkedInLightGreyCACCCE.withOpacity(.6),
+                  color: cjbLightGreyCACCCE.withOpacity(.6),
                 ),
                 child: const Icon(
                   Icons.home_work,
                   size: 50,
-                  color: linkedInMediumGrey86888A,
+                  color: cjbMediumGrey86888A,
                 ),
               ),
               const SizedBox(
@@ -255,7 +253,7 @@ class JobsPage extends StatelessWidget {
                         Icon(
                           Icons.bookmark_border,
                           size: 30,
-                          color: linkedInMediumGrey86888A,
+                          color: cjbMediumGrey86888A,
                         )
                       ],
                     ),
@@ -282,7 +280,7 @@ class JobsPage extends StatelessWidget {
                         Text(
                           "Actively recruiting",
                           style: TextStyle(
-                              fontSize: 12, color: linkedInMediumGrey86888A),
+                              fontSize: 12, color: cjbMediumGrey86888A),
                         ),
                       ],
                     ),
@@ -293,7 +291,7 @@ class JobsPage extends StatelessWidget {
                       text: const TextSpan(
                           text: "Promoted - ",
                           style: TextStyle(
-                              fontSize: 12, color: linkedInMediumGrey86888A),
+                              fontSize: 12, color: cjbMediumGrey86888A),
                           children: [
                             TextSpan(
                                 text: "2 applicants",
@@ -305,7 +303,7 @@ class JobsPage extends StatelessWidget {
                       height: 5,
                     ),
                     const Divider(
-                      color: linkedInMediumGrey86888A,
+                      color: cjbMediumGrey86888A,
                     ),
                   ],
                 ),
@@ -321,7 +319,7 @@ class JobsPage extends StatelessWidget {
         Icon(
           icon,
           size: 30,
-          color: linkedInMediumGrey86888A,
+          color: cjbMediumGrey86888A,
         ),
         const SizedBox(
           width: 10,

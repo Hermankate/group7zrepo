@@ -52,7 +52,7 @@ class DrawerWidget extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
-                            color: linkedInMediumGrey86888A),
+                            color: cjbMediumGrey86888A),
                       ),
                     ],
                   ),
@@ -63,7 +63,7 @@ class DrawerWidget extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   height: 1,
-                  color: linkedInLightGreyCACCCE,
+                  color: cjbLightGreyCACCCE,
                 ),
                 const SizedBox(
                   height: 30,
@@ -114,7 +114,7 @@ class DrawerWidget extends StatelessWidget {
           Container(
             width: double.infinity,
             height: 1,
-            color: linkedInLightGreyCACCCE,
+            color: cjbLightGreyCACCCE,
           ),
           const Padding(
             padding: EdgeInsets.only(bottom: 30.0, left: 20),
@@ -128,7 +128,7 @@ class DrawerWidget extends StatelessWidget {
                     Icon(
                       Icons.settings,
                       size: 35,
-                      color: linkedInMediumGrey86888A,
+                      color: cjbMediumGrey86888A,
                     ),
                     SizedBox(
                       width: 10,
@@ -136,7 +136,7 @@ class DrawerWidget extends StatelessWidget {
                     Text(
                       "Settings",
                       style: TextStyle(
-                          color: linkedInMediumGrey86888A,
+                          color: cjbMediumGrey86888A,
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
                     )

@@ -23,7 +23,7 @@ class _SingleNetworkUserWidgetState extends State<SingleNetworkUserWidget> {
               Container(
                 width: double.infinity,
                 height: 80,
-                decoration: const BoxDecoration(color: linkedInLightGreyCACCCE),
+                decoration: const BoxDecoration(color: cjbLightGreyCACCCE),
                 child: Image.asset(
                   "assets/${widget.network.userBgImage}",
                   fit: BoxFit.cover,
@@ -54,7 +54,7 @@ class _SingleNetworkUserWidgetState extends State<SingleNetworkUserWidget> {
                   style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
-                      color: linkedInMediumGrey86888A),
+                      color: cjbMediumGrey86888A),
                 ),
               ),
               const SizedBox(
@@ -74,7 +74,7 @@ class _SingleNetworkUserWidgetState extends State<SingleNetworkUserWidget> {
                       "${widget.network.mutualConnections} mutual connections",
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(color: linkedInMediumGrey86888A),
+                      style: const TextStyle(color: cjbMediumGrey86888A),
                     ))
                   ],
                 ),
@@ -87,7 +87,7 @@ class _SingleNetworkUserWidgetState extends State<SingleNetworkUserWidget> {
                 width: double.infinity,
                 height: 40,
                 decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: linkedInBlue0077B5),
+                  border: Border.all(width: 1, color: cjbBlue0077B5),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: const Center(
@@ -96,7 +96,7 @@ class _SingleNetworkUserWidgetState extends State<SingleNetworkUserWidget> {
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: linkedInBlue0077B5),
+                        color: cjbBlue0077B5),
                   ),
                 ),
               )
@@ -109,7 +109,7 @@ class _SingleNetworkUserWidgetState extends State<SingleNetworkUserWidget> {
               width: 110,
               height: 110,
               decoration: const BoxDecoration(
-                  color: linkedInMediumGrey86888A, shape: BoxShape.circle),
+                  color: cjbMediumGrey86888A, shape: BoxShape.circle),
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(60),
                   child: Image.asset(

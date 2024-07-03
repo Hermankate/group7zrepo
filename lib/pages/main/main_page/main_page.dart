@@ -47,11 +47,10 @@ class _MainPageState extends State<MainPage> {
               _currentPageIndex = index;
             });
           },
-          selectedItemColor: linkedInBlack000000,
-          selectedLabelStyle: const TextStyle(color: linkedInBlack000000),
-          unselectedItemColor: linkedInMediumGrey86888A,
-          unselectedLabelStyle:
-              const TextStyle(color: linkedInMediumGrey86888A),
+          selectedItemColor: cjbBlack000000,
+          selectedLabelStyle: const TextStyle(color: cjbBlack000000),
+          unselectedItemColor: cjbMediumGrey86888A,
+          unselectedLabelStyle: const TextStyle(color: cjbMediumGrey86888A),
           showUnselectedLabels: true,
           items: const [
             BottomNavigationBarItem(

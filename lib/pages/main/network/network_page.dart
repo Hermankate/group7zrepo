@@ -32,11 +32,11 @@ class _NetworkPageState extends State<NetworkPage> {
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: linkedInBlue0077B5),
+                        color: cjbBlue0077B5),
                   ),
                   Icon(
                     Icons.arrow_forward_ios,
-                    color: linkedInMediumGrey86888A,
+                    color: cjbMediumGrey86888A,
                   ),
                 ],
               ),
@@ -47,7 +47,7 @@ class _NetworkPageState extends State<NetworkPage> {
             Container(
               width: double.infinity,
               height: 8,
-              color: linkedInLightGreyCACCCE,
+              color: cjbLightGreyCACCCE,
             ),
             const SizedBox(
               height: 15,
@@ -62,11 +62,11 @@ class _NetworkPageState extends State<NetworkPage> {
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: linkedInBlue0077B5),
+                        color: cjbBlue0077B5),
                   ),
                   Icon(
                     Icons.arrow_forward_ios,
-                    color: linkedInMediumGrey86888A,
+                    color: cjbMediumGrey86888A,
                   ),
                 ],
               ),
@@ -77,7 +77,7 @@ class _NetworkPageState extends State<NetworkPage> {
             Container(
               width: double.infinity,
               height: 8,
-              color: linkedInLightGreyCACCCE,
+              color: cjbLightGreyCACCCE,
             ),
             const SizedBox(
               height: 15,
