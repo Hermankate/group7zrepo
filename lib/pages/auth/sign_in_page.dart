@@ -16,9 +16,9 @@ class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: linkedInWhiteFFFFFF,
+      backgroundColor: cjbWhiteFFFFFF,
       body: Container(
-        color: linkedInWhiteFFFFFF,
+        color: cjbWhiteFFFFFF,
         margin: const EdgeInsets.only(top: 60),
         child: SingleChildScrollView(
           child: Column(
@@ -88,7 +88,7 @@ class SignInPage extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: linkedInBlue0077B5),
+                          color: cjbBlue0077B5),
                     ),
                     const SizedBox(
                       height: 15,
@@ -111,7 +111,7 @@ class SignInPage extends StatelessWidget {
                           child: Container(
                             width: double.infinity,
                             height: 1,
-                            color: linkedInMediumGrey86888A,
+                            color: cjbMediumGrey86888A,
                           ),
                         ),
                         const Padding(
@@ -122,7 +122,7 @@ class SignInPage extends StatelessWidget {
                           child: Container(
                             width: double.infinity,
                             height: 1,
-                            color: linkedInMediumGrey86888A,
+                            color: cjbMediumGrey86888A,
                           ),
                         ),
                       ],
@@ -158,7 +158,7 @@ class SignInPage extends StatelessWidget {
                         text: TextSpan(
                             text: "New to cjb? ",
                             style: const TextStyle(
-                                color: linkedInBlack000000, fontSize: 16),
+                                color: cjbBlack000000, fontSize: 16),
                             children: [
                               TextSpan(
                                   recognizer: TapGestureRecognizer()
@@ -172,7 +172,7 @@ class SignInPage extends StatelessWidget {
                                     },
                                   text: "Join now",
                                   style: const TextStyle(
-                                      color: linkedInBlue0077B5,
+                                      color: cjbBlue0077B5,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16))
                             ]),

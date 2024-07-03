@@ -23,9 +23,9 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: linkedInWhiteFFFFFF,
+      backgroundColor: cjbWhiteFFFFFF,
       body: Container(
-        color: linkedInWhiteFFFFFF,
+        color: cjbWhiteFFFFFF,
         margin: const EdgeInsets.only(top: 60),
         child: SingleChildScrollView(
           child: Column(
@@ -48,7 +48,7 @@ class _SignUpPageState extends State<SignUpPage> {
               Center(
                 child: Text(
                   'Sign up',
-                  style: TextStyle(fontSize: 35, color: linkedInBlue0077B5),
+                  style: TextStyle(fontSize: 35, color: cjbBlue0077B5),
                 ),
               ),
               SizedBox(
@@ -153,7 +153,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         text: TextSpan(
                             text: "Have an account?",
                             style: const TextStyle(
-                                color: linkedInBlack000000, fontSize: 16),
+                                color: cjbBlack000000, fontSize: 16),
                             children: [
                               TextSpan(
                                   recognizer: TapGestureRecognizer()
@@ -167,7 +167,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                     },
                                   text: "Sign in",
                                   style: const TextStyle(
-                                      color: linkedInBlue0077B5,
+                                      color: cjbBlue0077B5,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16))
                             ]),
