@@ -47,7 +47,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
               Center(
                 child: Text(
-                  'Sign up',
+                  'Sign up.',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 35,
