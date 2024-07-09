@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+//import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cjb/pages/main/create/create_page.dart';
 import 'package:cjb/pages/main/home/home_page.dart';
-import 'package:cjb/pages/main/user_profile/user_profile.dart';
+//import 'package:cjb/pages/main/user_profile/user_profile.dart';
 import 'package:cjb/pages/main/main_page/widgets/drawer_widget.dart';
 import 'package:cjb/theme/styles.dart';
 
