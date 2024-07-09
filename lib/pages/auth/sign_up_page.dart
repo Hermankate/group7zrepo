@@ -97,11 +97,12 @@ class _SignUpPageState extends State<SignUpPage> {
                           });
                           return;
                         }
+                        ;
                         //Next operation
-                        // Navigator.pushAndRemoveUntil(
-                        //     context,
-                        //     MaterialPageRoute(builder: (_) => const MainPage()),
-                        //     (route) => false);
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (_) => const MainPage()),
+                            (route) => false);
                       },
                     ),
                     const SizedBox(
