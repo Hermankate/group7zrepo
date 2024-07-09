@@ -87,10 +87,10 @@ class SignInPage extends StatelessWidget {
                     ButtonContainerWidget(
                       title: "Sign In",
                       onTap: () {
-                        // Navigator.pushAndRemoveUntil(
-                        //     context,
-                        //     MaterialPageRoute(builder: (_) => const MainPage()),
-                        //     (route) => false);
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (_) => const MainPage()),
+                            (route) => false);
                       },
                     ),
                     const SizedBox(
