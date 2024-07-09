@@ -56,10 +56,6 @@ class _MainPageState extends State<MainPage> {
               label: "Home",
             ),
             BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.userGroup),
-              label: "Follow",
-            ),
-            BottomNavigationBarItem(
               icon: Icon(Icons.add_box),
               label: "Post",
             ),
@@ -69,12 +65,6 @@ class _MainPageState extends State<MainPage> {
                 size: 30,
               ),
               label: "Notifications",
-            ),
-            BottomNavigationBarItem(
-              icon: 
-                size: 30,
-              ),
-              label: "Post",
             ),
           ],
         ),
