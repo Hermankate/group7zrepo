@@ -92,7 +92,7 @@ class _MainPageState extends State<MainPage> {
         }
       case 1:
         {
-          return const NetworkPage();
+          //return const NetworkPage();
         }
       case 4:
         {
