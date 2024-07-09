@@ -63,28 +63,6 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        // const Text(
-                        //   "Join the Job Board",
-                        //   style: TextStyle(
-                        //       fontSize: 35, fontWeight: FontWeight.bold),
-                        // // ),
-                        // SizedBox(
-                        //   width: 10,
-                        // ),
-                        // ElevatedButton(
-                        //     onPressed: () {
-                        //       Navigator.pushAndRemoveUntil(
-                        //         context,
-                        //         MaterialPageRoute(
-                        //             builder: (_) => const OnBoardingScreen()),
-                        //         (route) => false,
-                        //       );
-                        //     },
-                        //     child: Text('back')),
-                      ],
-                    ),
                     const SizedBox(
                       height: 5,
                     ),

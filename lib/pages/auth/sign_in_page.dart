@@ -24,14 +24,6 @@ class SignInPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Padding(
-              //   padding: const EdgeInsets.only(left: 5.0),
-              //   child: SvgPicture.asset(
-              //     "assets/app_logo_svg.svg",
-              //     width: 50,
-              //     height: 50,
-              //   ),
-              // ),
               Container(
                   child: Center(
                 child: Image(
@@ -40,7 +32,6 @@ class SignInPage extends StatelessWidget {
                   height: 250,
                 ),
               )),
-
               Container(
                 margin: const EdgeInsets.only(left: 20, right: 20),
                 child: Column(
