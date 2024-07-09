@@ -1,3 +1,9 @@
+import 'package:cjb/pages/main/user_profile/model/user.dart';
+import 'package:cjb/pages/main/user_profile/utils/user_preferences.dart';
+import 'package:cjb/pages/main/user_profile/widget/appbar_widget.dart';
+import 'package:cjb/pages/main/user_profile/widget/button_widget.dart';
+import 'package:cjb/pages/main/user_profile/widget/numbers_widget.dart';
+import 'package:cjb/pages/main/user_profile/widget/profile_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:user_profile_example/model/user.dart';

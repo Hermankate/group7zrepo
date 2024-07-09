@@ -1,5 +1,5 @@
 import 'package:cjb/components/my_button.dart';
-import 'package:cjb/profiles/preferences.dart';
+import 'package:cjb/pages/auth/preferences.dart';
 import 'package:flutter/material.dart';
 
 class Identity_page extends StatelessWidget {
