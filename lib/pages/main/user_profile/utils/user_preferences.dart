@@ -1,4 +1,4 @@
-import 'package:user_profile_example/model/user.dart';
+import 'package:cjb/pages/main/user_profile/model/user.dart';
 
 class UserPreferences {
   static const myUser = User(
