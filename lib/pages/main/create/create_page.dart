@@ -337,8 +337,8 @@ class _CreatePageState extends State<CreatePage> {
                       height: 25,
                     ),
                     _createSubPostNavigationItem(
-                        title: "Share that you're hiring",
-                        iconData: Icons.work),
+                        title: "attachment",
+                        iconData: Icons.assignment_outlined),
                     const SizedBox(
                       height: 25,
                     ),
