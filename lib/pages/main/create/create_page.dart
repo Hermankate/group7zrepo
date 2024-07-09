@@ -331,42 +331,14 @@ class _CreatePageState extends State<CreatePage> {
                       height: 25,
                     ),
                     _createSubPostNavigationItem(
-                        title: "Use a template",
-                        iconData: Icons.temple_buddhist),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    _createSubPostNavigationItem(
-                        title: "Celebrate an occasion",
-                        iconData: Icons.celebration),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    _createSubPostNavigationItem(
                         title: "Add a document",
                         iconData: Icons.document_scanner),
                     const SizedBox(
                       height: 25,
                     ),
                     _createSubPostNavigationItem(
-                        title: "Share that you're hiring",
-                        iconData: Icons.work),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    _createSubPostNavigationItem(
-                        title: "Find an expert",
-                        iconData: Icons.account_circle_rounded),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    _createSubPostNavigationItem(
-                        title: "Create a poll", iconData: Icons.bar_chart),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    _createSubPostNavigationItem(
-                        title: "Create an event", iconData: Icons.event),
+                        title: "attachment",
+                        iconData: Icons.assignment_outlined),
                     const SizedBox(
                       height: 25,
                     ),

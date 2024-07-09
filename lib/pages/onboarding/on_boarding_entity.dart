@@ -11,7 +11,7 @@ class OnBoardingEntity {
     ),
     OnBoardingEntity(
       image: "on_boarding_2.jpg",
-      title: "Get updates in your comfort zone!",
+      title: "Get updates arround campus",
     ),
     OnBoardingEntity(
       image: "on_boarding_3.jpg",

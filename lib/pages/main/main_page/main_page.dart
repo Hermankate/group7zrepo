@@ -56,12 +56,8 @@ class _MainPageState extends State<MainPage> {
               label: "Home",
             ),
             BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.userGroup),
-              label: "Follow",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.briefcase),
-              label: "Jobs",
+              icon: Icon(Icons.add_box),
+              label: "Post",
             ),
             BottomNavigationBarItem(
               icon: Icon(
@@ -69,13 +65,6 @@ class _MainPageState extends State<MainPage> {
                 size: 30,
               ),
               label: "Notifications",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.add_box,
-                size: 30,
-              ),
-              label: "Post",
             ),
           ],
         ),
@@ -94,7 +83,7 @@ class _MainPageState extends State<MainPage> {
         }
       case 4:
         {
-          return const JobsPage();
+          //return const JobsPage();
         }
       case 3:
         {
