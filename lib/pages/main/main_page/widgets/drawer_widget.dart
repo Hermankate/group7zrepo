@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:cjb/pages/main/jobs/jobs_page.dart';
 import 'package:flutter/material.dart';
 import 'package:cjb/theme/styles.dart';
 import 'package:flutter/widgets.dart';
@@ -47,12 +48,21 @@ class DrawerWidget extends StatelessWidget {
                       const SizedBox(
                         height: 4,
                       ),
-                      const Text(
-                        "View profile",
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            color: cjbMediumGrey86888A),
+                      GestureDetector(
+                        child: const Text(
+                          "View profile",
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: cjbMediumGrey86888A),
+                        ),
+                        onTap: () {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => const Profile_Page()),
+                              (route) => false);
+                        },
                       ),
                     ],
                   ),
