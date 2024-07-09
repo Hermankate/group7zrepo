@@ -5,7 +5,7 @@ import 'package:cjb/pages/main/create/create_page.dart';
 import 'package:cjb/pages/main/home/home_page.dart';
 import 'package:cjb/pages/main/jobs/jobs_page.dart';
 import 'package:cjb/pages/main/main_page/widgets/drawer_widget.dart';
-import 'package:cjb/pages/main/network/network_page.dart';
+//import 'package:cjb/pages/main/network/network_page.dart';
 import 'package:cjb/pages/main/notifications/notifications_page.dart';
 import 'package:cjb/theme/styles.dart';
 
