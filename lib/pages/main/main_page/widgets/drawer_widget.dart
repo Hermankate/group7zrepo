@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:cjb/pages/main/jobs/jobs_page.dart';
+import 'package:cjb/pages/main/user_profile/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:cjb/theme/styles.dart';
 import 'package:flutter/widgets.dart';
