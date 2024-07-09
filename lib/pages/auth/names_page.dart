@@ -1,7 +1,7 @@
 import 'package:cjb/components/my_button.dart';
 import 'package:cjb/components/textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:cjb/profiles/identity.dart';
+import 'package:cjb/pages/auth/identity.dart';
 
 class Names_page extends StatelessWidget {
   const Names_page({Key? key}) : super(key: key);
