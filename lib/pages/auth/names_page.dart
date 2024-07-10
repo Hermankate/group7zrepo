@@ -1,10 +1,14 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:cjb/components/my_button.dart';
 import 'package:cjb/components/textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:cjb/pages/auth/identity.dart';
 
 class Names_page extends StatelessWidget {
-  const Names_page({Key? key}) : super(key: key);
+  Names_page({Key? key}) : super(key: key);
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +46,7 @@ class Names_page extends StatelessWidget {
                     ],
                   ),
                 ),
-                MytextApp(),
+                MytextApp(controller: _firstNameController),
                 SizedBox(
                   height: 25,
                 ),
@@ -57,7 +61,7 @@ class Names_page extends StatelessWidget {
                     ],
                   ),
                 ),
-                MytextApp(),
+                MytextApp(controller: _lastNameController),
                 SizedBox(
                   height: 25,
                 ),
@@ -67,7 +71,9 @@ class Names_page extends StatelessWidget {
                 Button(onTap: () {
                   Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (_) => const Identity_page()),
+                      MaterialPageRoute(
+                          builder: (_) => Identity_page(
+                              firstName: _firstNameController.text)),
                       (route) => false);
                 }),
               ],

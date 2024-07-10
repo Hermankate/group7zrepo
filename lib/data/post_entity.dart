@@ -40,7 +40,6 @@ class PostEntity {
         postImages: [
           "post_image_1.jpg",
           "post_image_2.jpg",
-          "post_image_3.jpg"
         ],
         tags: [
           "#code",
@@ -86,9 +85,7 @@ class PostEntity {
         postImages: [
           "post_image_5.jpg",
           "post_image_2.jpg",
-          "post_image_3.jpg",
           "post_image_1.jpg",
-          "post_image_4.jpg"
         ],
         tags: [
           "#gde",

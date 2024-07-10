@@ -21,9 +21,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/app_logo.png
     - assets/logo.jpg
-    - assets/app_logo_svg.svg
     - assets/bg_image_1.jpeg
     - assets/bg_image_2.png
     - assets/bg_image_3.jpeg
@@ -31,13 +29,13 @@ flutter:
     - assets/curious.png
     - assets/google_logo_svg.svg
     - assets/insightful.png
-    - assets/linkedin_loading.gif
-    - assets/linkedin_word_logo.png
+    - assets/holder.jpeg
     - assets/love.png
     - assets/on_boarding_1.jpg
     - assets/on_boarding_2.jpg
     - assets/on_boarding_3.jpg
     - assets/post_image_1.jpg
+    - assets/post_image_g.jpg
     - assets/post_image_2.jpg
     - assets/post_image_3.jpg
     - assets/post_image_4.jpg

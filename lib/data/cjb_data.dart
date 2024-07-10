@@ -1,4 +1,6 @@
 /// ! Home Posts Data:
+// ignore_for_file: non_constant_identifier_names
+
 final HOME_POSTS_LIST = [
   {
     "userProfile": "profile_1.png",

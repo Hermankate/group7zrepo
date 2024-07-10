@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, unnecessary_brace_in_string_interps, non_constant_identifier_names
 
 import 'package:cjb/components/my_button.dart';
 import 'package:cjb/pages/main/main_page/main_page.dart';
@@ -30,7 +30,9 @@ import 'package:flutter/material.dart';
 // }
 
 class DropDownWidget extends StatefulWidget {
-  const DropDownWidget({Key? key}) : super(key: key);
+  final String first_Name;
+
+  const DropDownWidget({required this.first_Name, Key? key}) : super(key: key);
 
   @override
   _DropDownWidgetState createState() => _DropDownWidgetState();
@@ -38,6 +40,8 @@ class DropDownWidget extends StatefulWidget {
 
 class _DropDownWidgetState extends State<DropDownWidget> {
   String selectedvalue = 'Information Tech(IT)';
+
+  get first_Name => 'herman';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +79,11 @@ class _DropDownWidgetState extends State<DropDownWidget> {
           Button(onTap: () {
             Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (_) => const MainPage()),
+                MaterialPageRoute(
+                    builder: (_) => MainPage(
+                          firstName: first_Name,
+                          first_Name: '${first_Name}',
+                        )),
                 (route) => false);
           })
         ]),

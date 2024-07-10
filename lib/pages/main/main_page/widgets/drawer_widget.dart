@@ -1,5 +1,6 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, unnecessary_string_interpolations
 
+import 'package:cjb/pages/main/user_profile/profile_page.dart';
 import 'package:cjb/pages/main/user_profile/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:cjb/theme/styles.dart';
@@ -7,8 +8,9 @@ import 'package:flutter/widgets.dart';
 import 'package:cjb/pages/onboarding/on_boarding_screen.dart';
 
 class DrawerWidget extends StatelessWidget {
-  const DrawerWidget({Key? key}) : super(key: key);
+  final String firstName;
 
+  const DrawerWidget({required this.firstName, Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -35,13 +37,13 @@ class DrawerWidget extends StatelessWidget {
                         height: 90,
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(45),
-                            child: Image.asset("assets/profile_1.jpeg")),
+                            child: Image.asset("assets/holder.jpeg")),
                       ),
                       const SizedBox(
                         height: 10,
                       ),
-                      const Text(
-                        "Herman Stevens",
+                      Text(
+                        "$firstName",
                         style: TextStyle(
                             fontSize: 25, fontWeight: FontWeight.bold),
                       ),
@@ -59,8 +61,7 @@ class DrawerWidget extends StatelessWidget {
                         onTap: () {
                           Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(
-                                  builder: (_) => const Profile_Page()),
+                              MaterialPageRoute(builder: (_) => ProfilePage()),
                               (route) => false);
                         },
                       ),
@@ -81,7 +82,7 @@ class DrawerWidget extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.only(left: 20.0),
                   child: Text(
-                    "Groups",
+                    "Resume Builder",
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -91,7 +92,7 @@ class DrawerWidget extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.only(left: 20.0),
                   child: Text(
-                    "Events",
+                    "pending Applications",
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ),
