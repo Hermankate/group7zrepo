@@ -11,7 +11,8 @@ import 'package:cjb/widgets/button_container_widget.dart';
 import 'package:cjb/widgets/google_button_container_widget.dart';
 
 class SignInPage extends StatelessWidget {
-  const SignInPage({Key? key}) : super(key: key);
+  SignInPage({Key? key}) : super(key: key);
+  final emailcontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +60,7 @@ class SignInPage extends StatelessWidget {
                       height: 10,
                     ),
                     TextFormField(
+                      controller: emailcontroller,
                       decoration: const InputDecoration(
                         hintText: "Email or Phone",
                       ),
@@ -89,7 +91,11 @@ class SignInPage extends StatelessWidget {
                       onTap: () {
                         Navigator.pushAndRemoveUntil(
                             context,
-                            MaterialPageRoute(builder: (_) => const MainPage()),
+                            MaterialPageRoute(
+                                builder: (_) => MainPage(
+                                      firstName: emailcontroller.text,
+                                      first_Name: '${emailcontroller.text}',
+                                    )),
                             (route) => false);
                       },
                     ),
