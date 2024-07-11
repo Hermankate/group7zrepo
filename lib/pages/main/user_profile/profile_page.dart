@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:cjb/pages/main/user_profile/model/user.dart';
 import 'package:cjb/pages/main/user_profile/utils/user_preferences.dart';
 import 'package:cjb/pages/main/user_profile/widget/appbar_widget.dart';
