@@ -13,7 +13,7 @@ PreferredSizeWidget appBarWidget(BuildContext context,
         child: ClipRRect(
             borderRadius: BorderRadius.circular(50),
             child: Image.asset(
-              "assets/profile_1.jpeg",
+              "assets/holder.jpeg",
             )),
       ),
     ),

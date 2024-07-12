@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:cjb/pages/auth/names_page.dart';
-import 'package:cjb/pages/main/main_page/main_page.dart';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -102,8 +102,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         //Next operation
                         Navigator.pushAndRemoveUntil(
                             context,
-                            MaterialPageRoute(
-                                builder: (_) => const Names_page()),
+                            MaterialPageRoute(builder: (_) => Names_page()),
                             (route) => false);
                       },
                     ),
@@ -146,7 +145,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                       Navigator.pushAndRemoveUntil(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (_) => const SignInPage()),
+                                            builder: (_) => SignInPage()),
                                         (route) => false,
                                       );
                                     },
