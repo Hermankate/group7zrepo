@@ -1,0 +1,1 @@
+{"flutter":{"platforms":{"android":{"default":{"projectId":"cjb-app","appId":"1:781590505905:android:8b6bd4a73d1e37cd67b590","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"cjb-app","configurations":{"android":"1:781590505905:android:8b6bd4a73d1e37cd67b590","ios":"1:781590505905:ios:948a461eb9510e4967b590"}}}}}}
