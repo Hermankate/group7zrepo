@@ -169,8 +169,9 @@
 // }
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:cjb/pages/auth/auth_service.dart';
+//import 'package:cjb/pages/auth/auth_service.dart';
 import 'package:cjb/pages/auth/firebase_auth_services.dart';
+import 'package:cjb/pages/main/main_page/main_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -307,15 +308,19 @@ class _SignUpPageState extends State<SignUpPage> {
                         if (_isContinued == false) {
                           setState(() {
                             _isContinued = true;
-                            _sigUp();
+                            sigUp();
                           });
                           return;
                         }
                         //Next operation
-                        // Navigator.pushAndRemoveUntil(
-                        //     context,
-                        //     MaterialPageRoute(builder: (_) => const MainPage()),
-                        //     (route) => false);
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => MainPage(
+                                      firstName: '${_usernameController.text}',
+                                      first_Name: '${_usernameController.text}',
+                                    )),
+                            (route) => false);
                       },
                     ),
                     const SizedBox(
@@ -379,7 +384,7 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  void _sigUp() async {
+  void sigUp() async {
     String username = _usernameController.text;
     String email = _emailController.text;
     String password = _passwordController.text;
