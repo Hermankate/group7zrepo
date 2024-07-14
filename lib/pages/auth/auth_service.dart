@@ -42,18 +42,47 @@ import 'package:flutter/material.dart';
 import 'package:cjb/pages/auth/auth_funcs.dart';
 
 class AuthServices {
-  static Future<void> signupUser(
+  // static Future<void> signupUser(
+  //     String email, String password, String name, BuildContext context) async {
+  //   try {
+  //     UserCredential userCredential = await FirebaseAuth.instance
+  //         .createUserWithEmailAndPassword(email: email, password: password);
+
+  //     await FirebaseAuth.instance.currentUser!.updateDisplayName(name);
+  //     await FirestoreServices.saveUser(name, email, userCredential.user!.uid);
+
+  //     ScaffoldMessenger.of(context)
+  //         .showSnackBar(SnackBar(content: Text('Registration Successful')));
+  //   } on FirebaseAuthException catch (e) {
+  //     if (e.code == 'weak-password') {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //           SnackBar(content: Text('Password Provided is too weak')));
+  //     } else if (e.code == 'email-already-in-use') {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //           SnackBar(content: Text('Email Provided already Exists')));
+  //     }
+  //   } catch (e) {
+  //     ScaffoldMessenger.of(context)
+  //         .showSnackBar(SnackBar(content: Text(e.toString())));
+  //   }
+  // }
+
+  static Future<bool> signupUser(
       String email, String password, String name, BuildContext context) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
 
+      String uid = userCredential.user!.uid;
+
       await FirebaseAuth.instance.currentUser!.updateDisplayName(name);
-      await FirestoreServices.saveUser(name, email, userCredential.user!.uid);
+      await FirestoreServices.saveUser(name, email, uid);
 
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Registration Successful')));
+      return true; // Return true on success
     } on FirebaseAuthException catch (e) {
+      // Handle errors
       if (e.code == 'weak-password') {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Password Provided is too weak')));
@@ -61,9 +90,11 @@ class AuthServices {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Email Provided already Exists')));
       }
+      return false; // Return false on failure
     } catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.toString())));
+      return false; // Return false on general error
     }
   }
 
