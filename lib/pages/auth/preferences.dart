@@ -88,8 +88,10 @@
 //     );
 //   }
 // }
+import 'package:cjb/pages/main/create/posts/firestore.dart';
 import 'package:cjb/pages/main/notifications/push_services.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class JobSubscriptionScreen extends StatefulWidget {
   @override
@@ -100,13 +102,25 @@ class _JobSubscriptionScreenState extends State<JobSubscriptionScreen> {
   final FirestoreService _firestoreService = FirestoreService();
   final PushNotificationService _pushNotificationService =
       PushNotificationService();
-  List<String> _categories = ['Tech', 'Finance', 'Health', 'Education'];
+  final List<String> _categories = ['Tech', 'Finance', 'Health', 'Education'];
   List<String> _selectedCategories = [];
 
   @override
   void initState() {
     super.initState();
     _pushNotificationService.initialize();
+    _loadUserSubscriptions();
+  }
+
+  Future<void> _loadUserSubscriptions() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      List<String> subscriptions =
+          await _firestoreService.getUserSubscriptions(user.uid);
+      setState(() {
+        _selectedCategories = subscriptions;
+      });
+    }
   }
 
   void _onCategorySelected(bool selected, String category) {
@@ -122,8 +136,13 @@ class _JobSubscriptionScreenState extends State<JobSubscriptionScreen> {
   }
 
   Future<void> _saveUserSubscriptions() async {
-    String userId = 'user-id'; // Replace with actual user ID
-    await _firestoreService.addUserSubscription(userId, _selectedCategories);
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await _firestoreService.addUserSubscription(
+          user.uid, _selectedCategories);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Subscriptions updated')));
+    }
   }
 
   @override
@@ -136,7 +155,9 @@ class _JobSubscriptionScreenState extends State<JobSubscriptionScreen> {
             title: Text(category),
             value: _selectedCategories.contains(category),
             onChanged: (bool? selected) {
-              _onCategorySelected(selected!, category);
+              if (selected != null) {
+                _onCategorySelected(selected, category);
+              }
             },
           );
         }).toList(),
