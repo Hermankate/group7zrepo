@@ -49,14 +49,14 @@ class Identity_page extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                Button(onTap: () {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) =>
-                              DropDownWidget(first_Name: firstName)),
-                      (route) => false);
-                })
+                // Button(onTap: () {
+                //   Navigator.pushAndRemoveUntil(
+                //       context,
+                //       MaterialPageRoute(
+                //           builder: (_) =>
+                //               DropDownWidget(first_Name: firstName)),
+                //       (route) => false);
+                // })
               ],
             ),
           ),
