@@ -5,30 +5,6 @@ import 'package:cjb/pages/main/main_page/main_page.dart';
 
 import 'package:flutter/material.dart';
 
-// class Preferences_page extends StatelessWidget {
-//   const Preferences_page({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Container(
-//           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-//         Text("What would be your Job preferences?"),
-//         SizedBox(
-//           height: 20,
-//         ),
-//         //DropdownButtonFormField(items: [], onChanged: (value) )
-//         Button(onTap: () {
-//           Navigator.pushAndRemoveUntil(
-//               context,
-//               MaterialPageRoute(builder: (_) => const MainPage()),
-//               (route) => false);
-//         }),
-//       ])),
-//     );
-//   }
-// }
-
 class DropDownWidget extends StatefulWidget {
   final String first_Name;
 
@@ -69,7 +45,7 @@ class _DropDownWidgetState extends State<DropDownWidget> {
                   'Information Tech(IT)',
                   'Business',
                   'Educational',
-                  'Tutors',
+                  'Finance',
                   'Human Resource'
                 ].map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(

@@ -274,6 +274,16 @@ class SignInPage extends StatelessWidget {
                           passwordController.text,
                           context,
                         );
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => MainPage(
+                              firstName: emailController.text,
+                              first_Name: emailController.text,
+                            ),
+                          ),
+                          (route) => false,
+                        );
                       },
                     ),
                     const SizedBox(height: 15),

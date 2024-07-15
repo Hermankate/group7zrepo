@@ -79,32 +79,20 @@ class _MainPageState extends State<MainPage> {
   _switchPages(int index) {
     switch (index) {
       case 0:
-        {
-          return const HomePage();
-        }
+        return const HomePage();
       case 1:
-        {
-          //return const NetworkPage();
-        }
-      case 4:
-        {
-          //return const JobsPage();
-        }
+        return CreatePage(
+          onCloneClickListener: () {
+            Navigator.pop(context);
+            setState(() {
+              _currentPageIndex = 0;
+            });
+          },
+        );
       case 2:
-        {
-          return const Notification_Page();
-        }
-      case 1:
-        {
-          return CreatePage(
-            onCloneClickListener: () {
-              Navigator.pop(context);
-              setState(() {
-                _currentPageIndex = 0;
-              });
-            },
-          );
-        }
+        return const Notification_Page();
+      default:
+        return const HomePage(); // Fallback to HomePage or a default page
     }
   }
 }
