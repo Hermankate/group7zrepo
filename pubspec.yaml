@@ -21,6 +21,7 @@ dependencies:
   firebase_messaging: ^15.0.3
   googleapis: ^13.2.0
   googleapis_auth: ^1.6.0
+  
 
 
 dev_dependencies:
@@ -53,3 +54,4 @@ flutter:
     - assets/profile_1.jpeg
     - assets/profile_2.jpeg
     - assets/thumbs_up.png
+    - assets/service-account-file.json

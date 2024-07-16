@@ -8,13 +8,19 @@ import 'pages/onboarding/on_boarding_screen.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  final pubsubApi = await initializePubSub();
-  const topicName = 'job-notifications';
-  const subscriptionName = 'job-category-subscription';
-  await createTopic(pubsubApi, 'job-notifications');
-  final pushNotificationService = PushNotificationService();
-  await pushNotificationService.initialize();
-  await createSubscription(pubsubApi, subscriptionName, topicName);
+
+  try {
+    final pubsubApi = await initializePubSub();
+    const topicName = 'job-notifications';
+    const subscriptionName = 'job-category-subscription';
+    await createTopic(pubsubApi, topicName);
+    final pushNotificationService = PushNotificationService();
+    await pushNotificationService.initialize();
+    await createSubscription(pubsubApi, subscriptionName, topicName);
+  } catch (e) {
+    print('Error setting up Pub/Sub: $e');
+  }
+
   runApp(const MyApp());
 }
 
