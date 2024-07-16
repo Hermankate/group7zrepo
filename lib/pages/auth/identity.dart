@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:cjb/components/my_button.dart';
 import 'package:cjb/pages/auth/preferences.dart';
 import 'package:flutter/material.dart';
@@ -49,14 +51,14 @@ class Identity_page extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                Button(onTap: () {
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) =>
-                              DropDownWidget(first_Name: firstName)),
-                      (route) => false);
-                })
+                // Button(onTap: () {
+                //   Navigator.pushAndRemoveUntil(
+                //       context,
+                //       MaterialPageRoute(
+                //           builder: (_) =>
+                //               DropDownWidget(first_Name: firstName)),
+                //       (route) => false);
+                // })
               ],
             ),
           ),
