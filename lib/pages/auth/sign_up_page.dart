@@ -582,9 +582,16 @@
 //     );
 //   }
 // }
-
+import 'package:cjb/pages/auth/auth_service.dart';
+import 'package:cjb/pages/main/main_page/main_page.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'dart:ui';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:cjb/pages/auth/sign_in_page.dart';
+import 'package:cjb/theme/styles.dart';
+import 'package:cjb/widgets/button_container_widget.dart';
+import 'package:cjb/widgets/google_button_container_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SignUp extends StatefulWidget {
@@ -803,8 +810,33 @@ class _SignUpState extends State<SignUp> {
                   ],
                 ),
                 child: TextButton(
-                  onPressed: () {
-                    // Implement sign-up functionality here
+                  onPressed: () async {
+                    // Call signupUser and await the result
+                    bool success = await AuthServices.signupUser(
+                      emailController.text,
+                      passwordController.text,
+                      fullNameController.text,
+                      context,
+                    );
+
+                    if (success) {
+                      // If signup is successful, navigate to MainPage
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => MainPage(
+                            firstName: fullNameController.text,
+                            first_Name: fullNameController.text,
+                          ),
+                        ),
+                        (route) => false,
+                      );
+                    } else {
+                      // Clear the text fields or keep them for user to try again
+                      emailController.clear();
+                      passwordController.clear();
+                      fullNameController.clear();
+                    }
                   },
                   style: TextButton.styleFrom(
                     padding:
@@ -889,6 +921,15 @@ class _SignUpState extends State<SignUp> {
                           color: Color(0xFFFF9228),
                           decorationColor: Color(0xFFFF9228),
                         ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SignInPage(),
+                              ),
+                            );
+                          },
                       ),
                     ],
                   ),
