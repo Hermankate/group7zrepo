@@ -372,6 +372,7 @@
 // }
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:cjb/pages/auth/forgot_password.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -526,12 +527,20 @@ class _SignInPageState extends State<SignInPage> {
                         ),
                       ],
                     ),
-                    Text(
-                      'Forgot Password?',
-                      style: GoogleFonts.dmSans(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 12,
-                        color: Color(0xFF0D0140),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(builder: (_) => ForgotPassword()),
+                            (route) => false);
+                      },
+                      child: Text(
+                        'Forgot Password?',
+                        style: GoogleFonts.dmSans(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12,
+                          color: Color(0xFF0D0140),
+                        ),
                       ),
                     ),
                   ],
