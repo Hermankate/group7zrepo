@@ -370,7 +370,11 @@
 //     );
 //   }
 // }
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SignInPage extends StatefulWidget {
@@ -381,6 +385,20 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool _rememberMe = false;
+  bool _obscurePassword = true;
+
+  void _toggleRememberMe(bool? value) {
+    setState(() {
+      _rememberMe = value ?? false;
+    });
+  }
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _obscurePassword = !_obscurePassword;
+    });
+  }
 
   void _login() {
     final email = _emailController.text;
@@ -390,94 +408,217 @@ class _SignInPageState extends State<SignInPage> {
     print('Password: $password');
   }
 
+  void _loginWithGoogle() {
+    // Handle Google login logic here
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF9F9F9),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 50),
-            Text(
-              'Login',
-              style: GoogleFonts.dmSans(
-                fontWeight: FontWeight.w700,
-                fontSize: 24,
-                color: Color(0xFF150B3D),
-              ),
-            ),
-            SizedBox(height: 30),
-            Text(
-              'Email',
-              style: GoogleFonts.openSans(
-                fontWeight: FontWeight.w600,
-                fontSize: 12,
-                color: Color(0xFF150B3D),
-              ),
-            ),
-            SizedBox(height: 5),
-            TextField(
-              controller: _emailController,
-              decoration: InputDecoration(
-                hintText: 'Enter your email',
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+      body: SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+            color: Color(0xFFFFFFFF),
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(29, 102, 20.9, 50),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Welcome Back',
+                  style: GoogleFonts.dmSans(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 30,
+                    color: Color(0xFF0D0140),
+                  ),
                 ),
-                filled: true,
-                fillColor: Colors.white,
-              ),
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Password',
-              style: GoogleFonts.openSans(
-                fontWeight: FontWeight.w600,
-                fontSize: 12,
-                color: Color(0xFF150B3D),
-              ),
-            ),
-            SizedBox(height: 5),
-            TextField(
-              controller: _passwordController,
-              obscureText: true,
-              decoration: InputDecoration(
-                hintText: 'Enter your password',
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+                SizedBox(height: 11),
+                Text(
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.dmSans(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
+                    height: 1.6,
+                    color: Color(0xFF524B6B),
+                  ),
                 ),
-                filled: true,
-                fillColor: Colors.white,
-              ),
-            ),
-            SizedBox(height: 30),
-            GestureDetector(
-              onTap: _login,
-              child: Container(
-                width: double.infinity,
-                height: 46,
-                decoration: BoxDecoration(
-                  color: Color(0xFFFF9228),
-                  borderRadius: BorderRadius.circular(23),
-                ),
-                child: Center(
+                SizedBox(height: 64),
+                Align(
+                  alignment: Alignment.topLeft,
                   child: Text(
-                    'Login',
+                    'Email',
+                    style: GoogleFonts.dmSans(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 12,
+                      color: Color(0xFF0D0140),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 5),
+                TextField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    hintText: 'Enter your email',
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                ),
+                SizedBox(height: 20),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    'Password',
+                    style: GoogleFonts.openSans(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12,
+                      color: Color(0xFF0D0140),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 5),
+                TextField(
+                  controller: _passwordController,
+                  obscureText: _obscurePassword,
+                  decoration: InputDecoration(
+                    hintText: 'Enter your password',
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _obscurePassword
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
+                      onPressed: _togglePasswordVisibility,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: _rememberMe,
+                          onChanged: _toggleRememberMe,
+                        ),
+                        Text(
+                          'Remember me',
+                          style: GoogleFonts.dmSans(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 12,
+                            color: Color(0xFFAAA6B9),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      'Forgot Password?',
+                      style: GoogleFonts.dmSans(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12,
+                        color: Color(0xFF0D0140),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 32),
+                ElevatedButton(
+                  onPressed: _login,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF130160),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                  ),
+                  child: Text(
+                    'LOGIN',
                     style: GoogleFonts.dmSans(
                       fontWeight: FontWeight.w700,
                       fontSize: 14,
                       color: Colors.white,
+                      letterSpacing: 0.8,
                     ),
                   ),
                 ),
-              ),
+                SizedBox(height: 19),
+                ElevatedButton.icon(
+                  onPressed: _loginWithGoogle,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFFD6CDFE),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                  ),
+                  icon: Image.asset(
+                    'assets/images/google_1.png',
+                    width: 24,
+                    height: 24,
+                  ),
+                  label: Text(
+                    'SIGN IN WITH GOOGLE',
+                    style: GoogleFonts.dmSans(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                      color: Color(0xFF130160),
+                      letterSpacing: 0.8,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16),
+                RichText(
+                  text: TextSpan(
+                    style: GoogleFonts.openSans(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12,
+                      color: Color(0xFF524B6B),
+                    ),
+                    children: [
+                      TextSpan(
+                        text: 'You don\'t have an account yet?  ',
+                        style: GoogleFonts.dmSans(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12,
+                          height: 1.3,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'Sign up',
+                        style: GoogleFonts.dmSans(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12,
+                          decoration: TextDecoration.underline,
+                          height: 1.3,
+                          color: Color(0xFFFF9228),
+                          decorationColor: Color(0xFFFF9228),
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.pushNamed(context, '/signup');
+                          },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
