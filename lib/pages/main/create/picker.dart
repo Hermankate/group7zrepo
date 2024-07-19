@@ -5,7 +5,7 @@ import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
 
-class _CreatePageState extends State<CreatePage> {
+class _CreatePageState extends State<AddPostScreen> {
   // Other existing code...
 
   List<String> postImages = [];

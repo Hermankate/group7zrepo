@@ -67,3 +67,8 @@ class Identity_page extends StatelessWidget {
     );
   }
 }
+// this is for navigating between pages!!
+// Navigator.pushAndRemoveUntil(
+//                                     context,
+//                                     MaterialPageRoute(
+//                                       builder: (_) => const SignUpPage(),

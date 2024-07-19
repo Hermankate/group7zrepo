@@ -81,7 +81,7 @@ class _MainPageState extends State<MainPage> {
       case 0:
         return const HomePage();
       case 1:
-        return CreatePage(
+        return AddPostScreen(
           onCloneClickListener: () {
             Navigator.pop(context);
             setState(() {

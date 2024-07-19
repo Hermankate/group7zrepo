@@ -6,6 +6,8 @@
 // class MytextApp extends StatelessWidget {
 //   MytextApp({Key? key}) : super(key: key );
 
+// ignore_for_file: prefer_const_constructors
+
 //   @override
 //   Widget build(BuildContext context) {
 //     return Padding(
