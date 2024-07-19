@@ -21,6 +21,8 @@ dependencies:
   firebase_messaging: ^15.0.3
   googleapis: ^13.2.0
   googleapis_auth: ^1.6.0
+  awesome_notifications: ^0.9.3+1
+  google_fonts: ^6.2.1
   
 
 

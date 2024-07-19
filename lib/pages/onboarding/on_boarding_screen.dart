@@ -95,7 +95,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     onTap: () {
                       Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (_) => const SignUpPage()),
+                        MaterialPageRoute(builder: (_) => SignUp()),
                         (route) => false,
                       );
                     },
