@@ -635,7 +635,7 @@ class _SignUpState extends State<SignUp> {
               Container(
                 margin: EdgeInsets.fromLTRB(0, 0, 1, 64),
                 child: Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
+                  'Welcome to our job board app',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.getFont(
                     'DM Sans',

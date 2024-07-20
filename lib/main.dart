@@ -83,8 +83,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-
- try {
+  try {
     final pubsubApi = await initializePubSub();
     final serviceAccountJson = File('assets/service-account-file.json');
     final credentialsJson = await serviceAccountJson.readAsString();
@@ -93,7 +92,8 @@ Future<void> main() async {
     const topicName = 'job-notifications';
     const subscriptionName = 'job-category-subscription';
     await createTopicIfNotExists(pubsubApi, projectID, topicName);
-    await createSubscriptionIfNotExists(pubsubApi, projectID, subscriptionName, topicName);
+    await createSubscriptionIfNotExists(
+        pubsubApi, projectID, subscriptionName, topicName);
 
     final pushNotificationService = PushNotificationService();
     await pushNotificationService.initialize();
