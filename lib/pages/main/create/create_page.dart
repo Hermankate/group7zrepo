@@ -1,3 +1,6 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:cjb/pages/main/create/add_job.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -41,228 +44,222 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var _postimage;
     return Scaffold(
       backgroundColor: Color(0xFFF9F9F9),
       body: Padding(
         padding: const EdgeInsets.only(top: 35.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 22.8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 7),
-                    width: 24,
-                    height: 24,
-                    decoration: BoxDecoration(
-                      color: Color(0xFF524B6B),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Center(
-                      child: Container(
-                        width: 18.2,
-                        height: 2.0,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    'Post',
-                    style: GoogleFonts.dmSans(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 12,
-                      color: Color(0xFFFF9228),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Text(
-                'Add Post',
-                style: GoogleFonts.dmSans(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 16,
-                  color: Color(0xFF150B3D),
-                ),
-              ),
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 18.0, vertical: 28.0),
-              child: Row(
-                children: [
-                  Container(
-                    width: 56,
-                    height: 56,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(28),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage('assets/images/image.jpeg'),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 11),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Orlando Diggs',
-                        style: GoogleFonts.dmSans(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14,
-                          color: Color(0xFF150B3D),
-                        ),
-                      ),
-                      Text(
-                        'California, USA',
-                        style: GoogleFonts.dmSans(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 12,
-                          color: Color(0xFF524B6B),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Post title',
-                    style: GoogleFonts.openSans(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 12,
-                      color: Color(0xFF150B3D),
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  TextField(
-                    controller: _titleController,
-                    decoration: InputDecoration(
-                      hintText: 'Write the title of your post here',
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Description',
-                    style: GoogleFonts.dmSans(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 12,
-                      color: Color(0xFF150B3D),
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  TextField(
-                    controller: _descriptionController,
-                    maxLines: 5,
-                    decoration: InputDecoration(
-                      hintText: 'What do you want to talk about?',
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Spacer(),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Color(0x26ACC8D3),
-                    offset: Offset(0, 4),
-                    blurRadius: 79.5,
-                  ),
-                ],
-              ),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 15, 20.6, 33),
+        child: Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 22.8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        IconButton(
-                          icon: SvgPicture.asset(
-                              'assets/vectors/icon_camera_x2.svg'),
-                          onPressed: _openCamera,
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 7),
+                      width: 24,
+                      height: 24,
+                      decoration: BoxDecoration(
+                        color: Color(0xFF524B6B),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                        child: Container(
+                          width: 18.2,
+                          height: 2.0,
+                          color: Colors.white,
                         ),
-                        IconButton(
-                          icon: SvgPicture.asset(
-                              'assets/vectors/icon_picture_1_x2.svg'),
-                          onPressed: _openGallery,
-                        ),
-                      ],
+                      ),
                     ),
-                    GestureDetector(
-                      onTap: _submitPost,
-                      child: Container(
-                        width: 124,
-                        height: 46,
-                        decoration: BoxDecoration(
-                          color: Color(0xFFFF9228),
-                          borderRadius: BorderRadius.circular(23),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Post',
-                            style: GoogleFonts.dmSans(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 14,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                    Text(
+                      'Post',
+                      style: GoogleFonts.dmSans(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 12,
+                        color: Color(0xFFFF9228),
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
+                  'Add Post',
+                  style: GoogleFonts.dmSans(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                    color: Color(0xFF150B3D),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 18.0, vertical: 28.0),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 56,
+                      height: 56,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(28),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage('assets/holder.jpeg'),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 11),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Username ',
+                          style: GoogleFonts.dmSans(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14,
+                            color: Color(0xFF150B3D),
+                          ),
+                        ),
+                        Text(
+                          'email@gmail.com',
+                          style: GoogleFonts.dmSans(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 12,
+                            color: Color(0xFF524B6B),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Description',
+                      style: GoogleFonts.dmSans(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 12,
+                        color: Color(0xFF150B3D),
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    TextField(
+                      controller: _descriptionController,
+                      maxLines: 5,
+                      minLines: 2,
+                      decoration: InputDecoration(
+                        hintText: 'What do you want to talk about?',
+                        contentPadding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Center(
+                child: Container(
+                  width: 150,
+                  height: 150,
+                  color: Colors.white,
+                  child: _postimage,
+                ),
+              ),
+              Spacer(),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0x26ACC8D3),
+                      offset: Offset(0, 4),
+                      blurRadius: 79.5,
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 8, 20.6, 18),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Column(
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.business_center_rounded),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => AddAjob(),
+                                    ),
+                                  );
+                                },
+                              ),
+                              Text('Job'),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              IconButton(
+                                icon: Icon(
+                                    Icons.photo_size_select_actual_rounded),
+                                onPressed: _openGallery,
+                              ),
+                              Text('Media')
+                            ],
+                          ),
+                        ],
+                      ),
+                      GestureDetector(
+                        onTap: _submitPost,
+                        child: Container(
+                          width: 124,
+                          height: 46,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFFF9228),
+                            borderRadius: BorderRadius.circular(23),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Post',
+                              style: GoogleFonts.dmSans(
+                                fontWeight: FontWeight.w700,
+                                fontSize: 14,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
-
-
-
-
-
-
-
 
 // import 'package:flutter/material.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
