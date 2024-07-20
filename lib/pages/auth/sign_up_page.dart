@@ -635,7 +635,7 @@ class _SignUpState extends State<SignUp> {
               Container(
                 margin: EdgeInsets.fromLTRB(0, 0, 1, 64),
                 child: Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
+                  'Welcome to our job board app',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.getFont(
                     'DM Sans',
@@ -800,7 +800,7 @@ class _SignUpState extends State<SignUp> {
                 margin: EdgeInsets.fromLTRB(0, 0, 2, 15),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(6),
-                  color: Color(0xFF130160),
+                  color: Color.fromRGBO(0, 96, 243, 1),
                   boxShadow: [
                     BoxShadow(
                       color: Color(0x2E99ABC6),
@@ -870,11 +870,11 @@ class _SignUpState extends State<SignUp> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Image.asset(
-                        'assets/images/google_1.png',
-                        width: 15.8,
-                        height: 20,
-                      ),
+                      // Image.asset(
+                      //   'assets/images/google_1.png',
+                      //   width: 5,
+                      //   height: 5,
+                      // ),
                       SizedBox(width: 10.4),
                       Text(
                         'SIGN UP WITH GOOGLE',
@@ -902,7 +902,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                     children: [
                       TextSpan(
-                        text: 'You don\'t have an account yet? ',
+                        text: 'You have an account? ',
                         style: GoogleFonts.getFont(
                           'DM Sans',
                           fontWeight: FontWeight.w400,
@@ -918,8 +918,8 @@ class _SignUpState extends State<SignUp> {
                           fontSize: 12,
                           decoration: TextDecoration.underline,
                           height: 1.3,
-                          color: Color(0xFFFF9228),
-                          decorationColor: Color(0xFFFF9228),
+                          color: Color.fromRGBO(0, 96, 243, 1),
+                          decorationColor: Color.fromRGBO(0, 96, 243, 1),
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {

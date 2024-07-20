@@ -437,7 +437,7 @@ class _SignInPageState extends State<SignInPage> {
                 ),
                 SizedBox(height: 11),
                 Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
+                  '',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.dmSans(
                     fontWeight: FontWeight.w400,
@@ -549,7 +549,7 @@ class _SignInPageState extends State<SignInPage> {
                 ElevatedButton(
                   onPressed: _login,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF130160),
+                    backgroundColor: Color.fromRGBO(0, 96, 243, 1),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6),
                     ),
