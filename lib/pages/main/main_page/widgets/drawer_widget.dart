@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_string_interpolations
 
+import 'package:cjb/pages/main/user_profile/prof.dart';
 import 'package:cjb/pages/main/user_profile/profile_page.dart';
 // import 'package:cjb/pages/main/user_profile/user_profile.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +62,7 @@ class DrawerWidget extends StatelessWidget {
                         onTap: () {
                           Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(builder: (_) => ProfilePage()),
+                              MaterialPageRoute(builder: (_) => Profile()),
                               (route) => false);
                         },
                       ),

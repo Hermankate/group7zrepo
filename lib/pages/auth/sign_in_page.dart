@@ -371,8 +371,10 @@
 //   }
 // }
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
+import 'package:cjb/pages/auth/firebase_auth_services.dart';
 import 'package:cjb/pages/auth/forgot_password.dart';
+import 'package:cjb/pages/auth/sign_up_page.dart';
+import 'package:cjb/pages/main/main_page/main_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -389,6 +391,8 @@ class _SignInPageState extends State<SignInPage> {
   bool _rememberMe = false;
   bool _obscurePassword = true;
 
+  final FirebaseAuthServices _authServices = FirebaseAuthServices();
+
   void _toggleRememberMe(bool? value) {
     setState(() {
       _rememberMe = value ?? false;
@@ -401,12 +405,37 @@ class _SignInPageState extends State<SignInPage> {
     });
   }
 
-  void _login() {
+  Future<void> _login() async {
     final email = _emailController.text;
     final password = _passwordController.text;
     // Handle login logic here
     print('Email: $email');
     print('Password: $password');
+
+    final user =
+        await _authServices.signInWithEmailAndPassword(email, password);
+
+    if (user != null) {
+      // Navigate to home page
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (_) => MainPage(
+            firstName: _emailController.text,
+            first_Name: _emailController.text,
+          ),
+        ),
+        (route) => false,
+      );
+    } else {
+      // Show invalid login credentials message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Invalid login credentials'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 
   void _loginWithGoogle() {
@@ -426,7 +455,12 @@ class _SignInPageState extends State<SignInPage> {
             padding: EdgeInsets.fromLTRB(29, 102, 20.9, 50),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Container(
+                    width: 100,
+                    height: 100,
+                    child: Image.asset('assets/logo_icon.png')),
                 Text(
                   'Welcome Back',
                   style: GoogleFonts.dmSans(
@@ -435,18 +469,11 @@ class _SignInPageState extends State<SignInPage> {
                     color: Color(0xFF0D0140),
                   ),
                 ),
-                SizedBox(height: 11),
-                Text(
-                  '',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.dmSans(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12,
-                    height: 1.6,
-                    color: Color(0xFF524B6B),
-                  ),
+                Text('login into ur cjb account',
+                    style: TextStyle(color: Color(0xFF0D0140))),
+                SizedBox(
+                  height: 20,
                 ),
-                SizedBox(height: 64),
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
@@ -575,17 +602,17 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                   ),
-                  icon: Image.asset(
-                    'assets/images/google_1.png',
-                    width: 24,
-                    height: 24,
-                  ),
+                  // icon: Image.asset(
+                  //   'assets/images/google_1.png',
+                  //   width: 24,
+                  //   height: 24,
+                  // ),
                   label: Text(
                     'SIGN IN WITH GOOGLE',
                     style: GoogleFonts.dmSans(
                       fontWeight: FontWeight.w700,
                       fontSize: 14,
-                      color: Color(0xFF130160),
+                      color: Colors.white,
                       letterSpacing: 0.8,
                     ),
                   ),
@@ -600,7 +627,7 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     children: [
                       TextSpan(
-                        text: 'You don\'t have an account yet?  ',
+                        text: 'You dont have an account yet?  ',
                         style: GoogleFonts.dmSans(
                           fontWeight: FontWeight.w400,
                           fontSize: 12,
@@ -614,12 +641,15 @@ class _SignInPageState extends State<SignInPage> {
                           fontSize: 12,
                           decoration: TextDecoration.underline,
                           height: 1.3,
-                          color: Color(0xFFFF9228),
-                          decorationColor: Color(0xFFFF9228),
+                          color: Color.fromRGBO(0, 96, 243, 1),
+                          decorationColor: Color.fromRGBO(0, 96, 243, 1),
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            Navigator.pushNamed(context, '/signup');
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(builder: (_) => SignUp()),
+                                (route) => false);
                           },
                       ),
                     ],

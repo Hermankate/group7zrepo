@@ -1,3 +1,4 @@
+import 'package:cjb/pages/auth/sign_in_page.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -137,7 +138,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 child: TextButton(
                   onPressed: () {
                     // Navigate back to login
-                    Navigator.pop(context);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SignInPage(),
+                        ));
                   },
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.symmetric(vertical: 17),
