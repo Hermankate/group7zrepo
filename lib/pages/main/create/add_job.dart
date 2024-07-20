@@ -245,7 +245,7 @@ class _AddAjobState extends State<AddAjob> {
                 IconButton(
                   icon: Icon(Icons.arrow_back),
                   onPressed: () {
-                    //Navigator.of(context).pop();
+                    Navigator.of(context).pop();
                   },
                 ),
                 Text(
@@ -348,93 +348,98 @@ class _AddAjobState extends State<AddAjob> {
 
   Widget buildInputField(BuildContext context, String labelText,
       String svgAsset, TextEditingController controller) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Text(
-              labelText,
-              style: GoogleFonts.dmSans(
-                fontWeight: FontWeight.w700,
-                fontSize: 14,
-                color: Color(0xFF150B3D),
+    return Container(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text(
+                labelText,
+                style: GoogleFonts.dmSans(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
+                  color: Color(0xFF150B3D),
+                ),
               ),
-            ),
-            GestureDetector(
-              child: Icon(Icons.add),
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Dialog(
-                      child: SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                'Enter $labelText',
-                                style: GoogleFonts.dmSans(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 16,
-                                  color: Color(0xFF150B3D),
+              SizedBox(
+                width: 80,
+              ),
+              GestureDetector(
+                child: Icon(Icons.add),
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Dialog(
+                        child: SingleChildScrollView(
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  'Enter $labelText',
+                                  style: GoogleFonts.dmSans(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16,
+                                    color: Color(0xFF150B3D),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 20),
-                              buildGrowingTextField(
-                                labelText,
-                                controller,
-                                (value) {
-                                  setState(() {
-                                    controller.text = value;
-                                  });
-                                },
-                              ),
-                              SizedBox(height: 20),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text('Cancel'),
-                                  ),
-                                  SizedBox(width: 8),
-                                  TextButton(
-                                    onPressed: () {
-                                      // Save the input data and close the dialog
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text('Save'),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                SizedBox(height: 20),
+                                buildGrowingTextField(
+                                  labelText,
+                                  controller,
+                                  (value) {
+                                    setState(() {
+                                      controller.text = value;
+                                    });
+                                  },
+                                ),
+                                SizedBox(height: 20),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('Cancel'),
+                                    ),
+                                    SizedBox(width: 8),
+                                    TextButton(
+                                      onPressed: () {
+                                        // Save the input data and close the dialog
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('Save'),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: Container(
-                width: 200,
-                height: 50,
-                color: Colors.white,
-                child: Text(controller.text),
+                      );
+                    },
+                  );
+                },
               ),
-            )
-          ],
-        ),
-      ],
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  width: 200,
+                  height: 50,
+                  color: Colors.white,
+                  child: Text(controller.text),
+                ),
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 

@@ -7,8 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AddPostScreen extends StatefulWidget {
   final VoidCallback? onCloneClickListener;
-  const AddPostScreen({Key? key, required this.onCloneClickListener})
-      : super(key: key);
+  const AddPostScreen({super.key, required this.onCloneClickListener});
   @override
   _AddPostScreenState createState() => _AddPostScreenState();
 }
