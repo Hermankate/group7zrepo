@@ -1,9 +1,30 @@
 import 'package:flutter/material.dart';
-import 'dart:ui';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
+  @override
+  _ProfileState createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  final Map<String, TextEditingController> _controllers = {
+    'About me': TextEditingController(),
+    'Work experience': TextEditingController(),
+    'Education': TextEditingController(),
+    'Skills': TextEditingController(),
+    'Hobbies': TextEditingController(),
+    'Languages': TextEditingController(),
+    'Portfolio': TextEditingController(),
+    'References': TextEditingController(),
+  };
+
+  @override
+  void dispose() {
+    _controllers.values.forEach((controller) => controller.dispose());
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,54 +54,6 @@ class Profile extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(10, 0, 10, 76),
-                                  child: Align(
-                                    alignment: Alignment.topRight,
-                                    child: SizedBox(
-                                      width: 61,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.fromLTRB(
-                                                0, 2.1, 16.7, 2),
-                                            width: 24,
-                                            height: 24,
-                                            child: SvgPicture.asset(
-                                              'assets/vectors/union_1_x2.svg',
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 24,
-                                            height: 24,
-                                            child: SvgPicture.asset(
-                                              'assets/vectors/icon_setting_1_x2.svg',
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(0, 0, 0, 27),
-                                  child: Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text(
-                                      'California, USA',
-                                      style: GoogleFonts.getFont(
-                                        'DM Sans',
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 12,
-                                        color: Color(0xFFFFFFFF),
-                                      ),
-                                    ),
-                                  ),
-                                ),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -281,7 +254,7 @@ class Profile extends StatelessWidget {
                       context,
                       'References',
                       'assets/vectors/icon_33_x2.svg',
-                      'assets/vectors/rectangle_1624_x2.svg',
+                      'assets/vectors/rectangle_1625_x2.svg',
                     ),
                   ],
                 ),
@@ -297,43 +270,42 @@ class Profile extends StatelessWidget {
       String iconPath, String backgroundPath) {
     return ListTile(
       contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 10),
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      title: Column(
         children: [
-          Container(
-            margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
-            child: SizedBox(
-              width: 24,
-              height: 24,
-              child: SvgPicture.asset(
-                iconPath,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                title,
+                style: GoogleFonts.getFont(
+                  'DM Sans',
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
+                  color: Color(0xFF150B3D),
+                ),
               ),
-            ),
+            ],
           ),
-          Text(
-            title,
-            style: GoogleFonts.getFont(
-              'DM Sans',
-              fontWeight: FontWeight.w700,
-              fontSize: 14,
-              color: Color(0xFF150B3D),
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  width: 200,
+                  height: 50,
+                  color: Colors.white,
+                  child: Text(_controllers[title]?.text ?? ''),
+                ),
+              )
+            ],
           ),
         ],
       ),
       trailing: GestureDetector(
-        onTap: () {
-          _showDialog(context, title);
-        },
-        child: SizedBox(
-          width: 24,
-          height: 24,
-          child: SvgPicture.asset(
-            'assets/vectors/add_x2.svg',
-          ),
-        ),
-      ),
+          onTap: () {
+            _showDialog(context, title);
+          },
+          child: Icon(Icons.add)),
     );
   }
 
@@ -341,11 +313,12 @@ class Profile extends StatelessWidget {
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        TextEditingController _dialogController = TextEditingController();
         return AlertDialog(
           title: Text('Add $title'),
           content: TextField(
+            controller: _dialogController,
             maxLines: null,
-            expands: true,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: 'Enter your text here',
@@ -361,8 +334,9 @@ class Profile extends StatelessWidget {
             TextButton(
               child: Text('Save'),
               onPressed: () {
-                // Save the text or perform any action you want
-                //print(_textEditingController.text);
+                setState(() {
+                  _controllers[title]?.text = _dialogController.text;
+                });
                 Navigator.of(context).pop();
               },
             ),
