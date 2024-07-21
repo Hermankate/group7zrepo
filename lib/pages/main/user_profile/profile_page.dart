@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_declarations
 
 import 'package:cjb/pages/main/user_profile/model/user.dart';
+import 'package:cjb/pages/main/user_profile/prof.dart';
 import 'package:cjb/pages/main/user_profile/utils/user_preferences.dart';
 import 'package:cjb/pages/main/user_profile/widget/appbar_widget.dart';
 import 'package:cjb/pages/main/user_profile/widget/button_widget.dart';
@@ -63,7 +64,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget buildUpgradeButton() => ButtonWidget(
         text: 'Edit profile',
-        onClicked: () {},
+        onClicked: () {
+          Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (_) => Profile()), (route) => false);
+        },
       );
 
   Widget buildAbout(User user) => Container(

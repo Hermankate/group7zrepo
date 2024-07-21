@@ -80,7 +80,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         onTap: () {
                           Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(builder: (_) => Profile()),
+                              MaterialPageRoute(builder: (_) => ProfilePage()),
                               (route) => false);
                         },
                       ),
