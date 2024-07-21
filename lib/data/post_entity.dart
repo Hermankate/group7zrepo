@@ -42,13 +42,13 @@ class PostEntity {
           "post_image_2.jpg",
         ],
         tags: [
-          "#code",
-          "#flutterdevelopment",
-          "#flutterui",
-          "#fluttermafia",
-          "#ullstackdeveloper",
-          "#fluttercode",
-          "#iosdeveloper"
+          // "#code",
+          // "#flutterdevelopment",
+          // "#flutterui",
+          // "#fluttermafia",
+          // "#ullstackdeveloper",
+          // "#fluttercode",
+          // "#iosdeveloper"
         ],
         totalReacts: 5,
         totalComments: 10,
