@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_string_interpolations
 
+import 'package:cjb/pages/auth/identity.dart';
 import 'package:cjb/pages/main/user_profile/prof.dart';
 import 'package:cjb/pages/main/user_profile/profile_page.dart';
 // import 'package:cjb/pages/main/user_profile/user_profile.dart';
@@ -8,10 +9,27 @@ import 'package:cjb/theme/styles.dart';
 import 'package:flutter/widgets.dart';
 import 'package:cjb/pages/onboarding/on_boarding_screen.dart';
 
-class DrawerWidget extends StatelessWidget {
+class DrawerWidget extends StatefulWidget {
   final String firstName;
 
   const DrawerWidget({required this.firstName, Key? key}) : super(key: key);
+
+  @override
+  State<DrawerWidget> createState() => _DrawerWidgetState();
+}
+
+class _DrawerWidgetState extends State<DrawerWidget> {
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    await GlobalVariables().loadUserData();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -44,7 +62,7 @@ class DrawerWidget extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                        "$firstName",
+                        "${GlobalVariables().username}",
                         style: TextStyle(
                             fontSize: 25, fontWeight: FontWeight.bold),
                       ),
@@ -83,7 +101,7 @@ class DrawerWidget extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.only(left: 20.0),
                   child: Text(
-                    "Resume Builder",
+                    "upload cv",
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -93,7 +111,7 @@ class DrawerWidget extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.only(left: 20.0),
                   child: Text(
-                    "pending Applications",
+                    "applications",
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -112,7 +130,7 @@ class DrawerWidget extends StatelessWidget {
                       );
                     },
                     child: Text(
-                      "Exit",
+                      "Log Out",
                       style:
                           TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                     ),

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_declarations
 
 import 'package:cjb/pages/main/user_profile/model/user.dart';
 import 'package:cjb/pages/main/user_profile/utils/user_preferences.dart';

@@ -1,8 +1,32 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-import 'package:cjb/components/my_button.dart';
-import 'package:cjb/pages/auth/preferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+class GlobalVariables {
+  static final GlobalVariables _instance = GlobalVariables._internal();
+
+  factory GlobalVariables() => _instance;
+
+  GlobalVariables._internal();
+
+  String username = '';
+  String email = '';
+
+  Future<void> loadUserData() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
+      if (userDoc.exists) {
+        username = userDoc['name'] ?? '';
+        email = userDoc['email'] ?? '';
+      }
+    }
+  }
+}
 
 class Identity_page extends StatelessWidget {
   final String firstName;
