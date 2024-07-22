@@ -23,6 +23,7 @@ dependencies:
   googleapis_auth: ^1.6.0
   awesome_notifications: ^0.9.3+1
   google_fonts: ^6.2.1
+  cached_network_image: ^3.3.1
   
 
 

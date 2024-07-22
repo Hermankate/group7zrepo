@@ -315,50 +315,31 @@
 // }
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PostEntity {
   final String? username;
-  final String? userProfile;
-  final String? userBio;
-  final String? createAt;
   final String? description;
-  final String? postImage;
-  final List<String>? tags;
-  final List<String>? postImages;
-  final num? totalReacts;
-  final num? totalComments;
-  final num? totalReposts;
+  final String? imageUrl;
+  final String? email;
+  final Timestamp? timestamp;
 
   PostEntity({
     this.username,
-    this.userProfile,
-    this.userBio,
-    this.createAt,
     this.description,
-    this.postImage,
-    this.tags,
-    this.postImages,
-    this.totalReacts,
-    this.totalComments,
-    this.totalReposts,
+    this.imageUrl,
+    this.email,
+    this.timestamp,
   });
 
   factory PostEntity.fromFirestore(DocumentSnapshot doc) {
     final data = doc.data() as Map<String, dynamic>;
     return PostEntity(
       username: data['username'] as String? ?? '',
-      userProfile: data['userProfile'] as String? ?? '',
-      userBio: data['userBio'] as String? ?? '',
-      createAt: data['createAt'] as String? ?? '',
       description: data['description'] as String? ?? '',
-      postImage: data['postImage'] as String? ?? '',
-      tags: data['tags'] != null ? List<String>.from(data['tags']) : [],
-      postImages: data['postImages'] != null
-          ? List<String>.from(data['postImages'])
-          : [],
-      totalReacts: data['totalReacts'] as num? ?? 0,
-      totalComments: data['totalComments'] as num? ?? 0,
-      totalReposts: data['totalReposts'] as num? ?? 0,
+      imageUrl: data['imageUrl'] as String? ?? '',
+      email: data['email'] as String? ?? '',
+      timestamp: data['timestamp'] as Timestamp?,
     );
   }
 }
