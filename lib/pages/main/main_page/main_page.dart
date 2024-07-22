@@ -1,3 +1,5 @@
+import 'package:cjb/pages/main/main_page/joblist.dart';
+import 'package:cjb/pages/main/main_page/jobs.dart';
 import 'package:cjb/pages/main/notifications/no_notty.dart';
 import 'package:cjb/pages/main/notifications/notification.dart';
 import 'package:flutter/cupertino.dart';
@@ -72,6 +74,13 @@ class _MainPageState extends State<MainPage> {
               ),
               label: "Notifications",
             ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.business_center,
+                size: 30,
+              ),
+              label: "Jobs",
+            ),
           ],
         ),
         body: _switchPages(_currentPageIndex));
@@ -81,6 +90,8 @@ class _MainPageState extends State<MainPage> {
     switch (index) {
       case 0:
         return const HomePage();
+      case 3:
+        return JobsList();
       case 1:
         return AddPostScreen(
           onCloneClickListener: () {

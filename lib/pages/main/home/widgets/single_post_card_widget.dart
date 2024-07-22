@@ -619,6 +619,8 @@
 // //     );
 // //   }
 
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 // //   _openBottomModalSheet() {
 // //     showModalBottomSheet(
 // //         context: context,
@@ -638,11 +640,9 @@
 // //         });
 // //   }
 // // }
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cjb/data/post_entity.dart';
-import 'package:cjb/theme/styles.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class SinglePostCardWidget extends StatefulWidget {
   final PostEntity post;
@@ -656,29 +656,12 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
   Future<List<String>> _fetchPostImages() async {
     List<String> imageUrls = [];
     try {
-      print('Post Images: ${widget.post.postImages}'); // Debug statement
-      print('Post Image: ${widget.post.postImage}'); // Debug statement
-
-      // Check if postImages is not null and has items
-      if (widget.post.postImages != null &&
-          widget.post.postImages!.isNotEmpty) {
-        imageUrls = widget.post.postImages!.where((url) {
-          print('Fetching image URL: $url'); // Debug statement
-          return url.isNotEmpty &&
-              (url.startsWith('http://') || url.startsWith('https://'));
-        }).toList();
-      }
-      // Check if postImage is not null and not empty
-      else if (widget.post.postImage != null &&
-          widget.post.postImage!.isNotEmpty) {
-        print(
-            'Fetching single image URL: ${widget.post.postImage!}'); // Debug statement
-        imageUrls = [widget.post.postImage!];
+      if (widget.post.imageUrl != null && widget.post.imageUrl!.isNotEmpty) {
+        imageUrls = [widget.post.imageUrl!];
       }
     } catch (e) {
       print('Error fetching post images: $e');
     }
-    print('Image URLs: $imageUrls'); // Debug statement
     return imageUrls;
   }
 
@@ -687,7 +670,7 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
     return Column(
       children: [
         Container(
-          color: cjbWhiteFFFFFF,
+          color: Colors.white,
           margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -695,21 +678,11 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
               Row(
                 children: [
                   SizedBox(
-                    width: 70,
-                    height: 70,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(35),
-                      child: widget.post.userProfile != null
-                          ? Image.network(
-                              widget.post.userProfile!,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return const Icon(Icons.person);
-                              },
-                            )
-                          : const Icon(Icons.person),
-                    ),
-                  ),
+                      width: 70,
+                      height: 70,
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(35),
+                          child: Icon(Icons.person))),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Column(
@@ -736,26 +709,26 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
                           ],
                         ),
                         Text(
-                          widget.post.userBio ?? '',
+                          '',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                              fontSize: 12, color: cjbMediumGrey86888A),
+                          style:
+                              const TextStyle(fontSize: 12, color: Colors.grey),
                         ),
                         const SizedBox(height: 2),
                         Row(
                           children: [
                             Text(
-                              widget.post.createAt ?? '',
+                              '',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
-                                  fontSize: 12, color: cjbMediumGrey86888A),
+                                  fontSize: 12, color: Colors.grey),
                             ),
                             const Icon(
-                              FontAwesomeIcons.earth,
+                              Icons.public,
                               size: 15,
-                              color: cjbMediumGrey86888A,
+                              color: Colors.grey,
                             ),
                           ],
                         ),
@@ -770,15 +743,6 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
                 style: const TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 10),
-              Wrap(
-                children: widget.post.tags?.map((tag) {
-                      return Text(
-                        "$tag ",
-                        style: const TextStyle(color: cjbBlue0077B5),
-                      );
-                    }).toList() ??
-                    [],
-              ),
             ],
           ),
         ),
@@ -786,54 +750,37 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
           future: _fetchPostImages(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
+              return Container(); // Removed CircularProgressIndicator
             } else if (snapshot.hasError) {
               print('Snapshot Error: ${snapshot.error}');
               return const Center(child: Text('Error fetching images'));
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return Container(
                 width: double.infinity,
-                color: cjbMediumGrey86888A,
-                child: Center(child: Text('No images available')),
+                color: Colors.grey,
+                child: const Center(child: Text('No images available')),
               );
             } else {
               List<String> imageUrls = snapshot.data!;
               return SizedBox(
-                height: 400,
-                child: Stack(
-                  children: [
-                    PageView.builder(
-                      itemCount: imageUrls.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          width: double.infinity,
-                          color: cjbMediumGrey86888A,
-                          child: Image.network(
-                            imageUrls[index],
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) {
-                              return const Center(child: Icon(Icons.error));
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                    Positioned(
-                      right: 15,
-                      top: 15,
-                      child: Container(
-                        width: 35,
-                        height: 35,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: cjbWhiteFFFFFF,
-                        ),
-                        child: const Center(
-                          child: Icon(FontAwesomeIcons.images),
-                        ),
+                height: 350,
+                child: PageView.builder(
+                  itemCount: imageUrls.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      width: 150,
+                      height: 350,
+                      color: Colors.grey,
+                      child: CachedNetworkImage(
+                        imageUrl: imageUrls[index],
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) =>
+                            const Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) =>
+                            const Center(child: Icon(Icons.error)),
                       ),
-                    ),
-                  ],
+                    );
+                  },
                 ),
               );
             }
@@ -861,20 +808,18 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
               ),
               Positioned(
                 left: 70,
-                child: Text("${widget.post.totalReacts}"),
+                child: Text("${0}"),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    "${widget.post.totalComments} comments - ",
-                    style: const TextStyle(
-                        color: cjbMediumGrey86888A, fontSize: 15),
+                    "${0} comments - ",
+                    style: const TextStyle(color: Colors.grey, fontSize: 15),
                   ),
                   Text(
-                    "${widget.post.totalReposts} reposts",
-                    style: const TextStyle(
-                        color: cjbMediumGrey86888A, fontSize: 15),
+                    "${0} reposts",
+                    style: const TextStyle(color: Colors.grey, fontSize: 15),
                   ),
                 ],
               ),
@@ -885,7 +830,7 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
         Container(
           width: double.infinity,
           height: 1,
-          color: cjbLightGreyCACCCE,
+          color: Colors.grey.shade300,
         ),
         const SizedBox(height: 10),
         Row(
@@ -893,19 +838,16 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
           children: [
             _singleActionItemWidget(
                 icon: Icons.thumb_up_alt_outlined, title: "Like"),
-            _singleActionItemWidget(
-                icon: FontAwesomeIcons.commentDots, title: "Comment"),
-            _singleActionItemWidget(
-                icon: FontAwesomeIcons.retweet, title: "Repost"),
-            _singleActionItemWidget(
-                icon: FontAwesomeIcons.paperPlane, title: "Send"),
+            _singleActionItemWidget(icon: Icons.comment, title: "Comment"),
+            _singleActionItemWidget(icon: Icons.share, title: "Repost"),
+            _singleActionItemWidget(icon: Icons.send, title: "Send"),
           ],
         ),
         const SizedBox(height: 10),
         Container(
           width: double.infinity,
           height: 8,
-          color: cjbLightGreyCACCCE,
+          color: Colors.grey.shade300,
         ),
       ],
     );
@@ -916,11 +858,11 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
       children: [
         Icon(
           icon,
-          color: cjbMediumGrey86888A,
+          color: Colors.grey,
         ),
         Text(
           "$title",
-          style: const TextStyle(color: cjbMediumGrey86888A),
+          style: const TextStyle(color: Colors.grey),
         ),
       ],
     );
@@ -932,7 +874,7 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
       decoration: BoxDecoration(
         color: bgColor,
         shape: BoxShape.circle,
-        border: Border.all(width: 2, color: cjbWhiteFFFFFF),
+        border: Border.all(width: 2, color: Colors.white),
       ),
       child: Image.asset(
         "assets/$image",
@@ -956,65 +898,60 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           decoration: const BoxDecoration(
-            color: cjbWhiteFFFFFF,
+            color: Colors.white,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),
               topRight: Radius.circular(20),
             ),
           ),
+          height: 200,
           child: Column(
             children: [
-              Center(
-                child: Container(
-                  width: 70,
-                  height: 6,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: cjbMediumGrey86888A),
+              const Icon(
+                Icons.expand_more,
+                color: Colors.grey,
+              ),
+              const SizedBox(height: 10),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  "Save Post",
+                  style: TextStyle(color: Colors.black),
                 ),
               ),
-              const SizedBox(height: 40),
-              _bottomNavigationItem(
-                  title: "Save", iconData: Icons.bookmark_border),
-              const SizedBox(height: 30),
-              _bottomNavigationItem(title: "Share via", iconData: Icons.share),
-              const SizedBox(height: 30),
-              _bottomNavigationItem(title: "Unfollow", iconData: Icons.cancel),
-              const SizedBox(height: 30),
-              _bottomNavigationItem(
-                  title: "Remove connection with ${widget.post.username}",
-                  iconData: Icons.person_remove),
-              const SizedBox(height: 30),
-              _bottomNavigationItem(
-                  title: "Mute Username",
-                  iconData: FontAwesomeIcons.volumeXmark),
-              const SizedBox(height: 30),
-              _bottomNavigationItem(title: "Report post", iconData: Icons.flag),
-              const SizedBox(height: 30),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  "Share Post",
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  "Unfollow Post",
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  "Cancel",
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
             ],
           ),
         );
       },
-    );
-  }
-
-  _bottomNavigationItem({IconData? iconData, String? title}) {
-    return Row(
-      children: [
-        Icon(
-          iconData,
-          size: 25,
-          color: cjbMediumGrey86888A,
-        ),
-        const SizedBox(width: 10),
-        Text(
-          "$title",
-          style: const TextStyle(
-              fontSize: 16,
-              color: cjbMediumGrey86888A,
-              fontWeight: FontWeight.bold),
-        ),
-      ],
     );
   }
 }
