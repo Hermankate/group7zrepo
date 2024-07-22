@@ -1,3 +1,4 @@
+import 'package:cjb/pages/main/main_page/joblist.dart';
 import 'package:cjb/pages/main/main_page/jobs.dart';
 import 'package:cjb/pages/main/notifications/no_notty.dart';
 import 'package:cjb/pages/main/notifications/notification.dart';
@@ -88,7 +89,7 @@ class _MainPageState extends State<MainPage> {
   _switchPages(int index) {
     switch (index) {
       case 0:
-        return const Jobs();
+        return JobsList();
       case 1:
         return AddPostScreen(
           onCloneClickListener: () {
