@@ -94,11 +94,4 @@
 //     ],
 //     "tags": [
 //       "#gde",
-//       "#googledevexpert",
-//       "#iosdevelopment",
-//       "#android",
-//       "#androidsummit",
-//       "#googlestudentsclub",
-//       "#growwithgoogle"
-//     ],
-//
+//       "#googledevex
