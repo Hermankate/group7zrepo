@@ -191,6 +191,8 @@
 //     );
 //   }
 
+// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers
+
 //   Widget buildGrowingTextField(
 //       String hintText, TextEditingController controller) {
 //     return ConstrainedBox(
@@ -213,6 +215,10 @@
 //   }
 // }
 ////////////
+///
+///
+///import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -223,13 +229,17 @@ class AddAjob extends StatefulWidget {
 }
 
 class _AddAjobState extends State<AddAjob> {
-  final TextEditingController workplaceController = TextEditingController();
+  final TextEditingController titleController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
   final TextEditingController companyController = TextEditingController();
   final TextEditingController employmentTypeController =
       TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController categoryController = TextEditingController();
+
+  String selectedCategory = '';
+  String selectedEmploymentType = '';
+  String selectedWorkType = '';
 
   @override
   Widget build(BuildContext context) {
@@ -273,10 +283,12 @@ class _AddAjobState extends State<AddAjob> {
               children: [
                 buildInputField(
                   context,
-                  'Job category',
+                  'Job title',
                   'rectangle_5928_x2.svg',
-                  categoryController,
+                  titleController,
                 ),
+                SizedBox(height: 30),
+                buildCategoryInputField(context),
                 SizedBox(height: 30),
                 buildInputField(
                   context,
@@ -292,12 +304,7 @@ class _AddAjobState extends State<AddAjob> {
                   companyController,
                 ),
                 SizedBox(height: 30),
-                buildInputField(
-                  context,
-                  'Employment type',
-                  'rectangle_1626_x2.svg',
-                  employmentTypeController,
-                ),
+                buildEmploymentTypeInputField(context),
                 SizedBox(height: 30),
                 buildInputField(
                   context,
@@ -310,19 +317,7 @@ class _AddAjobState extends State<AddAjob> {
             SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
-                // Collect all user inputs
-                final workplace = workplaceController.text;
-                final location = locationController.text;
-                final company = companyController.text;
-                final employmentType = employmentTypeController.text;
-                final description = descriptionController.text;
-
-                // Handle job posting with collected inputs
-                print('Workplace: $workplace');
-                print('Location: $location');
-                print('Company: $company');
-                print('Employment Type: $employmentType');
-                print('Description: $description');
+                postJob();
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFFFF9228),
@@ -347,6 +342,51 @@ class _AddAjobState extends State<AddAjob> {
     );
   }
 
+  Future<void> postJob() async {
+    if (titleController.text.isEmpty ||
+        locationController.text.isEmpty ||
+        companyController.text.isEmpty ||
+        employmentTypeController.text.isEmpty ||
+        descriptionController.text.isEmpty ||
+        categoryController.text.isEmpty) {
+      // Show an error message if any field is empty
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please fill in all fields'),
+        ),
+      );
+      return;
+    }
+
+    await FirebaseFirestore.instance.collection('jobs').add({
+      'title': titleController.text,
+      'location': locationController.text,
+      'company': companyController.text,
+      'employmentType': employmentTypeController.text,
+      'description': descriptionController.text,
+      'category': categoryController.text,
+      'timestamp': FieldValue.serverTimestamp(),
+    });
+
+    // Clear the text fields
+    titleController.clear();
+    locationController.clear();
+    companyController.clear();
+    employmentTypeController.clear();
+    descriptionController.clear();
+    categoryController.clear();
+
+    // Show a success message
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Job posted successfully!'),
+      ),
+    );
+
+    // Navigate back or show the list of jobs
+    Navigator.of(context).pop();
+  }
+
   Widget buildInputField(BuildContext context, String labelText,
       String svgAsset, TextEditingController controller) {
     return Container(
@@ -362,9 +402,7 @@ class _AddAjobState extends State<AddAjob> {
                   color: Color(0xFF150B3D),
                 ),
               ),
-              SizedBox(
-                width: 80,
-              ),
+              Spacer(),
               GestureDetector(
                 child: Icon(Icons.add),
                 onTap: () {
@@ -435,6 +473,309 @@ class _AddAjobState extends State<AddAjob> {
                   height: 50,
                   color: Colors.white,
                   child: Text(controller.text),
+                ),
+              )
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildCategoryInputField(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text(
+                'Job category',
+                style: GoogleFonts.dmSans(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
+                  color: Color(0xFF150B3D),
+                ),
+              ),
+              Spacer(),
+              GestureDetector(
+                child: Icon(Icons.add),
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Dialog(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'Select Job Category',
+                                style: GoogleFonts.dmSans(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16,
+                                  color: Color(0xFF150B3D),
+                                ),
+                              ),
+                              SizedBox(height: 20),
+                              DropdownButton<String>(
+                                value: selectedCategory.isNotEmpty
+                                    ? selectedCategory
+                                    : null,
+                                items: <String>[
+                                  'IT',
+                                  'Finance',
+                                  'Agriculture',
+                                  'Developer'
+                                ].map((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedCategory = newValue!;
+                                    categoryController.text = selectedCategory;
+                                  });
+                                },
+                                hint: Text('Select a category'),
+                              ),
+                              SizedBox(height: 20),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('Cancel'),
+                                  ),
+                                  SizedBox(width: 8),
+                                  TextButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        categoryController.text =
+                                            selectedCategory;
+                                      });
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('Save'),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  width: 200,
+                  height: 50,
+                  color: Colors.white,
+                  child: Text(categoryController.text),
+                ),
+              )
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildEmploymentTypeInputField(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Text(
+                'Employment type',
+                style: GoogleFonts.dmSans(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
+                  color: Color(0xFF150B3D),
+                ),
+              ),
+              Spacer(),
+              GestureDetector(
+                child: Icon(Icons.add),
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      String localSelectedRadioValue = selectedEmploymentType;
+                      String localSelectedCheckboxValue = selectedWorkType;
+                      return StatefulBuilder(
+                        builder:
+                            (BuildContext context, StateSetter setModalState) {
+                          return Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  'Select Employment Type and Work Type',
+                                  style: GoogleFonts.dmSans(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16,
+                                    color: Color(0xFF150B3D),
+                                  ),
+                                ),
+                                SizedBox(height: 20),
+                                Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('Part-time'),
+                                        Radio<String>(
+                                          value: 'Part-time',
+                                          groupValue: localSelectedRadioValue,
+                                          onChanged: (String? value) {
+                                            setModalState(() {
+                                              localSelectedRadioValue = value!;
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('Full-time'),
+                                        Radio<String>(
+                                          value: 'Full-time',
+                                          groupValue: localSelectedRadioValue,
+                                          onChanged: (String? value) {
+                                            setModalState(() {
+                                              localSelectedRadioValue = value!;
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('Internship'),
+                                        Radio<String>(
+                                          value: 'Internship',
+                                          groupValue: localSelectedRadioValue,
+                                          onChanged: (String? value) {
+                                            setModalState(() {
+                                              localSelectedRadioValue = value!;
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 20),
+                                Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('Onsite'),
+                                        Checkbox(
+                                          value: localSelectedCheckboxValue ==
+                                              'Onsite',
+                                          onChanged: (bool? value) {
+                                            setModalState(() {
+                                              if (value == true) {
+                                                localSelectedCheckboxValue =
+                                                    'Onsite';
+                                              } else {
+                                                localSelectedCheckboxValue = '';
+                                              }
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('Remote'),
+                                        Checkbox(
+                                          value: localSelectedCheckboxValue ==
+                                              'Remote',
+                                          onChanged: (bool? value) {
+                                            setModalState(() {
+                                              if (value == true) {
+                                                localSelectedCheckboxValue =
+                                                    'Remote';
+                                              } else {
+                                                localSelectedCheckboxValue = '';
+                                              }
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 20),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('Cancel'),
+                                    ),
+                                    SizedBox(width: 8),
+                                    TextButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          selectedEmploymentType =
+                                              localSelectedRadioValue;
+                                          selectedWorkType =
+                                              localSelectedCheckboxValue;
+                                          employmentTypeController.text =
+                                              '$selectedEmploymentType, $selectedWorkType';
+                                        });
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('Save'),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Container(
+                  width: 200,
+                  height: 50,
+                  color: Colors.white,
+                  child: Text(employmentTypeController.text),
                 ),
               )
             ],
