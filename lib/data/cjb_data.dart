@@ -106,6 +106,4 @@
 //     "totalReposts": 17
 //   },
 //   {
-//     "userProfile": "profile_2.jpeg",
-//     "username": "Alexander Graham Bell",
-//     "userBio":
+//     "userProfile": "profile_2.j
