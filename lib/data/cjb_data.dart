@@ -117,11 +117,4 @@
 //       "post_image_3.jpg",
 //       "post_image_4.jpg",
 //       "post_image_1.jpg",
-//       "post_image_5.jpg"
-//     ],
-//     "tags": [
-//       "#gde",
-//       "#googledevexpert",
-//       "#iosdevelopment",
-//       "#android",
-//       "#androidsumm
+//       "post_image_5.
