@@ -1,3 +1,4 @@
+import 'package:cjb/pages/main/notifications/no_notty.dart';
 import 'package:cjb/pages/main/notifications/notification.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -90,7 +91,7 @@ class _MainPageState extends State<MainPage> {
           },
         );
       case 2:
-        return const Notification_Page();
+        return NoNotifications();
       default:
         return const HomePage(); // Fallback to HomePage or a default page
     }

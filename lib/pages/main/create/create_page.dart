@@ -1,9 +1,13 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:cjb/pages/auth/identity.dart';
 import 'package:cjb/pages/main/create/add_job.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'global_variables.dart';
 
 class AddPostScreen extends StatefulWidget {
@@ -38,12 +42,58 @@ class _AddPostScreenState extends State<AddPostScreen> {
     setState(() {});
   }
 
-  void _submitPost() {
+  Future<void> _submitPost() async {
     final title = _titleController.text;
     final description = _descriptionController.text;
-    // Add your post submission logic here
-    print('Title: $title');
-    print('Description: $description');
+
+    if (_image == null || description.isEmpty) {
+      // Display a message if the image or description is missing
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Please provide an image and a description.'),
+      ));
+      return;
+    }
+
+    try {
+      // Upload image to Firebase Storage
+      String fileName = 'posts/${DateTime.now().millisecondsSinceEpoch}.jpg';
+      Reference storageRef = FirebaseStorage.instance.ref().child(fileName);
+      UploadTask uploadTask = storageRef.putFile(_image!);
+      TaskSnapshot storageSnapshot = await uploadTask;
+
+      // Get image download URL
+      String imageUrl = await storageSnapshot.ref.getDownloadURL();
+
+      // Get user data from global variables
+      String username = GlobalVariables().username ?? 'Unknown User';
+      String email = GlobalVariables().email ?? 'Unknown Email';
+
+      // Add post details to Firestore
+      await FirebaseFirestore.instance.collection('posts').add({
+        'username': username,
+        'email': email,
+        'imageUrl': imageUrl,
+        'description': description,
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+
+      // Clear the input fields
+      _titleController.clear();
+      _descriptionController.clear();
+      setState(() {
+        _image = null;
+      });
+
+      // Display a success message
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Post submitted successfully!'),
+      ));
+    } catch (e) {
+      // Display an error message
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Failed to submit post: $e'),
+      ));
+    }
   }
 
   Future<void> _pickImage() async {

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_declarations
 
+import 'package:cjb/pages/auth/identity.dart';
 import 'package:cjb/pages/main/user_profile/model/user.dart';
 import 'package:cjb/pages/main/user_profile/prof.dart';
 import 'package:cjb/pages/main/user_profile/utils/user_preferences.dart';
@@ -9,6 +10,17 @@ import 'package:cjb/pages/main/user_profile/widget/numbers_widget.dart';
 import 'package:cjb/pages/main/user_profile/widget/profile_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:path/path.dart' as path;
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 // import 'package:user_profile_example/model/user.dart';
 // import 'package:user_profile_example/utils/user_preferences.dart';
 // import 'package:user_profile_example/widget/appbar_widget.dart';
@@ -22,6 +34,17 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    await GlobalVariables().loadUserData();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = UserPreferences.myUser;
@@ -40,8 +63,6 @@ class _ProfilePageState extends State<ProfilePage> {
           const SizedBox(height: 24),
           Center(child: buildUpgradeButton()),
           const SizedBox(height: 24),
-          NumbersWidget(),
-          const SizedBox(height: 48),
           buildAbout(user),
         ],
       ),
@@ -51,12 +72,12 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget buildName(User user) => Column(
         children: [
           Text(
-            user.name,
+            GlobalVariables().username,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
           ),
           const SizedBox(height: 4),
           Text(
-            user.email,
+            GlobalVariables().email,
             style: TextStyle(color: Colors.grey),
           )
         ],

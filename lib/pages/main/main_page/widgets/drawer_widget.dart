@@ -3,6 +3,8 @@
 import 'package:cjb/pages/auth/identity.dart';
 import 'package:cjb/pages/main/user_profile/prof.dart';
 import 'package:cjb/pages/main/user_profile/profile_page.dart';
+import 'package:cjb/res/settings.dart';
+import 'package:flutter/cupertino.dart';
 // import 'package:cjb/pages/main/user_profile/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:cjb/theme/styles.dart';
@@ -80,7 +82,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                         onTap: () {
                           Navigator.pushAndRemoveUntil(
                               context,
-                              MaterialPageRoute(builder: (_) => ProfilePage()),
+                              MaterialPageRoute(builder: (_) => Profile()),
                               (route) => false);
                         },
                       ),
@@ -146,7 +148,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             height: 1,
             color: cjbLightGreyCACCCE,
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(bottom: 30.0, left: 20),
             child: Column(
               children: [
@@ -163,13 +165,20 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     SizedBox(
                       width: 10,
                     ),
+                    GestureDetector(onTap: () {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (_) => Settings()),
+                        (route) => false,
+                      );
+                    }),
                     Text(
                       "Settings",
                       style: TextStyle(
                           color: cjbMediumGrey86888A,
                           fontSize: 20,
                           fontWeight: FontWeight.bold),
-                    )
+                    ),
                   ],
                 )
               ],
