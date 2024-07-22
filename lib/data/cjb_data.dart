@@ -124,12 +124,4 @@
 //       "#googledevexpert",
 //       "#iosdevelopment",
 //       "#android",
-//       "#androidsummit",
-//       "#googlestudentsclub",
-//       "#growwithgoogle"
-//     ],
-//     "totalReacts": 4,
-//     "totalComments": 8,
-//     "totalReposts": 17
-//   },
-// ];
+//       "#androidsumm
