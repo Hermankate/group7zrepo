@@ -89,6 +89,8 @@ class _MainPageState extends State<MainPage> {
   _switchPages(int index) {
     switch (index) {
       case 0:
+        return const HomePage();
+      case 3:
         return JobsList();
       case 1:
         return AddPostScreen(

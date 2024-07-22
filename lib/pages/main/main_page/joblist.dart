@@ -7,7 +7,7 @@ class JobsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Job Listings'),
+        title: Center(child: Text('Job Listings')),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
