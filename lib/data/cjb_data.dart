@@ -94,42 +94,4 @@
 //     ],
 //     "tags": [
 //       "#gde",
-//       "#googledevexpert",
-//       "#iosdevelopment",
-//       "#android",
-//       "#androidsummit",
-//       "#googlestudentsclub",
-//       "#growwithgoogle"
-//     ],
-//     "totalReacts": 4,
-//     "totalComments": 8,
-//     "totalReposts": 17
-//   },
-//   {
-//     "userProfile": "profile_2.jpeg",
-//     "username": "Alexander Graham Bell",
-//     "userBio": "Inventor | Developer | Mobile Founder",
-//     "createAt": "1d",
-//     "description":
-//         "What's up people\nLook at this Alexander got something new to show you.",
-//     "postImage": "post_image_5.jpg",
-//     "postImagesList": [
-//       "post_image_3.jpg",
-//       "post_image_4.jpg",
-//       "post_image_1.jpg",
-//       "post_image_5.jpg"
-//     ],
-//     "tags": [
-//       "#gde",
-//       "#googledevexpert",
-//       "#iosdevelopment",
-//       "#android",
-//       "#androidsummit",
-//       "#googlestudentsclub",
-//       "#growwithgoogle"
-//     ],
-//     "totalReacts": 4,
-//     "totalComments": 8,
-//     "totalReposts": 17
-//   },
-// ];
+//       "#googledevex
