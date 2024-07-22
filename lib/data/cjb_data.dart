@@ -108,8 +108,4 @@
 //   {
 //     "userProfile": "profile_2.jpeg",
 //     "username": "Alexander Graham Bell",
-//     "userBio": "Inventor | Developer | Mobile Founder",
-//     "createAt": "1d",
-//     "description":
-//         "What's up people\nLook at this Alexander got something new to show you.",
-//     "po
+//     "userBio":
