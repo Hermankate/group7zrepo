@@ -229,6 +229,7 @@ class _AddAjobState extends State<AddAjob> {
   final TextEditingController employmentTypeController =
       TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController categoryController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -272,9 +273,9 @@ class _AddAjobState extends State<AddAjob> {
               children: [
                 buildInputField(
                   context,
-                  'Type of workplace',
-                  'rectangle_16223_x2.svg',
-                  workplaceController,
+                  'Job category',
+                  'rectangle_5928_x2.svg',
+                  categoryController,
                 ),
                 SizedBox(height: 30),
                 buildInputField(

@@ -11,7 +11,9 @@ AppBar buildAppBar(BuildContext context) {
     actions: [
       IconButton(
         icon: Icon(icon),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
       ),
     ],
   );

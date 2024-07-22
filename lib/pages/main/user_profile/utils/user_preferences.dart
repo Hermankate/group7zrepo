@@ -1,3 +1,4 @@
+import 'package:cjb/pages/auth/identity.dart';
 import 'package:cjb/pages/main/user_profile/model/user.dart';
 
 class UserPreferences {
