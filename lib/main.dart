@@ -1,10 +1,15 @@
 import 'dart:convert';
 import 'package:cjb/Imagepicking.dart';
 import 'package:cjb/firebase_options.dart';
+import 'package:cjb/pages/auth/user_pref.dart';
 import 'package:cjb/pages/main/notifications/push_services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:cjb/pages/splash/splash_page.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'pages/onboarding/on_boarding_screen.dart';
 import 'package:googleapis/pubsub/v1.dart' as pubsub;
 import 'package:googleapis_auth/auth_io.dart' as auth;
@@ -13,98 +18,112 @@ import 'package:googleapis/pubsub/v1.dart';
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-Future<PubsubApi> initializePubSub() async {
-  final jsonCredentials =
-      await rootBundle.loadString('assets/service-account-file.json');
-  final credentials = ServiceAccountCredentials.fromJson(jsonCredentials);
-  final client =
-      await clientViaServiceAccount(credentials, [PubsubApi.pubsubScope]);
-  return PubsubApi(client);
-}
-
-// Create a new topic
-Future<void> createTopic(PubsubApi pubsubApi, String topicName) async {
-  try {
-    await pubsubApi.projects.topics
-        .create(Topic(), 'projects/cjb-app-429507/topics/$topicName');
-  } catch (e) {
-    print('Error creating topic: $e');
-  }
-}
-
-// Create a new subscription
-Future<void> createSubscription(
-    PubsubApi pubsubApi, String subscriptionName, String topicName) async {
-  try {
-    await pubsubApi.projects.subscriptions.create(
-        Subscription(topic: 'projects/cjb-app-429507/topics/$topicName'),
-        'projects/cjb-app-429507/subscriptions/$subscriptionName');
-  } catch (e) {
-    print('Error creating subscription: $e');
-  }
-}
-
-Future<void> createTopicIfNotExists(
-    pubsub.PubsubApi pubsubApi, String projectID, String topicName) async {
-  final topic = 'projects/$projectID/topics/$topicName';
-  try {
-    await pubsubApi.projects.topics.create(pubsub.Topic(), topic);
-    print('Topic created: $topic');
-  } catch (e) {
-    if (e is pubsub.DetailedApiRequestError && e.status == 409) {
-      print('Topic already exists: $topic');
-    } else {
-      rethrow;
-    }
-  }
-}
-
-Future<void> createSubscriptionIfNotExists(pubsub.PubsubApi pubsubApi,
-    String projectID, String subscriptionName, String topicName) async {
-  final subscription = 'projects/$projectID/subscriptions/$subscriptionName';
-  final topic = 'projects/$projectID/topics/$topicName';
-  try {
-    await pubsubApi.projects.subscriptions.create(
-      pubsub.Subscription(topic: topic),
-      subscription,
-    );
-    print('Subscription created: $subscription');
-  } catch (e) {
-    if (e is pubsub.DetailedApiRequestError && e.status == 409) {
-      print('Subscription already exists: $subscription');
-    } else {
-      rethrow;
-    }
-  }
-}
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  try {
-    final pubsubApi = await initializePubSub();
-    final serviceAccountJson = File('assets/service-account-file.json');
-    final credentialsJson = await serviceAccountJson.readAsString();
-    final projectID = jsonDecode(credentialsJson)['cjb-app-429507'];
+  const AndroidInitializationSettings initializationSettingsAndroid =
+      AndroidInitializationSettings('@mipmap/ic_launcher');
+  final InitializationSettings initializationSettings = InitializationSettings(
+    android: initializationSettingsAndroid,
+  );
 
-    const topicName = 'job-notifications';
-    const subscriptionName = 'job-category-subscription';
-    await createTopicIfNotExists(pubsubApi, projectID, topicName);
-    await createSubscriptionIfNotExists(
-        pubsubApi, projectID, subscriptionName, topicName);
-
-    final pushNotificationService = PushNotificationService();
-    await pushNotificationService.initialize();
-  } catch (e) {
-    print('Error setting up Pub/Sub: $e');
-  }
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    _requestPermissions();
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      // Handle foreground message
+      print('Received a foreground message: ${message.messageId}');
+      _showNotification(message.notification);
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      // Handle background message when the app is opened from notification
+      print('Message clicked!');
+    });
+
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((RemoteMessage? message) {
+      if (message != null) {
+        // Handle initial message when the app is opened directly from the notification
+        print('Received an initial message: ${message.messageId}');
+      }
+    });
+
+    _storeFCMToken();
+  }
+
+  void _requestPermissions() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+    print('User granted permission: ${settings.authorizationStatus}');
+  }
+
+  Future<void> _storeFCMToken() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    String? token = await messaging.getToken();
+    if (token != null) {
+      String userId = FirebaseAuth.instance.currentUser!.uid;
+      await FirebaseFirestore.instance.collection('users').doc(userId).update({
+        'fcmToken': token,
+      });
+      print('Stored FCM token: $token');
+    } else {
+      print('Failed to get FCM token');
+    }
+  }
+
+  Future<void> _showNotification(RemoteNotification? notification) async {
+    if (notification != null) {
+      const AndroidNotificationDetails androidPlatformChannelSpecifics =
+          AndroidNotificationDetails(
+        'job_postings_channel', // Channel ID
+        'Job Postings', // Channel Name
+        channelDescription:
+            'Notifications about new job postings', // Channel Description
+        importance: Importance.max,
+        priority: Priority.high,
+        showWhen: false,
+      );
+
+      const NotificationDetails platformChannelSpecifics =
+          NotificationDetails(android: androidPlatformChannelSpecifics);
+      await flutterLocalNotificationsPlugin.show(
+        notification.hashCode,
+        notification.title,
+        notification.body,
+        platformChannelSpecifics,
+      );
+      print('Notification shown: ${notification.title} - ${notification.body}');
+    } else {
+      print('No notification to show');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
@@ -113,5 +132,39 @@ class MyApp extends StatelessWidget {
         child: OnBoardingScreen(),
       ),
     );
+  }
+}
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print('Handling a background message: ${message.messageId}');
+
+  // Display notification
+  RemoteNotification? notification = message.notification;
+  AndroidNotification? android = message.notification?.android;
+  if (notification != null && android != null) {
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+      'job_postings_channel', // Channel ID
+      'Job Postings', // Channel Name
+      channelDescription:
+          'Notifications about new job postings', // Channel Description
+      importance: Importance.max,
+      priority: Priority.high,
+      showWhen: false,
+    );
+
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+    await flutterLocalNotificationsPlugin.show(
+      notification.hashCode,
+      notification.title,
+      notification.body,
+      platformChannelSpecifics,
+    );
+    print(
+        'Background notification shown: ${notification.title} - ${notification.body}');
+  } else {
+    print('No background notification to show');
   }
 }

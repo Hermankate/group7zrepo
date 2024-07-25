@@ -12,7 +12,7 @@ AppBar buildAppBar(BuildContext context) {
       IconButton(
         icon: Icon(icon),
         onPressed: () {
-          Navigator.of(context).pop();
+          //change theme
         },
       ),
     ],

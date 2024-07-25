@@ -121,6 +121,8 @@
 //                     .map((doc) => PostEntity.fromFirestore(doc))
 //                     .toList();
 
+// ignore_for_file: prefer_const_constructors
+
 //                 return ListView.builder(
 //                   controller: _controller,
 //                   itemCount: posts.length,
@@ -137,7 +139,7 @@
 //     );
 //   }
 // }
-
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:cjb/data/post_entity.dart';
 import 'package:cjb/pages/main/create/posts/post_service.dart';
 import 'package:cjb/pages/main/home/widgets/single_post_card_widget.dart';
@@ -212,7 +214,11 @@ class _HomePageState extends State<HomePage> {
               future: _postsFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: Text('Loading...'));
+                  return Center(
+                      child: SpinKitWanderingCubes(
+                    color: Colors.blue[900],
+                    size: 50.0,
+                  ));
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {

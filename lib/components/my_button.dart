@@ -1,10 +1,8 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {
   final Function()? onTap;
-  const Button({super.key, required this.onTap});
+  const Button({super.key, required this.onTap, required Widget child});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +16,7 @@ class Button extends StatelessWidget {
             borderRadius: BorderRadius.circular(10)),
         child: Center(
             child: Text(
-          'Next',
+          'Save ',
           style: TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
         )),
