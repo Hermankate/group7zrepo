@@ -63,6 +63,7 @@ flutter:
     - assets/profile_1.jpeg
     - assets/profile_2.jpeg
     - assets/thumbs_up.png
+    - assets/images/google_1.png
     - assets/service-account-file.json
     - assets/vectors/rectangle_596_x2.svg
     - assets/vectors/group_441_x2.svg
