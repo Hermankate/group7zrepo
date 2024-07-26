@@ -1,3 +1,6 @@
+import 'package:cjb/pages/main/main_page/Uploadcv.dart';
+import 'package:cjb/pages/main/main_page/chat.dart';
+import 'package:cjb/pages/main/main_page/job_description.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -73,17 +76,35 @@ class JobCard extends StatelessWidget {
 
   Widget _bottomNavigationItem(BuildContext context,
       {required String title, required IconData iconData}) {
-    return GestureDetector(
-      onTap: () {
-        // Handle tap event
+    return TextButton(
+      onPressed: () {
+        // Handle button press
         Navigator.of(context).pop(); // Close the bottom sheet
         // Add your specific actions for each item here
         if (title == "Details") {
           // Navigate to details page or show details
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (_) => Description(),
+              ),
+              (route) => false);
         } else if (title == "Apply now") {
           // Navigate to apply page or show apply form
-        } else if (title == "Save") {
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (_) => Uploadcv(),
+              ),
+              (route) => false);
+        } else if (title == "Chat") {
           // Save the job or add to saved jobs list
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (_) => Chat(),
+              ),
+              (route) => false);
         }
       },
       child: Row(
