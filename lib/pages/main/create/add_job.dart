@@ -555,7 +555,7 @@ class _AddAjobState extends State<AddAjob> {
                                 items: <String>[
                                   'IT',
                                   'Finance',
-                                  'Agriculture',
+                                  'Health',
                                   'Developer'
                                 ].map((String value) {
                                   return DropdownMenuItem<String>(
