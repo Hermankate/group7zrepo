@@ -164,16 +164,26 @@ class _AddPostScreenState extends State<AddPostScreen> {
               child: Row(
                 children: [
                   Container(
-                    width: 56,
-                    height: 56,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(28),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage('assets/holder.jpeg'),
-                      ),
-                    ),
-                  ),
+                      width: 56,
+                      height: 56,
+                      // decoration: BoxDecoration(
+                      // borderRadius: BorderRadius.circular(28),
+                      // image: DecorationImage(
+                      //   fit: BoxFit.cover,
+                      //   image: AssetImage('assets/holder.jpeg'),
+
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(45),
+                        child: GlobalVariables().profileImageUrl.isNotEmpty
+                            ? Image.network(
+                                GlobalVariables().profileImageUrl,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.asset(
+                                'assets/holder.jpeg',
+                                fit: BoxFit.cover,
+                              ),
+                      )),
                   SizedBox(width: 11),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

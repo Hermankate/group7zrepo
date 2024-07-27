@@ -1,3 +1,4 @@
+import 'package:cjb/pages/auth/identity.dart';
 import 'package:flutter/material.dart';
 import 'package:cjb/theme/styles.dart';
 
@@ -14,13 +15,19 @@ PreferredSizeWidget appBarWidget(BuildContext context,
     leading: GestureDetector(
       onTap: onLeadingTapClickListener,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ClipRRect(
-            borderRadius: BorderRadius.circular(50),
-            child: Image.asset(
-              "assets/holder.jpeg",
-            )),
-      ),
+          padding: const EdgeInsets.all(8.0),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(45),
+            child: GlobalVariables().profileImageUrl.isNotEmpty
+                ? Image.network(
+                    GlobalVariables().profileImageUrl,
+                    fit: BoxFit.cover,
+                  )
+                : Image.asset(
+                    'assets/holder.jpeg',
+                    fit: BoxFit.cover,
+                  ),
+          )),
     ),
     title: Container(
       width: double.infinity,

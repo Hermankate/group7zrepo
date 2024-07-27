@@ -5,7 +5,6 @@ import 'package:cjb/pages/main/user_profile/prof.dart';
 import 'package:cjb/pages/main/user_profile/profile_page.dart';
 import 'package:cjb/res/settings.dart';
 import 'package:flutter/cupertino.dart';
-// import 'package:cjb/pages/main/user_profile/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:cjb/theme/styles.dart';
 import 'package:cjb/pages/onboarding/on_boarding_screen.dart';
@@ -57,9 +56,17 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           width: 90,
                           height: 90,
                           child: ClipRRect(
-                              borderRadius: BorderRadius.circular(45),
-                              child: Image.asset(
-                                  "assets/holder.jpeg")), // i want some logic such that if a user image exist in the global variables  its displayed else a ("assets/holder.jpeg") is displayed
+                            borderRadius: BorderRadius.circular(45),
+                            child: GlobalVariables().profileImageUrl.isNotEmpty
+                                ? Image.network(
+                                    GlobalVariables().profileImageUrl,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.asset(
+                                    'assets/holder.jpeg',
+                                    fit: BoxFit.cover,
+                                  ),
+                          ),
                         ),
                         const SizedBox(
                           height: 10,
@@ -105,7 +112,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   const Padding(
                     padding: EdgeInsets.only(left: 20.0),
                     child: Text(
-                      "upload cv",
+                      "Upload CV",
                       style:
                           TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                     ),
@@ -116,7 +123,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   const Padding(
                     padding: EdgeInsets.only(left: 20.0),
                     child: Text(
-                      "applications",
+                      "Applications",
                       style:
                           TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                     ),
