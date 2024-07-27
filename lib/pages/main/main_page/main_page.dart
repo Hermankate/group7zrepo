@@ -1,7 +1,7 @@
+import 'package:cjb/pages/main/main_page/job_results.dart';
 import 'package:cjb/pages/main/main_page/joblist.dart';
 import 'package:cjb/pages/main/main_page/jobs.dart';
 import 'package:cjb/pages/main/notifications/no_notty.dart';
-import 'package:cjb/pages/main/notifications/notification.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 //import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -12,6 +12,7 @@ import 'package:cjb/pages/main/main_page/widgets/drawer_widget.dart';
 import 'package:cjb/theme/styles.dart';
 
 import 'widgets/app_bar_widget.dart';
+//import 'job_search_results.dart'; // Import the JobSearchResults page
 
 class MainPage extends StatefulWidget {
   final String firstName;
@@ -24,8 +25,17 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final GlobalKey<ScaffoldState> _scaffoldState = GlobalKey<ScaffoldState>();
-
   int _currentPageIndex = 0;
+
+  void _handleSearch(String query) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => JobSearchResults(query: query),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,13 +49,13 @@ class _MainPageState extends State<MainPage> {
                 setState(() {
                   _scaffoldState.currentState!.openDrawer();
                 });
-              })
+              }, onSearch: _handleSearch)
             : appBarWidget(context, title: "Search", isJobsTab: false,
                 onLeadingTapClickListener: () {
                 setState(() {
                   _scaffoldState.currentState!.openDrawer();
                 });
-              }),
+              }, onSearch: _handleSearch),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentPageIndex,
           onTap: (index) {
