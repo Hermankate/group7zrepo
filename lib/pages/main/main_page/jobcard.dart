@@ -1,27 +1,23 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:cjb/pages/main/main_page/Uploadcv.dart';
 import 'package:cjb/pages/main/main_page/chat.dart';
 import 'package:cjb/pages/main/main_page/job_description.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class JobCard extends StatelessWidget {
-  final String title;
+  final String jobTitle;
   final String company;
   final String location;
   final String employmentType;
-  //final String workType;
   final String timestamp;
-  //final String salary;
   final String description;
 
   JobCard({
-    required this.title,
+    required this.jobTitle,
     required this.company,
     required this.location,
     required this.employmentType,
-    //required this.workType,
     required this.timestamp,
-    //required this.salary,
     required this.description,
   });
 
@@ -78,33 +74,31 @@ class JobCard extends StatelessWidget {
       {required String title, required IconData iconData}) {
     return TextButton(
       onPressed: () {
-        // Handle button press
         Navigator.of(context).pop(); // Close the bottom sheet
-        // Add your specific actions for each item here
         if (title == "Details") {
-          // Navigate to details page or show details
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (_) => Description(),
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => Description(
+                jobTitle: jobTitle,
+                company: company,
+                location: location,
+                employmentType: employmentType,
+                timestamp: timestamp,
+                description: description,
               ),
-              (route) => false);
+            ),
+          );
         } else if (title == "Apply now") {
-          // Navigate to apply page or show apply form
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (_) => Uploadcv(),
-              ),
-              (route) => false);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => CV_page()),
+          );
         } else if (title == "Chat") {
-          // Save the job or add to saved jobs list
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (_) => Chat(),
-              ),
-              (route) => false);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => Chat()),
+          );
         }
       },
       child: Row(
@@ -148,7 +142,7 @@ class JobCard extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () {},
                     child: Text(
-                      title,
+                      jobTitle,
                       style: GoogleFonts.dmSans(
                         fontWeight: FontWeight.w700,
                         fontSize: 14,
@@ -188,7 +182,6 @@ class JobCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _buildTag(employmentType),
-                // _buildTag(workType),
               ],
             ),
             SizedBox(height: 10),
@@ -212,8 +205,7 @@ class JobCard extends StatelessWidget {
                     ),
                     children: [
                       TextSpan(
-                        text:
-                            'ugx:300k', //salary.isNotEmpty ? 'UGx: $salary' : '',
+                        text: 'ugx:300k',
                         style: GoogleFonts.dmSans(
                           fontWeight: FontWeight.w700,
                           fontSize: 14,
@@ -221,26 +213,6 @@ class JobCard extends StatelessWidget {
                           color: Color(0xFF000000),
                         ),
                       ),
-                      // if (salary.isNotEmpty)
-                      //   TextSpan(
-                      //     text: '/',
-                      //     style: GoogleFonts.dmSans(
-                      //       fontWeight: FontWeight.w700,
-                      //       fontSize: 12,
-                      //       height: 1.3,
-                      //       color: Color(0xFFAAA6B9),
-                      //     ),
-                      //   ),
-                      // if (salary.isNotEmpty)
-                      //   TextSpan(
-                      //     text: 'Mo',
-                      //     style: GoogleFonts.dmSans(
-                      //       fontWeight: FontWeight.w400,
-                      //       fontSize: 12,
-                      //       height: 1.3,
-                      //       color: Color(0xFFAAA6B9),
-                      //     ),
-                      //   ),
                     ],
                   ),
                 ),

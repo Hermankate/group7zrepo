@@ -37,7 +37,7 @@ class _ProfileState extends State<Profile> {
 
   Future<void> _initializeProfile() async {
     if (UserPreferences.myUser != null) {
-      _fetchProfileData();
+      await _fetchProfileData();
     } else {
       print('UserPreferences.myUser is null');
     }
@@ -202,27 +202,31 @@ class _ProfileState extends State<Profile> {
               _buildProfileListTile(
                 context,
                 'Hobbies/interests',
-                Icon(Icons.interests),
-                'assets/vectors/rectangle_1620_x2.svg',
+                Icon(Icons.favorite_outline),
+                'assets/vectors/rectangle_16210_x2.svg',
               ),
               _buildProfileListTile(
                 context,
                 'Portfolio url',
-                Icon(Icons.web_outlined),
-                'assets/vectors/rectangle_1625_x2.svg',
+                Icon(Icons.workspaces_outline),
+                'assets/vectors/rectangle_16230_x2.svg',
               ),
               _buildProfileListTile(
                 context,
-                'job preference ',
-                Icon(Icons.handshake_outlined),
-                'assets/vectors/rectangle_1625_x2.svg',
+                'job preference',
+                Icon(Icons.workspaces_outline),
+                'assets/vectors/rectangle_16250_x2.svg',
               ),
+              SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _uploadProfile,
-                child: _isUploading
-                    ? CircularProgressIndicator()
-                    : Text('Save Profile'),
+                child: Text('Upload Profile'),
               ),
+              if (_isUploading)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CircularProgressIndicator(),
+                ),
             ],
           ),
         ),
@@ -231,100 +235,59 @@ class _ProfileState extends State<Profile> {
   }
 
   Widget _buildProfileListTile(
-      BuildContext context, String title, Widget icon, String backgroundPath) {
-    return ListTile(
-      contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-      title: Card(
-        elevation: 5,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+    BuildContext context,
+    String title,
+    Icon icon,
+    String assetPath,
+  ) {
+    return Column(
+      children: [
+        ListTile(
+          leading: icon,
+          title: Text(title),
+          onTap: () {
+            _showEditDialog(context, title, _controllers[title]?.text ?? '');
+          },
         ),
-        child: Container(
-          padding: EdgeInsets.all(16.0),
-          width: 400,
-          height: 150,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(children: [
-                icon,
-                SizedBox(
-                  width: 10,
-                ),
-                Container(
-                  margin: EdgeInsets.fromLTRB(0, 0, 0, 4),
-                  child: Text(
-                    title,
-                    style: GoogleFonts.getFont(
-                      'DM Sans',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14,
-                      color: Color(0xFF150B3D),
-                    ),
-                  ),
-                ),
-                Spacer(),
-                IconButton(
-                  onPressed: () {
-                    _showDialog(context, title);
-                  },
-                  icon: Icon(Icons.border_color_outlined),
-                ),
-              ]),
-              Divider(),
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      width: 200,
-                      height: 50,
-                      color: Colors.white,
-                      child: Text(_controllers[title]?.text ?? ''),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
+        Divider(),
+      ],
     );
   }
 
-  void _showDialog(BuildContext context, String title) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        TextEditingController _dialogController = TextEditingController();
-        return AlertDialog(
-          title: Text('Add $title'),
-          content: TextField(
-            controller: _dialogController,
-            maxLines: null,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Enter your text here',
+  void _showEditDialog(
+      BuildContext context, String field, String initialValue) {
+    final controller = _controllers[field];
+    if (controller != null) {
+      controller.text = initialValue;
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Edit $field'),
+            content: TextField(
+              controller: controller,
+              decoration: InputDecoration(
+                hintText: 'Enter $field',
+              ),
             ),
-          ),
-          actions: [
-            TextButton(
-              child: Text('Close'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: Text('Save'),
-              onPressed: () {
-                setState(() {
-                  _controllers[title]?.text = _dialogController.text;
-                });
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  setState(() {});
+                },
+                child: Text('Save'),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 }

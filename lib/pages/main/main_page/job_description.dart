@@ -1,17 +1,40 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:cjb/pages/main/home/home_page.dart';
 import 'package:cjb/pages/main/main_page/Uploadcv.dart';
 import 'package:cjb/pages/main/main_page/jobcard.dart';
 import 'package:cjb/pages/main/main_page/joblist.dart';
+import 'package:cjb/pages/main/main_page/main_page.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:googleapis/homegraph/v1.dart';
+import 'package:intl/intl.dart';
 
 class Description extends StatelessWidget {
-  //final JobCard job;
+  final String timestamp;
+  final String jobTitle;
+  final String company;
+  final String location;
+  final String employmentType;
 
-  //const Description({super.key, required this.job});
+  final String description;
+
+  Description({
+    required this.timestamp,
+    required this.jobTitle,
+    required this.company,
+    required this.location,
+    required this.employmentType,
+    required this.description,
+  });
+
+  // Convert Firestore Timestamp to DateTime
+  // DateTime date = location.toDate();
+  // // Format DateTime to display only the date
+  // String formattedDate = DateFormat.yMMMd().format(date);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +62,10 @@ class Description extends StatelessWidget {
                         Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => JobsList(),
+                              builder: (_) => MainPage(
+                                firstName: '',
+                                first_Name: '',
+                              ),
                             ),
                             (route) => false);
                         ;
@@ -81,25 +107,23 @@ class Description extends StatelessWidget {
                             Container(
                               margin: EdgeInsets.fromLTRB(2.3, 0, 0, 16),
                               child: Text(
-                                'job title',
+                                "${jobTitle}",
                                 style: GoogleFonts.getFont(
                                   'DM Sans',
                                   fontWeight: FontWeight.w700,
                                   fontSize: 16,
-                                  color: Color(0xFF0D0140),
+                                  color: Color(0xFF150B3D),
                                 ),
                               ),
                             ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                _buildTag('location'),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Text('Posted on:'),
-                                _buildTag('time')
+                                Text('lctn:'),
+                                _buildTag(location),
+                                Text(' Pstd:'),
+                                _buildTag(timestamp)
                               ],
                             ),
                           ],
@@ -110,13 +134,13 @@ class Description extends StatelessWidget {
                 ),
               ),
               Row(
-                children: [Text('Company Name: '), _buildTag('company name')],
+                children: [Text('Company Name: '), _buildTag(company)],
               ),
               SizedBox(
                 height: 20,
               ),
               Row(
-                children: [Text('WorkType: '), _buildTag('company name')],
+                children: [Text('WorkType: '), _buildTag(employmentType)],
               ),
               SizedBox(
                 height: 20,
@@ -124,7 +148,7 @@ class Description extends StatelessWidget {
               Row(
                 children: [
                   Text('Employment Type: '),
-                  _buildTag('company name')
+                  _buildTag(employmentType)
                 ],
               ),
               SizedBox(
@@ -156,7 +180,7 @@ class Description extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
                         child: Text(
-                          'job description  ...',
+                          '${description} ...',
                           style: GoogleFonts.getFont(
                             'Open Sans',
                             fontWeight: FontWeight.w400,
@@ -203,7 +227,7 @@ class Description extends StatelessWidget {
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => Uploadcv(),
+                            builder: (_) => CV_page(),
                           ),
                           (route) => false);
                     },
