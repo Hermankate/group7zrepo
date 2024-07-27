@@ -181,7 +181,7 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
                     style: const TextStyle(color: Colors.grey, fontSize: 15),
                   ),
                   Text(
-                    "${0} reposts",
+                    "${0} shared",
                     style: const TextStyle(color: Colors.grey, fontSize: 15),
                   ),
                 ],
@@ -202,7 +202,7 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
             _singleActionItemWidget(
                 icon: Icons.thumb_up_alt_outlined, title: "Like"),
             _singleActionItemWidget(icon: Icons.comment, title: "Comment"),
-            _singleActionItemWidget(icon: Icons.share, title: "Repost"),
+            _singleActionItemWidget(icon: Icons.share, title: "share"),
             // _singleActionItemWidget(icon: Icons.send, title: "Send"),
           ],
         ),
