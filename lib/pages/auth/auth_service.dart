@@ -37,7 +37,9 @@
 //     }
 //   }
 // }
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:cjb/pages/auth/auth_funcs.dart';
 
@@ -101,6 +103,22 @@ class AuthServices {
   static Future<void> signinUser(
       String email, String password, BuildContext context) async {
     try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      FirebaseMessaging messaging = FirebaseMessaging.instance;
+      String? token = await messaging.getToken();
+      if (token != null) {
+        String userId = userCredential.user!.uid;
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .update({
+          'fcmToken': token,
+        });
+      }
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
 

@@ -1,9 +1,17 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+
+import 'package:cjb/pages/main/main_page/Uploadcv.dart';
+import 'package:cjb/pages/main/main_page/jobcard.dart';
+import 'package:cjb/pages/main/main_page/joblist.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Description extends StatelessWidget {
+  //final JobCard job;
+
+  //const Description({super.key, required this.job});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,20 +36,25 @@ class Description extends StatelessWidget {
                     IconButton(
                       icon: Icon(Icons.arrow_back, color: Colors.black),
                       onPressed: () {
-                        Navigator.of(context).pop();
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => JobsList(),
+                            ),
+                            (route) => false);
+                        ;
                       },
                     ),
                     Center(
                       child: Container(
                         decoration: BoxDecoration(
                           color: Color(0xFFAFECFE),
-                          borderRadius: BorderRadius.circular(48),
+                          borderRadius: BorderRadius.circular(30),
                         ),
                         padding: EdgeInsets.all(14.7),
-                        child: Image.asset(
-                          'assets/images/google_1.png',
-                          width: 54.6,
-                          height: 54.6,
+                        child: CircleAvatar(
+                          backgroundImage: AssetImage('assets/holder.jpeg'),
+                          radius: 30,
                         ),
                       ),
                     ),
@@ -68,7 +81,7 @@ class Description extends StatelessWidget {
                             Container(
                               margin: EdgeInsets.fromLTRB(2.3, 0, 0, 16),
                               child: Text(
-                                'UI/UX Designer',
+                                'job title',
                                 style: GoogleFonts.getFont(
                                   'DM Sans',
                                   fontWeight: FontWeight.w700,
@@ -78,68 +91,15 @@ class Description extends StatelessWidget {
                               ),
                             ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(0, 0, 10.5, 0),
-                                  child: SizedBox(
-                                    width: 53,
-                                    child: Text(
-                                      'Google',
-                                      style: GoogleFonts.getFont(
-                                        'DM Sans',
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 16,
-                                        color: Color(0xFF0D0140),
-                                      ),
-                                    ),
-                                  ),
+                                _buildTag('location'),
+                                SizedBox(
+                                  width: 8,
                                 ),
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(0, 9, 0, 5),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Color(0xFF0D0140),
-                                      borderRadius: BorderRadius.circular(3.5),
-                                    ),
-                                    child: Container(
-                                      width: 7,
-                                      height: 7,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  'California',
-                                  style: GoogleFonts.getFont(
-                                    'DM Sans',
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 16,
-                                    color: Color(0xFF0D0140),
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(0, 9, 0, 5),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Color(0xFF0D0140),
-                                      borderRadius: BorderRadius.circular(3.5),
-                                    ),
-                                    child: Container(
-                                      width: 7,
-                                      height: 7,
-                                    ),
-                                  ),
-                                ),
-                                Text(
-                                  '1 day ago',
-                                  style: GoogleFonts.getFont(
-                                    'DM Sans',
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 16,
-                                    color: Color(0xFF0D0140),
-                                  ),
-                                ),
+                                Text('Posted on:'),
+                                _buildTag('time')
                               ],
                             ),
                           ],
@@ -148,6 +108,27 @@ class Description extends StatelessWidget {
                     ),
                   ),
                 ),
+              ),
+              Row(
+                children: [Text('Company Name: '), _buildTag('company name')],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [Text('WorkType: '), _buildTag('company name')],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
+                  Text('Employment Type: '),
+                  _buildTag('company name')
+                ],
+              ),
+              SizedBox(
+                height: 20,
               ),
               Container(
                 margin: EdgeInsets.fromLTRB(20, 0, 20, 25),
@@ -175,7 +156,7 @@ class Description extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
                         child: Text(
-                          'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem ...',
+                          'job description  ...',
                           style: GoogleFonts.getFont(
                             'Open Sans',
                             fontWeight: FontWeight.w400,
@@ -187,7 +168,7 @@ class Description extends StatelessWidget {
                       Align(
                         alignment: Alignment.topLeft,
                         child: Opacity(
-                          opacity: 0.2,
+                          opacity: 0.8,
                           child: Container(
                             decoration: BoxDecoration(
                               color: Color(0xFF7551FF),
@@ -211,258 +192,6 @@ class Description extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: EdgeInsets.fromLTRB(20, 0, 20, 39),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 15),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            'Requirements',
-                            style: GoogleFonts.getFont(
-                              'Open Sans',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                              color: Color(0xFF150B3D),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(1, 0, 10.6, 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.fromLTRB(0, 7, 11, 5),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0xFF524B6B),
-                                  borderRadius: BorderRadius.circular(2),
-                                ),
-                                child: Container(
-                                  width: 4,
-                                  height: 4,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                'Sed ut perspiciatis unde omnis iste natus error sit.',
-                                style: GoogleFonts.getFont(
-                                  'Open Sans',
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 12,
-                                  color: Color(0xFF524B6B),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(1, 0, 0, 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.fromLTRB(0, 7, 11, 21),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0xFF524B6B),
-                                  borderRadius: BorderRadius.circular(2),
-                                ),
-                                child: Container(
-                                  width: 4,
-                                  height: 4,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.',
-                                style: GoogleFonts.getFont(
-                                  'Open Sans',
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 12,
-                                  color: Color(0xFF524B6B),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(1, 0, 0, 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.fromLTRB(0, 7, 11, 23),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0xFF524B6B),
-                                  borderRadius: BorderRadius.circular(2),
-                                ),
-                                child: Container(
-                                  width: 4,
-                                  height: 4,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?',
-                                style: GoogleFonts.getFont(
-                                  'Open Sans',
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 12,
-                                  color: Color(0xFF524B6B),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(1, 0, 0, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.fromLTRB(0, 7, 11, 5),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0xFF524B6B),
-                                  borderRadius: BorderRadius.circular(2),
-                                ),
-                                child: Container(
-                                  width: 4,
-                                  height: 4,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                'Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?',
-                                style: GoogleFonts.getFont(
-                                  'Open Sans',
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 12,
-                                  color: Color(0xFF524B6B),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(25, 0, 25, 47),
-                child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 15),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            'Conditions',
-                            style: GoogleFonts.getFont(
-                              'Open Sans',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                              color: Color(0xFF150B3D),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(1, 0, 10.6, 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.fromLTRB(0, 7, 11, 5),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0xFF524B6B),
-                                  borderRadius: BorderRadius.circular(2),
-                                ),
-                                child: Container(
-                                  width: 4,
-                                  height: 4,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.',
-                                style: GoogleFonts.getFont(
-                                  'Open Sans',
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 12,
-                                  color: Color(0xFF524B6B),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(1, 0, 0, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.fromLTRB(0, 7, 11, 5),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0xFF524B6B),
-                                  borderRadius: BorderRadius.circular(2),
-                                ),
-                                child: Container(
-                                  width: 4,
-                                  height: 4,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                'Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.',
-                                style: GoogleFonts.getFont(
-                                  'Open Sans',
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 12,
-                                  color: Color(0xFF524B6B),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
                 decoration: BoxDecoration(
                   color: Color(0xFF7551FF),
                   borderRadius: BorderRadius.circular(24),
@@ -470,7 +199,14 @@ class Description extends StatelessWidget {
                 margin: EdgeInsets.fromLTRB(26, 0, 25, 0),
                 child: Center(
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => Uploadcv(),
+                          ),
+                          (route) => false);
+                    },
                     style: TextButton.styleFrom(
                       padding:
                           EdgeInsets.symmetric(vertical: 15, horizontal: 100),
@@ -488,6 +224,29 @@ class Description extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTag(String text) {
+    return Opacity(
+      opacity: 0.8,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Color(0xFFCBC9D4),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        padding: EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+        child: Center(
+          child: Text(
+            text,
+            style: GoogleFonts.dmSans(
+              fontWeight: FontWeight.bold,
+              fontSize: 10,
+              color: Color(0xFF524B6B),
+            ),
           ),
         ),
       ),

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:cjb/pages/auth/identity.dart';
 import 'package:cjb/pages/main/user_profile/prof.dart';
 import 'package:cjb/pages/main/user_profile/profile_page.dart';
@@ -80,7 +82,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           onTap: () {
                             Navigator.pushAndRemoveUntil(
                                 context,
-                                MaterialPageRoute(builder: (_) => Profile()),
+                                MaterialPageRoute(
+                                    builder: (_) => ProfilePage()),
                                 (route) => false);
                           },
                         ),

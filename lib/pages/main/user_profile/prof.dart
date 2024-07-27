@@ -1,6 +1,14 @@
+import 'package:cjb/pages/auth/user_pref.dart';
+import 'package:cjb/pages/main/user_profile/utils/user_preferences.dart';
+import 'package:cjb/pages/main/user_profile/widget/profile_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'package:path/path.dart' as path;
+import 'package:cjb/pages/main/user_profile/profile_page.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -13,11 +21,116 @@ class _ProfileState extends State<Profile> {
     'Work experience': TextEditingController(),
     'Education': TextEditingController(),
     'Skills': TextEditingController(),
-    'Hobbies': TextEditingController(),
-    'Languages': TextEditingController(),
-    'Portfolio': TextEditingController(),
-    'References': TextEditingController(),
+    'Hobbies/interests': TextEditingController(),
+    'Portfolio url': TextEditingController(),
+    'job preference': TextEditingController(),
   };
+
+  File? _profileImage;
+  bool _isUploading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeProfile();
+  }
+
+  Future<void> _initializeProfile() async {
+    if (UserPreferences.myUser != null) {
+      _fetchProfileData();
+    } else {
+      print('UserPreferences.myUser is null');
+    }
+  }
+
+  Future<void> _fetchProfileData() async {
+    final userId = UserPreferences.myUser?.id ?? '';
+    if (userId.isNotEmpty) {
+      try {
+        final userDoc =
+            FirebaseFirestore.instance.collection('profile').doc(userId);
+        final snapshot = await userDoc.get();
+
+        if (snapshot.exists) {
+          final data = snapshot.data();
+          _controllers['About me']?.text = data?['about_me'] ?? '';
+          _controllers['Work experience']?.text =
+              data?['work_experience'] ?? '';
+          _controllers['Education']?.text = data?['education'] ?? '';
+          _controllers['Skills']?.text = data?['skills'] ?? '';
+          _controllers['Hobbies/interests']?.text =
+              data?['hobbies_interests'] ?? '';
+          _controllers['Portfolio url']?.text = data?['portfolio_url'] ?? '';
+          _controllers['job preference']?.text = data?['job_preference'] ?? '';
+        }
+      } catch (e) {
+        print('Error fetching profile data: $e');
+      }
+    } else {
+      print('User ID is empty');
+    }
+  }
+
+  Future<void> _uploadProfile() async {
+    if (_profileImage == null) return;
+
+    setState(() {
+      _isUploading = true;
+    });
+
+    try {
+      // Upload image to Firebase Storage
+      final fileName = path.basename(_profileImage!.path);
+      final storageReference =
+          FirebaseStorage.instance.ref().child('profile_images/$fileName');
+      final uploadTask = storageReference.putFile(_profileImage!);
+      await uploadTask.whenComplete(() => null);
+      final downloadURL = await storageReference.getDownloadURL();
+
+      // Save profile data to Firestore
+      final userId = UserPreferences.myUser?.id ?? '';
+      if (userId.isNotEmpty) {
+        final userDoc =
+            FirebaseFirestore.instance.collection('profile').doc(userId);
+
+        await userDoc.set({
+          'image_path': downloadURL,
+          'about_me': _controllers['About me']?.text,
+          'work_experience': _controllers['Work experience']?.text,
+          'education': _controllers['Education']?.text,
+          'skills': _controllers['Skills']?.text,
+          'hobbies_interests': _controllers['Hobbies/interests']?.text,
+          'portfolio_url': _controllers['Portfolio url']?.text,
+          'job_preference': _controllers['job preference']?.text,
+        }, SetOptions(merge: true)); // Use merge to update existing document
+
+        setState(() {
+          _isUploading = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Profile Uploaded Successfully')));
+      } else {
+        print('User ID is empty');
+      }
+    } catch (e) {
+      print('Error uploading profile: $e');
+      setState(() {
+        _isUploading = false;
+      });
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Failed to Upload Profile')));
+    }
+  }
+
+  Future<void> _pickImage() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        _profileImage = File(pickedFile.path);
+      }
+    });
+  }
 
   @override
   void dispose() {
@@ -27,6 +140,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    final user = UserPreferences.myUser;
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -34,230 +148,80 @@ class _ProfileState extends State<Profile> {
             color: Color(0xFFF9F9F9),
             borderRadius: BorderRadius.circular(30),
           ),
-          padding: EdgeInsets.fromLTRB(0, 0, 0, 22),
-          child: Stack(
-            clipBehavior: Clip.none,
+          padding: EdgeInsets.fromLTRB(0, 10, 0, 22),
+          child: Column(
             children: [
-              SizedBox(
-                width: double.infinity,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
-                      child: Stack(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.fromLTRB(27, 26, 13, 21),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.fromLTRB(0, 5, 0, 7),
-                                      child: SizedBox(
-                                        width: 179.9,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              margin: EdgeInsets.fromLTRB(
-                                                  0, 0, 9, 0),
-                                              child: SizedBox(
-                                                width: 80,
-                                                child: RichText(
-                                                  text: TextSpan(
-                                                    style: GoogleFonts.getFont(
-                                                      'Open Sans',
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: 12,
-                                                      color: Color(0xFFFFFFFF),
-                                                    ),
-                                                    children: [
-                                                      TextSpan(
-                                                        text: '120k',
-                                                        style:
-                                                            GoogleFonts.getFont(
-                                                          'DM Sans',
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                          fontSize: 14,
-                                                          height: 1.3,
-                                                        ),
-                                                      ),
-                                                      TextSpan(
-                                                        text: ' Follower',
-                                                        style:
-                                                            GoogleFonts.getFont(
-                                                          'DM Sans',
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontSize: 12,
-                                                          height: 1.3,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            RichText(
-                                              text: TextSpan(
-                                                style: GoogleFonts.getFont(
-                                                  'Open Sans',
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 12,
-                                                  color: Color(0xFFFFFFFF),
-                                                ),
-                                                children: [
-                                                  TextSpan(
-                                                    text: '23k',
-                                                    style: GoogleFonts.getFont(
-                                                      'DM Sans',
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      fontSize: 14,
-                                                      height: 1.3,
-                                                    ),
-                                                  ),
-                                                  TextSpan(
-                                                    text: ' Following',
-                                                    style: GoogleFonts.getFont(
-                                                      'DM Sans',
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: 12,
-                                                      height: 1.3,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Stack(
-                                      children: [
-                                        Positioned(
-                                          top: -3,
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(6),
-                                            child: Opacity(
-                                              opacity: 0.1,
-                                              child: SizedBox(
-                                                width: 120,
-                                                height: 30,
-                                                child: SvgPicture.asset(
-                                                  'assets/vectors/rectangle_1612_x2.svg',
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          padding:
-                                              EdgeInsets.fromLTRB(15, 3, 10, 3),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                margin: EdgeInsets.fromLTRB(
-                                                    0, 3.5, 10.8, 4.5),
-                                                child: Text(
-                                                  'Edit profile',
-                                                  style: GoogleFonts.getFont(
-                                                    'DM Sans',
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 12,
-                                                    color: Color(0xFFFFFFFF),
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: 24,
-                                                height: 24,
-                                                child: SvgPicture.asset(
-                                                  'assets/vectors/edit_8_x2.svg',
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    _buildProfileListTile(
-                      context,
-                      'About me',
-                      'assets/vectors/icon_29_x2.svg',
-                      'assets/vectors/rectangle_16210_x2.svg',
-                    ),
-                    _buildProfileListTile(
-                      context,
-                      'Work experience',
-                      'assets/vectors/icon_x2.svg',
-                      'assets/vectors/rectangle_16240_x2.svg',
-                    ),
-                    _buildProfileListTile(
-                      context,
-                      'Education',
-                      'assets/vectors/icon_28_x2.svg',
-                      'assets/vectors/rectangle_16226_x2.svg',
-                    ),
-                    _buildProfileListTile(
-                      context,
-                      'Skills',
-                      'assets/vectors/icon_19_x2.svg',
-                      'assets/vectors/rectangle_1622_x2.svg',
-                    ),
-                    _buildProfileListTile(
-                      context,
-                      'Hobbies',
-                      'assets/vectors/icon_22_x2.svg',
-                      'assets/vectors/rectangle_1620_x2.svg',
-                    ),
-                    _buildProfileListTile(
-                      context,
-                      'Languages',
-                      'assets/vectors/icon_24_x2.svg',
-                      'assets/vectors/rectangle_1623_x2.svg',
-                    ),
-                    _buildProfileListTile(
-                      context,
-                      'Portfolio',
-                      'assets/vectors/icon_30_x2.svg',
-                      'assets/vectors/rectangle_1625_x2.svg',
-                    ),
-                    _buildProfileListTile(
-                      context,
-                      'References',
-                      'assets/vectors/icon_33_x2.svg',
-                      'assets/vectors/rectangle_1625_x2.svg',
-                    ),
-                  ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (_) => ProfilePage()),
+                        (route) => false,
+                      );
+                    },
+                    icon: Icon(Icons.arrow_back),
+                  ),
+                ],
+              ),
+              GestureDetector(
+                onTap: _pickImage,
+                child: ProfileWidget(
+                  imagePath: _profileImage != null
+                      ? _profileImage!.path
+                      : user?.imagePath ?? 'defaultImagePath',
+                  onClicked: _pickImage,
                 ),
+              ),
+              _buildProfileListTile(
+                context,
+                'About me',
+                Icon(Icons.account_circle_outlined),
+                'assets/vectors/rectangle_16210_x2.svg',
+              ),
+              _buildProfileListTile(
+                context,
+                'Work experience',
+                Icon(Icons.business_center_rounded),
+                'assets/vectors/rectangle_16240_x2.svg',
+              ),
+              _buildProfileListTile(
+                context,
+                'Education',
+                Icon(Icons.school_outlined),
+                'assets/vectors/rectangle_16226_x2.svg',
+              ),
+              _buildProfileListTile(
+                context,
+                'Skills',
+                Icon(Icons.ac_unit_outlined),
+                'assets/vectors/rectangle_1622_x2.svg',
+              ),
+              _buildProfileListTile(
+                context,
+                'Hobbies/interests',
+                Icon(Icons.interests),
+                'assets/vectors/rectangle_1620_x2.svg',
+              ),
+              _buildProfileListTile(
+                context,
+                'Portfolio url',
+                Icon(Icons.web_outlined),
+                'assets/vectors/rectangle_1625_x2.svg',
+              ),
+              _buildProfileListTile(
+                context,
+                'job preference ',
+                Icon(Icons.handshake_outlined),
+                'assets/vectors/rectangle_1625_x2.svg',
+              ),
+              ElevatedButton(
+                onPressed: _uploadProfile,
+                child: _isUploading
+                    ? CircularProgressIndicator()
+                    : Text('Save Profile'),
               ),
             ],
           ),
@@ -266,46 +230,64 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Widget _buildProfileListTile(BuildContext context, String title,
-      String iconPath, String backgroundPath) {
+  Widget _buildProfileListTile(
+      BuildContext context, String title, Widget icon, String backgroundPath) {
     return ListTile(
-      contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 10),
-      title: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
+      contentPadding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+      title: Card(
+        elevation: 5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Container(
+          padding: EdgeInsets.all(16.0),
+          width: 400,
+          height: 150,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                title,
-                style: GoogleFonts.getFont(
-                  'DM Sans',
-                  fontWeight: FontWeight.w700,
-                  fontSize: 14,
-                  color: Color(0xFF150B3D),
+              Row(children: [
+                icon,
+                SizedBox(
+                  width: 10,
                 ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(0, 0, 0, 4),
+                  child: Text(
+                    title,
+                    style: GoogleFonts.getFont(
+                      'DM Sans',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                      color: Color(0xFF150B3D),
+                    ),
+                  ),
+                ),
+                Spacer(),
+                IconButton(
+                  onPressed: () {
+                    _showDialog(context, title);
+                  },
+                  icon: Icon(Icons.border_color_outlined),
+                ),
+              ]),
+              Divider(),
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      width: 200,
+                      height: 50,
+                      color: Colors.white,
+                      child: Text(_controllers[title]?.text ?? ''),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-          Row(
-            children: [
-              Expanded(
-                child: Container(
-                  width: 200,
-                  height: 50,
-                  color: Colors.white,
-                  child: Text(_controllers[title]?.text ?? ''),
-                ),
-              )
-            ],
-          ),
-        ],
+        ),
       ),
-      trailing: GestureDetector(
-          onTap: () {
-            _showDialog(context, title);
-          },
-          child: Icon(Icons.add)),
     );
   }
 

@@ -218,6 +218,7 @@
 ///
 ///
 ///import 'package:flutter/material.dart';
+import 'package:cjb/pages/main/notifications/notification_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -240,6 +241,34 @@ class _AddAjobState extends State<AddAjob> {
   String selectedCategory = '';
   String selectedEmploymentType = '';
   String selectedWorkType = '';
+
+  final NotificationService _notificationService = NotificationService();
+
+  Future<void> _notifyUsers(String jobCategory) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Fetch all user documents
+    QuerySnapshot userSnapshots = await firestore.collection('users').get();
+
+    // Get the FCM tokens of users subscribed to the jobCategory
+    List<String> tokens = [];
+    for (var doc in userSnapshots.docs) {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      List<dynamic> subscriptions = data['subscriptions'] ?? [];
+
+      if (subscriptions.contains(jobCategory)) {
+        String token = data[
+            'fcmToken']; // Assuming you store fcmToken in each user document
+        if (token != null) {
+          tokens.add(token);
+        }
+      }
+    }
+
+    // Notify all users with the collected tokens
+    await _notificationService.sendNotificationsToSubscribers(
+        jobCategory, tokens);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -318,6 +347,7 @@ class _AddAjobState extends State<AddAjob> {
             ElevatedButton(
               onPressed: () {
                 postJob();
+                _notifyUsers('${selectedCategory}');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFFFF9228),
@@ -525,7 +555,7 @@ class _AddAjobState extends State<AddAjob> {
                                 items: <String>[
                                   'IT',
                                   'Finance',
-                                  'Agriculture',
+                                  'Health',
                                   'Developer'
                                 ].map((String value) {
                                   return DropdownMenuItem<String>(

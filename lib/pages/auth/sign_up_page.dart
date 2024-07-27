@@ -583,6 +583,7 @@
 //   }
 // }
 import 'package:cjb/pages/auth/auth_service.dart';
+import 'package:cjb/pages/auth/preferences.dart';
 import 'package:cjb/pages/main/main_page/main_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -824,10 +825,7 @@ class _SignUpState extends State<SignUp> {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => MainPage(
-                            firstName: fullNameController.text,
-                            first_Name: fullNameController.text,
-                          ),
+                          builder: (_) => SubscriptionScreen(),
                         ),
                         (route) => false,
                       );

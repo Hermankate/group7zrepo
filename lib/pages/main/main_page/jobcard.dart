@@ -1,3 +1,6 @@
+import 'package:cjb/pages/main/main_page/Uploadcv.dart';
+import 'package:cjb/pages/main/main_page/chat.dart';
+import 'package:cjb/pages/main/main_page/job_description.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -22,6 +25,105 @@ class JobCard extends StatelessWidget {
     required this.description,
   });
 
+  void _openJobOptionsModalSheet(BuildContext context) {
+    showModalBottomSheet(
+      enableDrag: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      context: context,
+      builder: (context) {
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                child: Container(
+                  width: 70,
+                  height: 6,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.grey[400]),
+                ),
+              ),
+              const SizedBox(height: 40),
+              _bottomNavigationItem(context,
+                  title: "Details", iconData: Icons.info),
+              const SizedBox(height: 30),
+              _bottomNavigationItem(context,
+                  title: "Apply now", iconData: Icons.send),
+              const SizedBox(height: 30),
+              _bottomNavigationItem(context,
+                  title: "Save", iconData: Icons.bookmark_border),
+              const SizedBox(height: 30),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _bottomNavigationItem(BuildContext context,
+      {required String title, required IconData iconData}) {
+    return TextButton(
+      onPressed: () {
+        // Handle button press
+        Navigator.of(context).pop(); // Close the bottom sheet
+        // Add your specific actions for each item here
+        if (title == "Details") {
+          // Navigate to details page or show details
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (_) => Description(),
+              ),
+              (route) => false);
+        } else if (title == "Apply now") {
+          // Navigate to apply page or show apply form
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (_) => Uploadcv(),
+              ),
+              (route) => false);
+        } else if (title == "Chat") {
+          // Save the job or add to saved jobs list
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (_) => Chat(),
+              ),
+              (route) => false);
+        }
+      },
+      child: Row(
+        children: [
+          Icon(iconData, color: Colors.black),
+          const SizedBox(width: 10),
+          Text(
+            title,
+            style: GoogleFonts.dmSans(
+              fontWeight: FontWeight.w700,
+              fontSize: 14,
+              color: const Color(0xFF232D3A),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -38,8 +140,7 @@ class JobCard extends StatelessWidget {
             Row(
               children: [
                 CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      'url_to_image'), // Replace with actual image URL
+                  backgroundImage: AssetImage('assets/holder.jpeg'),
                   radius: 20,
                 ),
                 SizedBox(width: 10),
@@ -57,7 +158,9 @@ class JobCard extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _openJobOptionsModalSheet(context);
+                  },
                   icon: Icon(Icons.more_vert),
                 )
               ],
