@@ -59,16 +59,14 @@ class Description extends StatelessWidget {
                     IconButton(
                       icon: Icon(Icons.arrow_back, color: Colors.black),
                       onPressed: () {
-                        Navigator.pushAndRemoveUntil(
+                        Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (_) => MainPage(
                                 firstName: '',
                                 first_Name: '',
                               ),
-                            ),
-                            (route) => false);
-                        ;
+                            ));
                       },
                     ),
                     Center(

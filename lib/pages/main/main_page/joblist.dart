@@ -1,5 +1,6 @@
 import 'package:cjb/pages/main/home/home_page.dart';
 import 'package:cjb/pages/main/main_page/jobcard.dart';
+import 'package:cjb/pages/main/main_page/main_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,13 @@ class JobsList extends StatelessWidget {
         leading: IconButton(
           onPressed: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (_) => HomePage()));
+                context,
+                MaterialPageRoute(
+                  builder: (_) => MainPage(
+                    firstName: '',
+                    first_Name: '',
+                  ),
+                ));
           },
           icon: Icon(Icons.arrow_back),
         ),

@@ -104,16 +104,11 @@ class _CV_pageState extends State<CV_page> {
                       width: 24,
                       height: 24,
                       child: IconButton(
-                        onPressed: () {
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => JobsList(),
-                            ),
-                            (route) => false,
-                          );
-                        },
                         icon: Icon(Icons.arrow_back),
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => JobsList()));
+                        },
                       ),
                     ),
                   ),
