@@ -1,3 +1,4 @@
+import 'package:cjb/pages/main/main_page/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,7 +20,15 @@ class NoNotifications extends StatelessWidget {
                 child: IconButton(
                   icon: Icon(Icons.arrow_back, color: Color(0xFF524B6B)),
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => MainPage(
+                            firstName: '',
+                            first_Name: '',
+                          ),
+                        ));
+                    ;
                   },
                 ),
               ),

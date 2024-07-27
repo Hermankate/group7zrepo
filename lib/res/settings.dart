@@ -1,3 +1,6 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:cjb/pages/main/main_page/main_page.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,8 +12,6 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  String _gender = 'Male'; // Default value for gender
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,18 +32,21 @@ class _SettingsState extends State<Settings> {
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Container(
-                      width: 24,
-                      height: 24,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Color(0xFF524B6B),
-                        ),
-                        child: Container(
-                          width: 18.2,
-                          height: 0,
-                        ),
-                      ),
-                    ),
+                        width: 24,
+                        height: 24,
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => MainPage(
+                                    firstName: '',
+                                    first_Name: '',
+                                  ),
+                                ));
+                          },
+                          icon: Icon(Icons.arrow_back),
+                        )),
                   ),
                 ),
                 Container(
@@ -61,22 +65,22 @@ class _SettingsState extends State<Settings> {
                   ),
                 ),
                 _buildSettingOption(
-                  iconPath: 'assets/vectors/rectangle_596_x2.svg',
+                  iconPath: Icon(Icons.notifications_active),
                   title: 'Notifications',
                   trailingIcon: 'assets/vectors/group_441_x2.svg',
                 ),
                 _buildSettingOption(
-                  iconPath: 'assets/vectors/rectangle_59104_x2.svg',
+                  iconPath: Icon(Icons.dark_mode),
                   title: 'Dark mode',
                   trailingIcon: 'assets/vectors/group_43_x2.svg',
                 ),
                 _buildSettingOption(
-                  iconPath: 'assets/vectors/rectangle_5979_x2.svg',
+                  iconPath: Icon(Icons.lock_outline),
                   title: 'Password',
                   trailingIcon: 'assets/vectors/icon_7_x2.svg',
                 ),
                 _buildSettingOption(
-                  iconPath: 'assets/vectors/rectangle_598_x2.svg',
+                  iconPath: Icon(Icons.logout),
                   title: 'Logout',
                   trailingIcon: 'assets/vectors/icon_33_x2.svg',
                 ),
@@ -120,37 +124,33 @@ class _SettingsState extends State<Settings> {
   }
 
   Widget _buildSettingOption({
-    required String iconPath,
+    required Widget iconPath,
     required String title,
     required String trailingIcon,
   }) {
     return Container(
-      margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-      child: Stack(
-        children: [
+        margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+        child: Stack(children: [
           Positioned(
-            left: -20,
+            left: -90,
             right: -20,
             top: -13,
             bottom: -13,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Container(
-                width: 335,
-                height: 50,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color(0x2E99ABC6),
-                      offset: Offset(0, 4),
-                      blurRadius: 31,
-                    ),
-                  ],
-                ),
-                child: SvgPicture.asset(
-                  iconPath,
-                ),
-              ),
+                  width: 335,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(0x2E99ABC6),
+                        offset: Offset(0, 4),
+                        blurRadius: 31,
+                      ),
+                    ],
+                  ),
+                  child: iconPath),
             ),
           ),
           SizedBox(
@@ -158,53 +158,34 @@ class _SettingsState extends State<Settings> {
             child: Container(
               padding: EdgeInsets.fromLTRB(20, 13, 23, 13),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 11, 0),
-                        child: SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: SvgPicture.asset(
-                            'assets/vectors/icon_7_x2.svg',
-                          ),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.fromLTRB(0, 4, 0, 4),
+                      child: Text(
+                        title,
+                        style: GoogleFonts.getFont(
+                          'DM Sans',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12,
+                          color: Color(0xFF150B3D),
                         ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 4, 0, 4),
-                        child: Text(
-                          title,
-                          style: GoogleFonts.getFont(
-                            'DM Sans',
-                            fontWeight: FontWeight.w400,
-                            fontSize: 12,
-                            color: Color(0xFF150B3D),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(0, 6, 0, 6),
-                    child: SizedBox(
-                      width: 38,
-                      height: 19,
-                      child: SvgPicture.asset(
-                        trailingIcon,
                       ),
                     ),
-                  ),
-                ],
-              ),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(0, 6, 0, 6),
+                      child: SizedBox(
+                        width: 38,
+                        height: 19,
+                        child: SvgPicture.asset(
+                          trailingIcon,
+                        ),
+                      ),
+                    )
+                  ]),
             ),
           ),
-        ],
-      ),
-    );
+        ]));
   }
 }

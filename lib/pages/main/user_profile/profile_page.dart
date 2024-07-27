@@ -30,7 +30,6 @@ import '../../auth/user_pref.dart';
 // import 'package:user_profile_example/widget/button_widget.dart';
 // import 'package:user_profile_example/widget/numbers_widget.dart';
 // import 'package:user_profile_example/widget/profile_widget.dart';
-
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -58,8 +57,7 @@ class _ProfilePageState extends State<ProfilePage> {
         physics: BouncingScrollPhysics(),
         children: [
           ProfileWidget(
-            imagePath:
-                'https://images.unsplash.com/photo-1554151228-14d9def656e4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=333&q=80',
+            imagePath: user?.imagePath ?? 'defaultImagePath',
             onClicked: () async {
               Navigator.pushAndRemoveUntil(
                   context,
@@ -68,7 +66,7 @@ class _ProfilePageState extends State<ProfilePage> {
             },
           ),
           const SizedBox(height: 24),
-          buildName(user!),
+          buildName(user),
           const SizedBox(height: 24),
           Center(child: buildUpgradeButton()),
           const SizedBox(height: 24),
@@ -78,15 +76,15 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget buildName(User user) => Column(
+  Widget buildName(User? user) => Column(
         children: [
           Text(
-            GlobalVariables().username,
+            'Username',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
           ),
           const SizedBox(height: 4),
           Text(
-            GlobalVariables().email,
+            'Email',
             style: TextStyle(color: Colors.grey),
           )
         ],
@@ -95,12 +93,14 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget buildUpgradeButton() => ButtonWidget(
         text: 'Edit profile',
         onClicked: () {
-          Navigator.pushAndRemoveUntil(context,
-              MaterialPageRoute(builder: (_) => Profile()), (route) => false);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => Profile()),
+          );
         },
       );
 
-  Widget buildAbout(User user) => Container(
+  Widget buildAbout(User? user) => Container(
         padding: EdgeInsets.symmetric(horizontal: 48),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,7 +111,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             const SizedBox(height: 16),
             Text(
-              'about',
+              'About information not available',
               style: TextStyle(fontSize: 16, height: 1.4),
             ),
           ],
