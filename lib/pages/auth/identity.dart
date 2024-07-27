@@ -10,9 +10,19 @@ class GlobalVariables {
 
   GlobalVariables._internal();
 
+  // Define all the fields to store user information
   String username = '';
   String email = '';
+  String profileImageUrl = '';
+  String aboutMe = '';
+  String workExperience = '';
+  String education = '';
+  String skills = '';
+  String hobbiesInterests = '';
+  String portfolioUrl = '';
+  String jobPreference = '';
 
+  // Method to load user data from Firestore
   Future<void> loadUserData() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
@@ -23,6 +33,14 @@ class GlobalVariables {
       if (userDoc.exists) {
         username = userDoc['name'] ?? '';
         email = userDoc['email'] ?? '';
+        profileImageUrl = userDoc['image_path'] ?? '';
+        aboutMe = userDoc['about_me'] ?? '';
+        workExperience = userDoc['work_experience'] ?? '';
+        education = userDoc['education'] ?? '';
+        skills = userDoc['skills'] ?? '';
+        hobbiesInterests = userDoc['hobbies_interests'] ?? '';
+        portfolioUrl = userDoc['portfolio_url'] ?? '';
+        jobPreference = userDoc['job_preference'] ?? '';
       }
     }
   }
