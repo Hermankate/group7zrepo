@@ -58,7 +58,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           height: 90,
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(45),
-                              child: Image.asset("assets/holder.jpeg")),
+                              child: Image.asset(
+                                  "assets/holder.jpeg")), // i want some logic such that if a user image exist in the global variables  its displayed else a ("assets/holder.jpeg") is displayed
                         ),
                         const SizedBox(
                           height: 10,

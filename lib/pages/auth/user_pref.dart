@@ -23,7 +23,7 @@ class UserPreferences {
     if (userId != null) {
       try {
         final userDoc = await FirebaseFirestore.instance
-            .collection('profile')
+            .collection('users')
             .doc(userId)
             .get();
         if (userDoc.exists) {

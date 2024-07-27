@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_declarations
-
 import 'package:cjb/pages/auth/identity.dart';
 import 'package:cjb/pages/main/home/home_page.dart';
 import 'package:cjb/pages/main/user_profile/model/user.dart';
@@ -7,29 +5,16 @@ import 'package:cjb/pages/main/user_profile/prof.dart';
 import 'package:cjb/pages/main/user_profile/utils/user_preferences.dart';
 import 'package:cjb/pages/main/user_profile/widget/appbar_widget.dart';
 import 'package:cjb/pages/main/user_profile/widget/button_widget.dart';
-import 'package:cjb/pages/main/user_profile/widget/numbers_widget.dart';
 import 'package:cjb/pages/main/user_profile/widget/profile_widget.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:path/path.dart' as path;
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 import '../../auth/user_pref.dart';
 
-// import 'package:user_profile_example/model/user.dart';
-// import 'package:user_profile_example/utils/user_preferences.dart';
-// import 'package:user_profile_example/widget/appbar_widget.dart';
-// import 'package:user_profile_example/widget/button_widget.dart';
-// import 'package:user_profile_example/widget/numbers_widget.dart';
-// import 'package:user_profile_example/widget/profile_widget.dart';
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -49,15 +34,15 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final user = UserPreferences.myUser;
-
     return Scaffold(
       appBar: buildAppBar(context),
       body: ListView(
         physics: BouncingScrollPhysics(),
         children: [
           ProfileWidget(
-            imagePath: user?.imagePath ?? 'defaultImagePath',
+            imagePath: GlobalVariables().profileImageUrl.isNotEmpty
+                ? GlobalVariables().profileImageUrl
+                : 'assets/holder.jpeg',
             onClicked: () async {
               Navigator.pushAndRemoveUntil(
                   context,
@@ -66,25 +51,25 @@ class _ProfilePageState extends State<ProfilePage> {
             },
           ),
           const SizedBox(height: 24),
-          buildName(user),
+          buildName(),
           const SizedBox(height: 24),
           Center(child: buildUpgradeButton()),
           const SizedBox(height: 24),
-          buildAbout(user),
+          buildAbout(),
         ],
       ),
     );
   }
 
-  Widget buildName(User? user) => Column(
+  Widget buildName() => Column(
         children: [
           Text(
-            'Username',
+            GlobalVariables().username,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
           ),
           const SizedBox(height: 4),
           Text(
-            'Email',
+            GlobalVariables().email,
             style: TextStyle(color: Colors.grey),
           )
         ],
@@ -100,21 +85,124 @@ class _ProfilePageState extends State<ProfilePage> {
         },
       );
 
-  Widget buildAbout(User? user) => Container(
+  Widget buildAbout() => Container(
         padding: EdgeInsets.symmetric(horizontal: 48),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'About',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Center(
+              child: Text(
+                'About',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
             ),
             const SizedBox(height: 16),
-            Text(
-              'About information not available',
-              style: TextStyle(fontSize: 16, height: 1.4),
-            ),
+            buildInfoRow('About me: ', GlobalVariables().aboutMe),
+            const SizedBox(height: 16),
+            buildInfoRow('Work experience: ', GlobalVariables().workExperience),
+            const SizedBox(height: 16),
+            buildInfoRow('Education: ', GlobalVariables().education),
+            const SizedBox(height: 16),
+            buildInfoRow('Skills: ', GlobalVariables().skills),
+            const SizedBox(height: 16),
+            buildInfoRow(
+                'Hobbies/interests: ', GlobalVariables().hobbiesInterests),
+            const SizedBox(height: 16),
+            buildInfoRow('Portfolio: ', GlobalVariables().portfolioUrl),
+            const SizedBox(height: 16),
+            buildInfoRow('Job preference: ', GlobalVariables().jobPreference),
           ],
+        ),
+      );
+
+  Widget buildInfoRow(String label, String value) => Row(
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontSize: 16, height: 1.4),
+          ),
+          Expanded(
+            child: Container(
+              child:
+                  Text(value.isNotEmpty ? value : 'Information not available'),
+            ),
+          ),
+        ],
+      );
+}
+
+class ProfileWidget extends StatelessWidget {
+  final String imagePath;
+  final VoidCallback onClicked;
+
+  const ProfileWidget({
+    Key? key,
+    required this.imagePath,
+    required this.onClicked,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme.primary;
+
+    return Center(
+      child: Stack(
+        children: [
+          buildImage(),
+          Positioned(
+            bottom: 0,
+            right: 4,
+            child: buildEditIcon(color),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildImage() {
+    final image = imagePath.contains('http')
+        ? NetworkImage(imagePath)
+        : AssetImage(imagePath) as ImageProvider;
+
+    return ClipOval(
+      child: Material(
+        color: Colors.transparent,
+        child: Ink.image(
+          image: image,
+          fit: BoxFit.cover,
+          width: 128,
+          height: 128,
+          child: InkWell(onTap: onClicked),
+        ),
+      ),
+    );
+  }
+
+  Widget buildEditIcon(Color color) => buildCircle(
+        color: Colors.white,
+        all: 3,
+        child: buildCircle(
+          color: color,
+          all: 8,
+          child: Icon(
+            Icons.edit,
+            color: Colors.white,
+            size: 20,
+          ),
+        ),
+      );
+
+  Widget buildCircle({
+    required Widget child,
+    required double all,
+    required Color color,
+  }) =>
+      ClipOval(
+        child: Container(
+          padding: EdgeInsets.all(all),
+          color: color,
+          child: child,
         ),
       );
 }
