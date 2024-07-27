@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:cjb/theme/styles.dart';
 
 PreferredSizeWidget appBarWidget(BuildContext context,
-    {VoidCallback? onLeadingTapClickListener, String? title, bool? isJobsTab}) {
+    {VoidCallback? onLeadingTapClickListener,
+    String? title,
+    bool? isJobsTab,
+    Function(String)? onSearch}) {
+  final TextEditingController _searchController = TextEditingController();
+
   return AppBar(
     backgroundColor: cjbWhiteFFFFFF,
     elevation: 0,
@@ -23,10 +28,16 @@ PreferredSizeWidget appBarWidget(BuildContext context,
           color: cjbLightGreyCACCCE.withOpacity(.5),
           borderRadius: BorderRadius.circular(10)),
       child: TextFormField(
+        controller: _searchController,
         decoration: InputDecoration(
             hintText: "$title",
             border: InputBorder.none,
             prefixIcon: const Icon(Icons.search)),
+        onFieldSubmitted: (query) {
+          if (onSearch != null) {
+            onSearch(query);
+          }
+        },
       ),
     ),
     actions: [
