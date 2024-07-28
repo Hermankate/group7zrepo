@@ -220,6 +220,7 @@
 ///import 'package:flutter/material.dart';
 import 'package:cjb/pages/main/notifications/notification_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -388,6 +389,20 @@ class _AddAjobState extends State<AddAjob> {
       return;
     }
 
+    // Retrieve the current user's UID
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      // Show an error message if the user is not authenticated
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('You need to be logged in to post a job'),
+        ),
+      );
+      return;
+    }
+
+    final posterId = user.uid;
+
     await FirebaseFirestore.instance.collection('jobs').add({
       'title': titleController.text,
       'location': locationController.text,
@@ -396,6 +411,7 @@ class _AddAjobState extends State<AddAjob> {
       'description': descriptionController.text,
       'category': categoryController.text,
       'timestamp': FieldValue.serverTimestamp(),
+      'posterId': posterId, // Add the posterId field
     });
 
     // Clear the text fields

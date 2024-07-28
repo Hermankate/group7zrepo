@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:cjb/Imagepicking.dart';
 import 'package:cjb/firebase_options.dart';
 import 'package:cjb/pages/auth/user_pref.dart';
+import 'package:cjb/pages/main/main_page/joblist.dart';
+import 'package:cjb/pages/main/main_page/main_page.dart';
 import 'package:cjb/pages/main/notifications/push_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,12 +19,20 @@ import 'dart:io';
 import 'package:googleapis/pubsub/v1.dart';
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
+// Import the JobsList widget
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final appDocumentDir = await getApplicationDocumentsDirectory();
+  await Hive.initFlutter(appDocumentDir.path);
+  await Hive.openBox('messages');
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
@@ -32,10 +42,22 @@ Future<void> main() async {
     android: initializationSettingsAndroid,
   );
 
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  await flutterLocalNotificationsPlugin.initialize(
+    initializationSettings,
+    onDidReceiveNotificationResponse: (NotificationResponse response) async {
+      if (response.payload != null) {
+        // Navigate to JobsList on notification click
+        navigatorKey.currentState?.push(MaterialPageRoute(
+          builder: (context) => JobsList(),
+        ));
+      }
+    },
+  );
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -58,6 +80,9 @@ class _MyAppState extends State<MyApp> {
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       // Handle background message when the app is opened from notification
+      navigatorKey.currentState?.push(MaterialPageRoute(
+        builder: (context) => JobsList(),
+      ));
       print('Message clicked!');
     });
 
@@ -66,6 +91,9 @@ class _MyAppState extends State<MyApp> {
         .then((RemoteMessage? message) {
       if (message != null) {
         // Handle initial message when the app is opened directly from the notification
+        navigatorKey.currentState?.push(MaterialPageRoute(
+          builder: (context) => JobsList(),
+        ));
         print('Received an initial message: ${message.messageId}');
       }
     });
@@ -126,12 +154,24 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
-      home: SplashPage(
-        child: OnBoardingScreen(),
-      ),
+      home: _buildHome(),
     );
+  }
+
+  Widget _buildHome() {
+    if (FirebaseAuth.instance.currentUser != null) {
+      return MainPage(
+        firstName: '',
+        first_Name: '',
+      ); // Navigate to HomePage if the user is logged in
+    } else {
+      return SplashPage(
+        child: OnBoardingScreen(),
+      );
+    }
   }
 }
 

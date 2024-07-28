@@ -1,7 +1,17 @@
 import 'package:cjb/pages/auth/identity.dart';
+import 'package:cjb/pages/main/main_page/chatlist.dart';
+//import 'package:cjb/pages/main/main_page/chatlist';
 import 'package:flutter/material.dart';
 import 'package:cjb/theme/styles.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
+
+String? getCurrentUserId() {
+  final User? user = FirebaseAuth.instance.currentUser;
+  return user?.uid;
+}
+
+final posterid = getCurrentUserId();
 PreferredSizeWidget appBarWidget(BuildContext context,
     {VoidCallback? onLeadingTapClickListener,
     String? title,
@@ -50,7 +60,10 @@ PreferredSizeWidget appBarWidget(BuildContext context,
     actions: [
       isJobsTab == false
           ? GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => ConversationList()));
+              },
               child: const Icon(
                 Icons.message_outlined,
                 size: 35,

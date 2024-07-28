@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+
 import 'package:cjb/theme/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:cjb/data/post_entity.dart';
@@ -181,7 +183,7 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
                     style: const TextStyle(color: Colors.grey, fontSize: 15),
                   ),
                   Text(
-                    "${0} reposts",
+                    "${0} shared",
                     style: const TextStyle(color: Colors.grey, fontSize: 15),
                   ),
                 ],
@@ -202,7 +204,7 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
             _singleActionItemWidget(
                 icon: Icons.thumb_up_alt_outlined, title: "Like"),
             _singleActionItemWidget(icon: Icons.comment, title: "Comment"),
-            _singleActionItemWidget(icon: Icons.share, title: "Repost"),
+            _singleActionItemWidget(icon: Icons.share, title: "share"),
             // _singleActionItemWidget(icon: Icons.send, title: "Send"),
           ],
         ),
@@ -343,76 +345,3 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
     );
   }
 }
-
-
-//   _openBottomModalSheet() {
-//     showModalBottomSheet(
-//       enableDrag: true,
-//       shape: const RoundedRectangleBorder(
-//         borderRadius: BorderRadius.only(
-//           topLeft: Radius.circular(20),
-//           topRight: Radius.circular(20),
-//         ),
-//       ),
-//       context: context,
-//       builder: (context) {
-//         return Container(
-//           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-//           decoration: const BoxDecoration(
-//             color: Colors.white,
-//             borderRadius: BorderRadius.only(
-//               topLeft: Radius.circular(20),
-//               topRight: Radius.circular(20),
-//             ),
-//           ),
-//           height: 200,
-//           child: Column(
-//             children: [
-//               const Icon(
-//                 Icons.expand_more,
-//                 color: Colors.grey,
-//               ),
-//               const SizedBox(height: 10),
-//               TextButton(
-//                 onPressed: () {
-//                   Navigator.pop(context);
-//                 },
-//                 child: const Text(
-//                   "Save Post",
-//                   style: TextStyle(color: Colors.black),
-//                 ),
-//               ),
-//               TextButton(
-//                 onPressed: () {
-//                   Navigator.pop(context);
-//                 },
-//                 child: const Text(
-//                   "Share Post",
-//                   style: TextStyle(color: Colors.black),
-//                 ),
-//               ),
-//               TextButton(
-//                 onPressed: () {
-//                   Navigator.pop(context);
-//                 },
-//                 child: const Text(
-//                   "Unfollow Post",
-//                   style: TextStyle(color: Colors.black),
-//                 ),
-//               ),
-//               TextButton(
-//                 onPressed: () {
-//                   Navigator.pop(context);
-//                 },
-//                 child: const Text(
-//                   "Cancel",
-//                   style: TextStyle(color: Colors.red),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }

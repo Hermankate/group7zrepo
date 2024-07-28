@@ -1,5 +1,4 @@
-// ignore_for_file: prefer_const_constructors
-
+import 'package:cjb/pages/auth/auth_service.dart';
 import 'package:cjb/pages/auth/identity.dart';
 import 'package:cjb/pages/main/user_profile/prof.dart';
 import 'package:cjb/pages/main/user_profile/profile_page.dart';
@@ -7,7 +6,7 @@ import 'package:cjb/res/settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cjb/theme/styles.dart';
-import 'package:cjb/pages/onboarding/on_boarding_screen.dart';
+import 'package:cjb/pages/onboarding/on_boarding_screen.dart'; // Ensure this import
 
 class DrawerWidget extends StatefulWidget {
   final String firstName;
@@ -88,11 +87,10 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                 color: cjbMediumGrey86888A),
                           ),
                           onTap: () {
-                            Navigator.pushAndRemoveUntil(
+                            Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => ProfilePage()),
-                                (route) => false);
+                                    builder: (_) => ProfilePage()));
                           },
                         ),
                       ],
@@ -135,12 +133,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     padding: EdgeInsets.only(left: 20.0),
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => const OnBoardingScreen()),
-                          (route) => false,
-                        );
+                        AuthServices.logoutUser(context);
                       },
                       child: Text(
                         "Log Out",
