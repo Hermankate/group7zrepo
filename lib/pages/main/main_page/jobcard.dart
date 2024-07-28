@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cjb/pages/main/main_page/Uploadcv.dart';
 import 'package:cjb/pages/main/main_page/chat.dart';
 import 'package:cjb/pages/main/main_page/job_description.dart';
 
 class JobCard extends StatelessWidget {
+  final String jobId;
   final String jobTitle;
   final String company;
   final String location;
   final String employmentType;
   final String timestamp;
   final String description;
+  final String posterId; // Added posterId
 
   JobCard({
+    required this.jobId,
     required this.jobTitle,
     required this.company,
     required this.location,
     required this.employmentType,
     required this.timestamp,
     required this.description,
+    required this.posterId, // Added posterId
   });
 
   void _openJobOptionsModalSheet(BuildContext context) {
@@ -61,7 +66,7 @@ class JobCard extends StatelessWidget {
                   title: "Apply now", iconData: Icons.send),
               const SizedBox(height: 30),
               _bottomNavigationItem(context,
-                  title: "Save", iconData: Icons.bookmark_border),
+                  title: "Chat", iconData: Icons.chat),
               const SizedBox(height: 30),
             ],
           ),
@@ -97,7 +102,13 @@ class JobCard extends StatelessWidget {
         } else if (title == "Chat") {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => Chat()),
+            MaterialPageRoute(
+              builder: (_) => ChatScreen(
+                jobId: jobId,
+                posterId: posterId,
+                receiverId: posterId, // Receiver is the job poster
+              ),
+            ),
           );
         }
       },
@@ -205,12 +216,12 @@ class JobCard extends StatelessWidget {
                     ),
                     children: [
                       TextSpan(
-                        text: 'ugx:300k',
+                        text: '# cjb',
                         style: GoogleFonts.dmSans(
                           fontWeight: FontWeight.w700,
                           fontSize: 14,
                           height: 1.3,
-                          color: Color(0xFF000000),
+                          color: Colors.blue,
                         ),
                       ),
                     ],

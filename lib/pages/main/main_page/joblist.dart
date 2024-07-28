@@ -47,16 +47,17 @@ class JobsList extends StatelessWidget {
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {
                 DocumentSnapshot job = snapshot.data!.docs[index];
+
+                // Assuming your job document structure includes a posterId field
                 return JobCard(
+                  jobId: job.id, // Document ID as jobId
                   timestamp: job['timestamp'].toDate().toString(),
                   jobTitle: job['title'],
                   company: job['company'],
                   location: job['location'],
                   employmentType: job['employmentType'],
-                  // workType: job['workType'],
-                  // convert timestamp to String
-                  // salary: job['salary'],
                   description: job['description'],
+                  posterId: job['posterId'], // Poster ID from the job document
                 );
               },
             );

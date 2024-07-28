@@ -31,12 +31,14 @@ class JobSearchResults extends StatelessWidget {
             itemBuilder: (context, index) {
               var job = jobs[index];
               return JobCard(
+                jobId: job.id, // Document ID as jobId
+                timestamp: job['timestamp'].toDate().toString(),
                 jobTitle: job['title'],
                 company: job['company'],
                 location: job['location'],
                 employmentType: job['employmentType'],
-                timestamp: job['timestamp'].toDate().toString(),
                 description: job['description'],
+                posterId: job['posterId'],
               );
             },
           );

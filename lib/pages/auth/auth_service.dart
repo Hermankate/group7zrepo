@@ -1,3 +1,5 @@
+import 'package:cjb/pages/auth/sign_in_page.dart';
+import 'package:cjb/pages/onboarding/on_boarding_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -68,6 +70,22 @@ class AuthServices {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Password did not match')));
       }
+    }
+  }
+
+  static Future<void> logoutUser(BuildContext context) async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Successfully logged out')));
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (_) => SignInPage()),
+        (route) => false,
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Error logging out: $e')));
     }
   }
 }
