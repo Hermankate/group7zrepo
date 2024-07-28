@@ -65,6 +65,7 @@ class _ChatScreenState extends State<ChatScreen> {
         'jobId': widget.jobId,
         'compositeId': compositeId,
       });
+      _loadMessages();
       _messageController.clear();
     }
   }
