@@ -1,10 +1,6 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
-import 'package:cjb/pages/main/notifications/push_services.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class Notification_Page extends StatefulWidget {
   const Notification_Page({super.key});
@@ -14,18 +10,40 @@ class Notification_Page extends StatefulWidget {
 }
 
 class _Notification_PageState extends State<Notification_Page> {
+  Box? notificationsBox;
+
+  @override
   void initState() {
     super.initState();
-    PushNotificationService().initialize();
+    notificationsBox = Hive.box('notifications');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Column(
-          children: [Text('Notifications will appear here')],
-        ),
+      appBar: AppBar(
+        title: Text('Notifications'),
+      ),
+      body: ValueListenableBuilder(
+        valueListenable: notificationsBox!.listenable(),
+        builder: (context, Box box, _) {
+          if (box.isEmpty) {
+            return Center(
+              child: Text('No notifications'),
+            );
+          }
+
+          return ListView.builder(
+            itemCount: box.length,
+            itemBuilder: (context, index) {
+              var notification = box.getAt(index);
+              return ListTile(
+                title: Text(notification['title']),
+                subtitle: Text(notification['body']),
+              );
+            },
+          );
+        },
       ),
     );
   }

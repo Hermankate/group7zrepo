@@ -2,6 +2,7 @@ import 'package:cjb/pages/main/main_page/job_results.dart';
 import 'package:cjb/pages/main/main_page/joblist.dart';
 import 'package:cjb/pages/main/main_page/jobs.dart';
 import 'package:cjb/pages/main/notifications/no_notty.dart';
+import 'package:cjb/pages/main/notifications/notification.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 //import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -112,7 +113,7 @@ class _MainPageState extends State<MainPage> {
           },
         );
       case 2:
-        return NoNotifications();
+        return Notification_Page();
       default:
         return const HomePage(); // Fallback to HomePage or a default page
     }

@@ -39,6 +39,7 @@ class _ChatScreenState extends State<ChatScreen> {
     String compositeId1 = widget.posterId + '_' + widget.receiverId;
     String compositeId2 = widget.receiverId + '_' + widget.posterId;
 
+    debugPrint('Loading messages for jobId: ${widget.jobId}');
     _firestore
         .collection('messages')
         .where('jobId', isEqualTo: widget.jobId)
@@ -46,27 +47,38 @@ class _ChatScreenState extends State<ChatScreen> {
         .orderBy('timestamp', descending: true)
         .snapshots()
         .listen((snapshot) {
+          debugPrint(
+              'Received message snapshot with ${snapshot.docs.length} messages.');
           setState(() {
             _messages = snapshot.docs;
             _isLoading = false;
           });
+        }, onError: (error) {
+          debugPrint('Error loading messages: $error');
         });
   }
 
   void _sendMessage() async {
     if (_messageController.text.isNotEmpty) {
       String compositeId = widget.posterId + '_' + widget.receiverId;
+      debugPrint('Sending message with compositeId: $compositeId');
 
-      await _firestore.collection('messages').add({
-        'senderId': currentUserId,
-        'receiverId': isPoster ? widget.receiverId : widget.posterId,
-        'messageContent': _messageController.text,
-        'timestamp': FieldValue.serverTimestamp(),
-        'jobId': widget.jobId,
-        'compositeId': compositeId,
-      });
-      _loadMessages();
-      _messageController.clear();
+      try {
+        await _firestore.collection('messages').add({
+          'senderId': currentUserId,
+          'receiverId': isPoster ? widget.receiverId : widget.posterId,
+          'messageContent': _messageController.text,
+          'timestamp': FieldValue.serverTimestamp(),
+          'jobId': widget.jobId,
+          'compositeId': compositeId,
+        });
+        debugPrint('Message sent successfully.');
+        _messageController.clear();
+      } catch (e) {
+        debugPrint('Error sending message: $e');
+      }
+    } else {
+      debugPrint('Message is empty.');
     }
   }
 
