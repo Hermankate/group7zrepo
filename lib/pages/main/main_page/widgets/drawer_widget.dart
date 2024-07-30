@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+
 import 'package:cjb/pages/auth/auth_service.dart';
 import 'package:cjb/pages/auth/identity.dart';
 import 'package:cjb/pages/main/user_profile/prof.dart';
@@ -109,10 +111,18 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   ),
                   const Padding(
                     padding: EdgeInsets.only(left: 20.0),
-                    child: Text(
-                      "Upload CV",
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    child: Row(
+                      children: [
+                        Icon(Icons.bookmark, color: Colors.blueGrey),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Text(
+                          "Saved jobs",
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(
@@ -120,10 +130,19 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   ),
                   const Padding(
                     padding: EdgeInsets.only(left: 20.0),
-                    child: Text(
-                      "Applications",
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    child: Row(
+                      children: [
+                        Icon(Icons.emoji_people_rounded,
+                            color: Colors.blueGrey),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Text(
+                          "find employee",
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(
@@ -135,10 +154,18 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       onTap: () {
                         AuthServices.logoutUser(context);
                       },
-                      child: Text(
-                        "Log Out",
-                        style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.logout_rounded,
+                            color: Colors.blueGrey,
+                          ),
+                          Text(
+                            "Log Out",
+                            style: TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.bold),
+                          ),
+                        ],
                       ),
                     ),
                   )
