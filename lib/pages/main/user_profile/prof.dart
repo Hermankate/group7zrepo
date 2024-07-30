@@ -92,8 +92,18 @@ class _ProfileState extends State<Profile> {
             File('${(await getTemporaryDirectory()).path}/temp_image.jpg');
         await tempFile.writeAsBytes(compressedImage);
 
-        // Upload image to Firebase Storage
-        final fileName = path.basename(tempFile.path);
+        // Get the current user's ID
+        final userId = FirebaseAuth.instance.currentUser?.uid ?? '';
+        if (userId.isEmpty) {
+          print('User ID is empty');
+          setState(() {
+            _isUploading = false;
+          });
+          return;
+        }
+
+        // Upload image to Firebase Storage with user ID in the file name
+        final fileName = '${userId}${path.basename(tempFile.path)}';
         final storageReference =
             FirebaseStorage.instance.ref().child('profile_images/$fileName');
         final uploadTask = storageReference.putFile(tempFile);
@@ -102,30 +112,25 @@ class _ProfileState extends State<Profile> {
 
         print('Uploading profile data...');
         // Save profile data to Firestore
-        final userId = FirebaseAuth.instance.currentUser?.uid ?? '';
-        if (userId.isNotEmpty) {
-          final userDoc =
-              FirebaseFirestore.instance.collection('users').doc(userId);
+        final userDoc =
+            FirebaseFirestore.instance.collection('users').doc(userId);
 
-          await userDoc.set({
-            'image_path': downloadURL,
-            'about_me': _controllers['About me']?.text,
-            'work_experience': _controllers['Work experience']?.text,
-            'education': _controllers['Education']?.text,
-            'skills': _controllers['Skills']?.text,
-            'hobbies_interests': _controllers['Hobbies/interests']?.text,
-            'portfolio_url': _controllers['Portfolio url']?.text,
-            'job_preference': _controllers['job preference']?.text,
-          }, SetOptions(merge: true)); // Use merge to update existing document
+        await userDoc.set({
+          'image_path': downloadURL,
+          'about_me': _controllers['About me']?.text,
+          'work_experience': _controllers['Work experience']?.text,
+          'education': _controllers['Education']?.text,
+          'skills': _controllers['Skills']?.text,
+          'hobbies_interests': _controllers['Hobbies/interests']?.text,
+          'portfolio_url': _controllers['Portfolio url']?.text,
+          'job_preference': _controllers['job preference']?.text,
+        }, SetOptions(merge: true)); // Use merge to update existing document
 
-          setState(() {
-            _isUploading = false;
-          });
-          ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Profile Uploaded Successfully')));
-        } else {
-          print('User ID is empty');
-        }
+        setState(() {
+          _isUploading = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Profile Uploaded Successfully')));
       }
     } catch (e) {
       print('Error uploading profile: $e');
