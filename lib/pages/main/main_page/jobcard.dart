@@ -13,7 +13,8 @@ class JobCard extends StatelessWidget {
   final String employmentType;
   final String timestamp;
   final String description;
-  final String posterId; // Added posterId
+  final String posterId;
+  final String email;
 
   JobCard({
     required this.jobId,
@@ -24,6 +25,7 @@ class JobCard extends StatelessWidget {
     required this.timestamp,
     required this.description,
     required this.posterId, // Added posterId
+    required this.email,
   });
 
   void _openJobOptionsModalSheet(BuildContext context) {
@@ -91,13 +93,17 @@ class JobCard extends StatelessWidget {
                 employmentType: employmentType,
                 timestamp: timestamp,
                 description: description,
+                email: email,
               ),
             ),
           );
         } else if (title == "Apply now") {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => CV_page()),
+            MaterialPageRoute(
+                builder: (_) => CV_page(
+                      email: email,
+                    )),
           );
         } else if (title == "Chat") {
           Navigator.push(

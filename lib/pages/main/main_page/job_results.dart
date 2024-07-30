@@ -39,6 +39,7 @@ class JobSearchResults extends StatelessWidget {
                 employmentType: job['employmentType'],
                 description: job['description'],
                 posterId: job['posterId'],
+                email: job['email'],
               );
             },
           );

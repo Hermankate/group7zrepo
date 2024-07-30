@@ -3,8 +3,7 @@ import 'package:cjb/Imagepicking.dart';
 import 'package:cjb/firebase_options.dart';
 import 'package:cjb/pages/auth/user_pref.dart';
 import 'package:cjb/pages/main/main_page/joblist.dart';
-import 'package:cjb/pages/main/main_page/main_page.dart';
-import 'package:cjb/pages/main/notifications/push_services.dart';
+import 'package:cjb/pages/main/main_page/main_page.dart'; // Added import for Notification_Page
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -19,7 +18,6 @@ import 'dart:io';
 import 'package:googleapis/pubsub/v1.dart';
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
@@ -32,7 +30,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final appDocumentDir = await getApplicationDocumentsDirectory();
   await Hive.initFlutter(appDocumentDir.path);
-  await Hive.openBox('messages');
+  await Hive.openBox('notifications');
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
@@ -76,6 +74,8 @@ class _MyAppState extends State<MyApp> {
       // Handle foreground message
       print('Received a foreground message: ${message.messageId}');
       _showNotification(message.notification);
+      print('Now saving to local ');
+      _saveNotificationToLocal(message.notification);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
@@ -149,6 +149,17 @@ class _MyAppState extends State<MyApp> {
       print('Notification shown: ${notification.title} - ${notification.body}');
     } else {
       print('No notification to show');
+    }
+  }
+
+  void _saveNotificationToLocal(RemoteNotification? notification) async {
+    if (notification != null) {
+      Box box = Hive.box('notifications');
+      await box.add({
+        'title': notification.title,
+        'body': notification.body,
+      });
+      print('Notification saved: ${notification.title} - ${notification.body}');
     }
   }
 

@@ -218,6 +218,8 @@
 ///
 ///
 ///import 'package:flutter/material.dart';
+
+import 'package:cjb/pages/auth/identity.dart';
 import 'package:cjb/pages/main/notifications/notification_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -269,6 +271,17 @@ class _AddAjobState extends State<AddAjob> {
     // Notify all users with the collected tokens
     await _notificationService.sendNotificationsToSubscribers(
         jobCategory, tokens);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    await GlobalVariables().loadUserData();
+    setState(() {});
   }
 
   @override
@@ -411,7 +424,8 @@ class _AddAjobState extends State<AddAjob> {
       'description': descriptionController.text,
       'category': categoryController.text,
       'timestamp': FieldValue.serverTimestamp(),
-      'posterId': posterId, // Add the posterId field
+      'posterId': posterId,
+      'email': GlobalVariables().email
     });
 
     // Clear the text fields
