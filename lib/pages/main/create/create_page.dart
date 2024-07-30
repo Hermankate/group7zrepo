@@ -2,6 +2,7 @@
 
 import 'package:cjb/pages/auth/identity.dart';
 import 'package:cjb/pages/main/create/add_job.dart';
+import 'package:cjb/pages/main/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -87,6 +88,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
       // Display a success message
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Post submitted successfully!'),
+        // on suceesfull posting it should navigate the user to the homepage
       ));
     } catch (e) {
       // Display an error message
@@ -111,42 +113,10 @@ class _AddPostScreenState extends State<AddPostScreen> {
     return Scaffold(
       backgroundColor: Color(0xFFF9F9F9),
       body: Padding(
-        padding: const EdgeInsets.only(top: 35.0),
+        padding: const EdgeInsets.only(top: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 22.8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 7),
-                    width: 24,
-                    height: 24,
-                    decoration: BoxDecoration(
-                      color: Color(0xFF524B6B),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Center(
-                      child: Container(
-                        width: 18.2,
-                        height: 2.0,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    'Post',
-                    style: GoogleFonts.dmSans(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 12,
-                      color: Color(0xFFFF9228),
-                    ),
-                  ),
-                ],
-              ),
-            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
@@ -160,12 +130,12 @@ class _AddPostScreenState extends State<AddPostScreen> {
             ),
             Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 18.0, vertical: 28.0),
+                  const EdgeInsets.symmetric(horizontal: 18.0, vertical: 20.0),
               child: Row(
                 children: [
                   Container(
-                      width: 56,
-                      height: 56,
+                      width: 30,
+                      height: 30,
                       // decoration: BoxDecoration(
                       // borderRadius: BorderRadius.circular(28),
                       // image: DecorationImage(
@@ -266,7 +236,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 ],
               ),
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 8, 20.6, 18),
+                padding: const EdgeInsets.fromLTRB(20, 8, 20.6, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -301,10 +271,11 @@ class _AddPostScreenState extends State<AddPostScreen> {
                       ],
                     ),
                     GestureDetector(
-                      onTap: _submitPost,
+                      onTap:
+                          _submitPost, // add functionality to take usr to hpme page
                       child: Container(
-                        width: 124,
-                        height: 46,
+                        width: 100,
+                        height: 30,
                         decoration: BoxDecoration(
                           color: Color(0xFFFF9228),
                           borderRadius: BorderRadius.circular(23),

@@ -58,6 +58,7 @@ class JobsList extends StatelessWidget {
                   employmentType: job['employmentType'],
                   description: job['description'],
                   posterId: job['posterId'], // Poster ID from the job document
+                  email: job['email'],
                 );
               },
             );

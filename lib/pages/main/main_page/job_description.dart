@@ -18,6 +18,7 @@ class Description extends StatelessWidget {
   final String company;
   final String location;
   final String employmentType;
+  final String email;
 
   final String description;
 
@@ -27,6 +28,7 @@ class Description extends StatelessWidget {
     required this.company,
     required this.location,
     required this.employmentType,
+    required this.email,
     required this.description,
   });
 
@@ -225,7 +227,7 @@ class Description extends StatelessWidget {
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => CV_page(),
+                            builder: (_) => CV_page(email: email),
                           ),
                           (route) => false);
                     },
