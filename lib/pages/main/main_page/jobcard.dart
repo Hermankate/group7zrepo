@@ -1,9 +1,12 @@
+import 'package:cjb/pages/main/create/add_job.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cjb/pages/main/main_page/Uploadcv.dart';
 import 'package:cjb/pages/main/main_page/chat.dart';
 import 'package:cjb/pages/main/main_page/job_description.dart';
+import 'package:hive/hive.dart';
 
 class JobCard extends StatelessWidget {
   final String jobId;
@@ -27,54 +30,78 @@ class JobCard extends StatelessWidget {
     required this.posterId, // Added posterId
     required this.email,
   });
-
+// i want to add a checking logic in the bottommodal sheet ie i want the system to first compare the
+// user id of the curent user and the poster id if  the ids are the same, more option are to be added ie (delete and edit)
+// and also apply now option must not be shown meaning if the  if the current user id is simillar to the posterid only 4 options will be displayed ie (details,chat,delete, edit)
+// if the current user id doesnot match the posterid the following options should be displayed(details, chat,applynow, save)
+//keep the logic for details, chat and apply now the same. then for delete(make sure a job poster can delete the post they have made ie the post documen)
+//then for edit(make sure the job poster can edit fields in the posted post document)
+//for save  it should allow the current user to store the job details in a local storeage(hive) and displayed in another widget later
   void _openJobOptionsModalSheet(BuildContext context) {
-    showModalBottomSheet(
-      enableDrag: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
+    final currentUser = FirebaseAuth.instance.currentUser;
+
+    if (currentUser != null) {
+      bool isJobPoster = currentUser.uid == posterId;
+
+      showModalBottomSheet(
+        enableDrag: true,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
         ),
-      ),
-      context: context,
-      builder: (context) {
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-            ),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Center(
-                child: Container(
-                  width: 70,
-                  height: 6,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.grey[400]),
-                ),
+        context: context,
+        builder: (context) {
+          return Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
               ),
-              const SizedBox(height: 40),
-              _bottomNavigationItem(context,
-                  title: "Details", iconData: Icons.info),
-              const SizedBox(height: 30),
-              _bottomNavigationItem(context,
-                  title: "Apply now", iconData: Icons.send),
-              const SizedBox(height: 30),
-              _bottomNavigationItem(context,
-                  title: "Chat", iconData: Icons.chat),
-              const SizedBox(height: 30),
-            ],
-          ),
-        );
-      },
-    );
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Center(
+                  child: Container(
+                    width: 70,
+                    height: 6,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.grey[400]),
+                  ),
+                ),
+                const SizedBox(height: 40),
+                _bottomNavigationItem(context,
+                    title: "Details", iconData: Icons.info),
+                const SizedBox(height: 30),
+                if (!isJobPoster) ...[
+                  _bottomNavigationItem(context,
+                      title: "Apply now", iconData: Icons.send),
+                  const SizedBox(height: 30),
+                  _bottomNavigationItem(context,
+                      title: "Save", iconData: Icons.bookmark),
+                  const SizedBox(height: 30),
+                ],
+                _bottomNavigationItem(context,
+                    title: "Chat", iconData: Icons.chat),
+                const SizedBox(height: 30),
+                if (isJobPoster) ...[
+                  _bottomNavigationItem(context,
+                      title: "Edit", iconData: Icons.edit),
+                  const SizedBox(height: 30),
+                  _bottomNavigationItem(context,
+                      title: "Delete", iconData: Icons.delete),
+                ],
+              ],
+            ),
+          );
+        },
+      );
+    }
   }
 
   Widget _bottomNavigationItem(BuildContext context,
@@ -116,6 +143,30 @@ class JobCard extends StatelessWidget {
               ),
             ),
           );
+        } else if (title == "Edit") {
+          // Navigate to an edit screen or show an edit dialog
+          // Implement edit functionality here
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (_) => AddAjob(
+          //       jobId: jobId,
+          //       jobTitle: jobTitle,
+          //       company: company,
+          //       location: location,
+          //       employmentType: employmentType,
+          //       timestamp: timestamp,
+          //       description: description,
+          //       email: email,
+          //     ),
+          //   ),
+          // );
+        } else if (title == "Delete") {
+          // Implement delete functionality here
+          _deleteJobPost();
+        } else if (title == "Save") {
+          // Implement save functionality to local storage here
+          _saveJobPostToLocal();
         }
       },
       child: Row(
@@ -133,6 +184,23 @@ class JobCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _deleteJobPost() {
+    FirebaseFirestore.instance.collection('jobs').doc(jobId).delete();
+  }
+
+  void _saveJobPostToLocal() async {
+    var box = await Hive.openBox('savedJobs');
+    box.put(jobId, {
+      'jobTitle': jobTitle,
+      'company': company,
+      'location': location,
+      'employmentType': employmentType,
+      'timestamp': timestamp,
+      'description': description,
+      'email': email,
+    });
   }
 
   @override
