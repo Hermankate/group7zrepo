@@ -1,3 +1,4 @@
+import 'package:cjb/pages/main/create/add_job.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cjb/pages/main/main_page/Uploadcv.dart';
 import 'package:cjb/pages/main/main_page/chat.dart';
 import 'package:cjb/pages/main/main_page/job_description.dart';
+import 'package:hive/hive.dart';
 
 class JobCard extends StatelessWidget {
   final String jobId;
@@ -144,6 +146,21 @@ class JobCard extends StatelessWidget {
         } else if (title == "Edit") {
           // Navigate to an edit screen or show an edit dialog
           // Implement edit functionality here
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (_) => AddAjob(
+          //       jobId: jobId,
+          //       jobTitle: jobTitle,
+          //       company: company,
+          //       location: location,
+          //       employmentType: employmentType,
+          //       timestamp: timestamp,
+          //       description: description,
+          //       email: email,
+          //     ),
+          //   ),
+          // );
         } else if (title == "Delete") {
           // Implement delete functionality here
           _deleteJobPost();
@@ -173,8 +190,17 @@ class JobCard extends StatelessWidget {
     FirebaseFirestore.instance.collection('jobs').doc(jobId).delete();
   }
 
-  void _saveJobPostToLocal() {
-    // Implement Hive or local storage saving logic here
+  void _saveJobPostToLocal() async {
+    var box = await Hive.openBox('savedJobs');
+    box.put(jobId, {
+      'jobTitle': jobTitle,
+      'company': company,
+      'location': location,
+      'employmentType': employmentType,
+      'timestamp': timestamp,
+      'description': description,
+      'email': email,
+    });
   }
 
   @override
