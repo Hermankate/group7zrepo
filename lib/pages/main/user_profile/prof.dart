@@ -28,6 +28,9 @@ class _ProfileState extends State<Profile> {
   File? _profileImage;
   bool _isUploading = false;
 
+  String? _selectedGender;
+  String? _selectedAgeRange;
+
   @override
   void initState() {
     super.initState();
@@ -63,6 +66,8 @@ class _ProfileState extends State<Profile> {
             data?['hobbies_interests'] ?? '';
         _controllers['Portfolio url']?.text = data?['portfolio_url'] ?? '';
         _controllers['job preference']?.text = data?['job_preference'] ?? '';
+        _selectedGender = data?['gender'] ?? '';
+        _selectedAgeRange = data?['age_range'] ?? '';
       }
     } catch (e) {
       print('Error fetching profile data: $e');
@@ -70,68 +75,72 @@ class _ProfileState extends State<Profile> {
   }
 
   Future<void> _uploadProfile() async {
-    if (_profileImage == null) return;
-
     setState(() {
       _isUploading = true;
     });
 
     try {
-      print('Uploading profile image...');
-      // Compress image
-      final compressedImage = await FlutterImageCompress.compressWithFile(
-        _profileImage!.path,
-        minWidth: 800,
-        minHeight: 600,
-        quality: 85,
-        format: CompressFormat.jpeg,
-      );
+      String? downloadURL;
+      if (_profileImage != null) {
+        print('Uploading profile image...');
+        // Compress image
+        final compressedImage = await FlutterImageCompress.compressWithFile(
+          _profileImage!.path,
+          minWidth: 800,
+          minHeight: 600,
+          quality: 85,
+          format: CompressFormat.jpeg,
+        );
 
-      if (compressedImage != null) {
-        final tempFile =
-            File('${(await getTemporaryDirectory()).path}/temp_image.jpg');
-        await tempFile.writeAsBytes(compressedImage);
+        if (compressedImage != null) {
+          final tempFile =
+              File('${(await getTemporaryDirectory()).path}/temp_image.jpg');
+          await tempFile.writeAsBytes(compressedImage);
 
-        // Get the current user's ID
-        final userId = FirebaseAuth.instance.currentUser?.uid ?? '';
-        if (userId.isEmpty) {
-          print('User ID is empty');
-          setState(() {
-            _isUploading = false;
-          });
-          return;
+          // Get the current user's ID
+          final userId = FirebaseAuth.instance.currentUser?.uid ?? '';
+          if (userId.isEmpty) {
+            print('User ID is empty');
+            setState(() {
+              _isUploading = false;
+            });
+            return;
+          }
+
+          // Upload image to Firebase Storage with user ID in the file name
+          final fileName = '${userId}${path.basename(tempFile.path)}';
+          final storageReference =
+              FirebaseStorage.instance.ref().child('profile_images/$fileName');
+          final uploadTask = storageReference.putFile(tempFile);
+          await uploadTask.whenComplete(() => null);
+          downloadURL = await storageReference.getDownloadURL();
         }
-
-        // Upload image to Firebase Storage with user ID in the file name
-        final fileName = '${userId}${path.basename(tempFile.path)}';
-        final storageReference =
-            FirebaseStorage.instance.ref().child('profile_images/$fileName');
-        final uploadTask = storageReference.putFile(tempFile);
-        await uploadTask.whenComplete(() => null);
-        final downloadURL = await storageReference.getDownloadURL();
-
-        print('Uploading profile data...');
-        // Save profile data to Firestore
-        final userDoc =
-            FirebaseFirestore.instance.collection('users').doc(userId);
-
-        await userDoc.set({
-          'image_path': downloadURL,
-          'about_me': _controllers['About me']?.text,
-          'work_experience': _controllers['Work experience']?.text,
-          'education': _controllers['Education']?.text,
-          'skills': _controllers['Skills']?.text,
-          'hobbies_interests': _controllers['Hobbies/interests']?.text,
-          'portfolio_url': _controllers['Portfolio url']?.text,
-          'job_preference': _controllers['job preference']?.text,
-        }, SetOptions(merge: true)); // Use merge to update existing document
-
-        setState(() {
-          _isUploading = false;
-        });
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Profile Uploaded Successfully')));
       }
+
+      print('Uploading profile data...');
+      // Save profile data to Firestore
+      final userId = FirebaseAuth.instance.currentUser?.uid ?? '';
+      final userDoc =
+          FirebaseFirestore.instance.collection('users').doc(userId);
+
+      await userDoc.set({
+        if (downloadURL != null) 'image_path': downloadURL,
+        'about_me': _controllers['About me']?.text,
+        'work_experience': _controllers['Work experience']?.text,
+        'education': _controllers['Education']?.text,
+        'skills': _controllers['Skills']?.text,
+        'hobbies_interests': _controllers['Hobbies/interests']?.text,
+        'portfolio_url': _controllers['Portfolio url']?.text,
+        'job_preference': _controllers['job preference']?.text,
+        'gender': _selectedGender,
+        'age_range': _selectedAgeRange,
+      }, SetOptions(merge: true)); // Use merge to update existing document
+
+      setState(() {
+        _isUploading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Profile Uploaded Successfully')));
     } catch (e) {
       print('Error uploading profile: $e');
       setState(() {
@@ -162,7 +171,6 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    final userId = FirebaseAuth.instance.currentUser?.uid ?? '';
     return Scaffold(
       backgroundColor: Colors.pink[50],
       body: SingleChildScrollView(
@@ -222,6 +230,18 @@ class _ProfileState extends State<Profile> {
               ),
               _buildProfileListTile(
                 context,
+                'Gender',
+                Icon(Icons.person),
+                onTap: _showGenderBottomSheet,
+              ),
+              _buildProfileListTile(
+                context,
+                'Age',
+                Icon(Icons.cake),
+                onTap: _showAgeBottomSheet,
+              ),
+              _buildProfileListTile(
+                context,
                 'Portfolio url',
                 Icon(Icons.workspaces_outline),
               ),
@@ -247,7 +267,8 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Widget _buildProfileListTile(BuildContext context, String title, Icon icon) {
+  Widget _buildProfileListTile(BuildContext context, String title, Icon icon,
+      {VoidCallback? onTap}) {
     return Column(
       children: [
         ListTile(
@@ -256,9 +277,11 @@ class _ProfileState extends State<Profile> {
             title,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          onTap: () {
-            _showEditDialog(context, title, _controllers[title]?.text ?? '');
-          },
+          onTap: onTap ??
+              () {
+                _showEditDialog(
+                    context, title, _controllers[title]?.text ?? '');
+              },
         ),
         if ((_controllers[title]?.text ?? '').isNotEmpty)
           Padding(
@@ -268,47 +291,147 @@ class _ProfileState extends State<Profile> {
               style: TextStyle(color: Colors.black54),
             ),
           ),
-        Divider(),
+        Divider(
+          color: Colors.grey[300],
+          height: 1,
+        ),
       ],
     );
   }
 
   void _showEditDialog(
-      BuildContext context, String field, String initialValue) {
-    final controller = _controllers[field];
-    if (controller != null) {
-      controller.text = initialValue;
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('Edit $field'),
-            content: TextField(
-              controller: controller,
-              decoration: InputDecoration(
-                hintText: 'Enter $field',
-              ),
+      BuildContext context, String title, String currentValue) {
+    TextEditingController _dialogController = TextEditingController();
+    _dialogController.text = currentValue;
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Edit $title'),
+          content: TextField(
+            controller: _dialogController,
+            maxLines: 3,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Enter your $title',
             ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () {
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  _controllers[title]?.text = _dialogController.text;
+                });
+                Navigator.of(context).pop();
+              },
+              child: Text('Save'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showGenderBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: Radio<String>(
+                value: 'Male',
+                groupValue: _selectedGender,
+                onChanged: (value) {
                   setState(() {
-                    _controllers[field]?.text = controller.text;
+                    _selectedGender = value;
                   });
-                  Navigator.pop(context);
+                  Navigator.of(context).pop();
                 },
-                child: Text('Save'),
               ),
-            ],
-          );
-        },
-      );
-    }
+              title: Text('Male'),
+              onTap: () {
+                setState(() {
+                  _selectedGender = 'Male';
+                });
+                Navigator.of(context).pop();
+              },
+            ),
+            ListTile(
+              leading: Radio<String>(
+                value: 'Female',
+                groupValue: _selectedGender,
+                onChanged: (value) {
+                  setState(() {
+                    _selectedGender = value;
+                  });
+                  Navigator.of(context).pop();
+                },
+              ),
+              title: Text('Female'),
+              onTap: () {
+                setState(() {
+                  _selectedGender = 'Female';
+                });
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showAgeBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: Radio<String>(
+                value: '20-35',
+                groupValue: _selectedAgeRange,
+                onChanged: (value) {
+                  setState(() {
+                    _selectedAgeRange = value;
+                  });
+                  Navigator.of(context).pop();
+                },
+              ),
+              title: Text('20-35'),
+              onTap: () {
+                setState(() {
+                  _selectedAgeRange = '20-35';
+                });
+                Navigator.of(context).pop();
+              },
+            ),
+            ListTile(
+              leading: Radio<String>(
+                value: '35-50',
+                groupValue: _selectedAgeRange,
+                onChanged: (value) {
+                  setState(() {
+                    _selectedAgeRange = value;
+                  });
+                  Navigator.of(context).pop();
+                },
+              ),
+              title: Text('35-50'),
+              onTap: () {
+                setState(() {
+                  _selectedAgeRange = '35-50';
+                });
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
