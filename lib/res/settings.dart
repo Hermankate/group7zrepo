@@ -28,26 +28,21 @@ class _SettingsState extends State<Settings> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(2.8, 0, 2.8, 50.5),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Container(
-                        width: 24,
-                        height: 24,
-                        child: IconButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => MainPage(
-                                    firstName: '',
-                                    first_Name: '',
-                                  ),
-                                ));
-                          },
-                          icon: Icon(Icons.arrow_back),
-                        )),
-                  ),
+                    child: IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => MainPage(
+                            firstName: '',
+                            first_Name: '',
+                          ),
+                        ));
+                  },
+                  icon: Icon(Icons.arrow_back),
+                )),
+                SizedBox(
+                  height: 8,
                 ),
                 Container(
                   margin: EdgeInsets.fromLTRB(0, 0, 0, 26),

@@ -593,30 +593,7 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                 ),
                 SizedBox(height: 19),
-                ElevatedButton.icon(
-                  onPressed: _loginWithGoogle,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFD6CDFE),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-                  ),
-                  // icon: Image.asset(
-                  //   'assets/images/google_1.png',
-                  //   width: 24,
-                  //   height: 24,
-                  // ),
-                  label: Text(
-                    'SIGN IN WITH GOOGLE',
-                    style: GoogleFonts.dmSans(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14,
-                      color: Colors.white,
-                      letterSpacing: 0.8,
-                    ),
-                  ),
-                ),
+                //
                 SizedBox(height: 16),
                 RichText(
                   text: TextSpan(
