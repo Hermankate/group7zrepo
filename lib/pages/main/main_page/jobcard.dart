@@ -326,6 +326,8 @@
 //     );
 //   }
 
+// ignore_for_file: prefer_const_constructors
+
 //   Widget _buildTag(String text) {
 //     return Opacity(
 //       opacity: 0.8,
