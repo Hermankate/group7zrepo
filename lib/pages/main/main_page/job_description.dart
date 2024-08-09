@@ -1,16 +1,16 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, use_key_in_widget_constructors, unnecessary_string_interpolations, unnecessary_brace_in_string_interps
 
-import 'package:cjb/pages/main/home/home_page.dart';
+//import 'package:cjb/pages/main/home/home_page.dart';
 import 'package:cjb/pages/main/main_page/Uploadcv.dart';
-import 'package:cjb/pages/main/main_page/jobcard.dart';
-import 'package:cjb/pages/main/main_page/joblist.dart';
+//import 'package:cjb/pages/main/main_page/jobcard.dart';
+//import 'package:cjb/pages/main/main_page/joblist.dart';
 import 'package:cjb/pages/main/main_page/main_page.dart';
 import 'package:flutter/material.dart';
-import 'dart:ui';
-import 'package:flutter_svg/flutter_svg.dart';
+//import 'dart:ui';
+//import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:googleapis/homegraph/v1.dart';
-import 'package:intl/intl.dart';
+//import 'package:googleapis/homegraph/v1.dart';
+//import 'package:intl/intl.dart';
 
 class Description extends StatelessWidget {
   final String timestamp;

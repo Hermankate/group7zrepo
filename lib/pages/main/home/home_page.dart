@@ -5,23 +5,6 @@ import 'package:cjb/pages/main/home/widgets/single_post_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cjb/theme/styles.dart';
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cjb/data/post_entity.dart';
-import 'package:cjb/pages/main/home/widgets/single_post_card_widget.dart';
-import 'package:cjb/theme/styles.dart';
-import 'package:flutter/material.dart';
-import 'package:cjb/data/post_entity.dart';
-import 'package:cjb/pages/main/home/widgets/single_post_card_widget.dart';
-import 'package:cjb/theme/styles.dart';
-import 'package:flutter/material.dart';
-import 'package:cjb/data/post_entity.dart';
-import 'package:cjb/pages/main/home/widgets/single_post_card_widget.dart';
-import 'package:cjb/theme/styles.dart';
-import 'package:flutter/material.dart';
-import 'package:cjb/data/post_entity.dart';
-import 'package:cjb/pages/main/home/widgets/single_post_card_widget.dart';
-import 'package:cjb/theme/styles.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
