@@ -1,5 +1,7 @@
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
+
 import 'package:cjb/pages/auth/sign_in_page.dart';
-import 'package:cjb/pages/onboarding/on_boarding_screen.dart';
+//import 'package:cjb/pages/onboarding/on_boarding_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
