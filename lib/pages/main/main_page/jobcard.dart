@@ -166,7 +166,28 @@ class JobCard extends StatelessWidget {
           _deleteJobPost();
         } else if (title == "Save") {
           // Implement save functionality to local storage here
-          _saveJobPostToLocal();
+          void _saveJobPostToLocal() async {
+            final currentUser = FirebaseAuth.instance.currentUser;
+
+            if (currentUser != null) {
+              await FirebaseFirestore.instance
+                  .collection('saved_jobs')
+                  .doc(currentUser.uid)
+                  .collection('user_saved_jobs')
+                  .doc(jobId)
+                  .set({
+                'jobId': jobId,
+                'jobTitle': jobTitle,
+                'company': company,
+                'location': location,
+                'employmentType': employmentType,
+                'timestamp': timestamp,
+                'description': description,
+                'posterId': posterId,
+                'email': email,
+              });
+            }
+          }
         }
       },
       child: Row(
