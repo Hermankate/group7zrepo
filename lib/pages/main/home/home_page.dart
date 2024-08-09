@@ -1,9 +1,11 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:cjb/data/post_entity.dart';
 import 'package:cjb/pages/main/create/posts/post_service.dart';
 import 'package:cjb/pages/main/home/widgets/single_post_card_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cjb/theme/styles.dart';
 
 class HomePage extends StatefulWidget {
