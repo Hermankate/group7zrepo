@@ -1,5 +1,7 @@
+// ignore_for_file: avoid_print, prefer_const_constructors, unnecessary_brace_in_string_interps, use_build_context_synchronously, avoid_function_literals_in_foreach_calls, no_leading_underscores_for_local_identifiers, use_key_in_widget_constructors, library_private_types_in_public_api, depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+//import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';

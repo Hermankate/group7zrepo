@@ -1,10 +1,12 @@
+// ignore_for_file: depend_on_referenced_packages, use_super_parameters, unused_field, use_build_context_synchronously, prefer_const_constructors, avoid_print
+
 import 'dart:io';
 import 'package:cjb/pages/auth/identity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:google_fonts/google_fonts.dart';
+//import 'package:google_fonts/google_fonts.dart';
 import 'package:path/path.dart' as path;
 
 class ProfileWidget extends StatefulWidget {
