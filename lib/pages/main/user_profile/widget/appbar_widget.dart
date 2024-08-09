@@ -1,6 +1,8 @@
-import 'package:cjb/pages/main/home/home_page.dart';
+//import 'package:cjb/pages/main/home/home_page.dart';
+// ignore_for_file: prefer_const_declarations, prefer_const_constructors
+
 import 'package:cjb/pages/main/main_page/main_page.dart';
-import 'package:cjb/res/settings.dart';
+import 'package:cjb/pages/main/settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

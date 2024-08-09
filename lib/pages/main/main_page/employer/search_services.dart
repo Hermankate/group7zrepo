@@ -7,54 +7,47 @@ class EmployeeSearchService {
     String? name,
     String? location,
     List<String>? gender,
-    String? jobPreferences,
+    String? workingexperience,
     List<String>? skills,
     String? ageRange,
   }) async {
     try {
       final querySnapshot = await _firestore.collection('users').get();
       final users = querySnapshot.docs
-          .map((doc) => doc.data() as Map<String, dynamic>)
+          .map((doc) => doc.data() as Map<String, dynamic>
+            ..['uid'] = doc.id) // Include user ID
           .toList();
 
       final matchedUsers = <Map<String, dynamic>>[];
 
       for (var user in users) {
-        bool matches = true; // Assume the user matches until proven otherwise
+        bool matches = true;
 
-        // Safely access fields and handle null values
         final normalizedName = (user['name'] as String?)?.trim() ?? '';
         final normalizedGender = (user['gender'] as String?)?.trim() ?? '';
-        final normalizedJobPreferences =
-            (user['job_preference'] as String?)?.trim() ?? '';
+        final normalizedWorkingExperience =
+            (user['work_experience'] as String?)?.trim() ?? '';
         final normalizedSkills = (user['skills'] as String?)?.trim() ?? '';
         final normalizedAgeRange = (user['age_range'] as String?)?.trim() ?? '';
 
-        print('Evaluating user: ${user.toString()}');
-
-        // Check name match
         if (name != null && !normalizedName.contains(name.trim())) {
           matches = false;
         }
 
-        // Check gender match
         if (gender != null && !gender.contains(normalizedGender)) {
           matches = false;
         }
 
-        // Check job preferences match
-        if (jobPreferences != null &&
-            !normalizedJobPreferences.contains(jobPreferences.trim())) {
+        if (workingexperience != null &&
+            !normalizedWorkingExperience.contains(workingexperience.trim())) {
           matches = false;
         }
 
-        // Check skills match
         if (skills != null &&
             !skills.any((skill) => normalizedSkills.contains(skill.trim()))) {
           matches = false;
         }
 
-        // Check age range match
         if (ageRange != null && normalizedAgeRange != ageRange.trim()) {
           matches = false;
         }

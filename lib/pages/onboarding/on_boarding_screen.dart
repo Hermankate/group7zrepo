@@ -1,11 +1,13 @@
+// ignore_for_file: use_super_parameters
+
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+//import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cjb/pages/auth/sign_in_page.dart';
 import 'package:cjb/pages/auth/sign_up_page.dart';
 import 'package:cjb/pages/onboarding/on_boarding_entity.dart';
 import 'package:cjb/theme/styles.dart';
 import 'package:cjb/widgets/button_container_widget.dart';
-import 'package:cjb/widgets/google_button_container_widget.dart';
+//import 'package:cjb/widgets/google_button_container_widget.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);
@@ -105,19 +107,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: GoogleButtonContainerWidget(
-                      hasIcon: true,
-                      icon: SvgPicture.asset(
-                        "assets/google_logo_svg.svg",
-                        width: 30,
-                        height: 30,
-                      ),
-                      title: "Join with Google",
-                      onTap: () {},
-                    ),
-                  ),
+
                   const SizedBox(
                     height: 30,
                   ),

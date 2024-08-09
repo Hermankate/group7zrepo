@@ -61,8 +61,12 @@ PreferredSizeWidget appBarWidget(BuildContext context,
       isJobsTab == false
           ? GestureDetector(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => ConversationList()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => ChatListScreen(
+                              currentUserId: '${posterid}',
+                            )));
               },
               child: const Icon(
                 Icons.message_outlined,

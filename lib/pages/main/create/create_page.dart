@@ -1,8 +1,8 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, use_super_parameters, library_private_types_in_public_api, unused_local_variable, use_build_context_synchronously, unnecessary_string_interpolations, prefer_const_literals_to_create_immutables
 
 import 'package:cjb/pages/auth/identity.dart';
 import 'package:cjb/pages/main/create/add_job.dart';
-import 'package:cjb/pages/main/home/home_page.dart';
+//import 'package:cjb/pages/main/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -101,6 +101,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
   Future<void> _pickImage() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    //final pickedFile = await picker.pickVideo(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
         _image = File(pickedFile.path);

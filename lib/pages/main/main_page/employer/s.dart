@@ -1,5 +1,8 @@
+import 'package:cjb/pages/main/main_page/employer/chatscreen.dart';
 import 'package:cjb/pages/main/main_page/employer/search_services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+//import 'chat_screen.dart'; // Import ChatScreen
 
 class EmployeeSearchPage extends StatefulWidget {
   @override
@@ -9,20 +12,19 @@ class EmployeeSearchPage extends StatefulWidget {
 class _EmployeeSearchPageState extends State<EmployeeSearchPage> {
   final EmployeeSearchService _searchService = EmployeeSearchService();
   final TextEditingController _nameController = TextEditingController();
-  //final TextEditingController _locationController = TextEditingController();
-  final TextEditingController _jobPreferencesController =
+  final TextEditingController _workingexperienceController =
       TextEditingController();
   final TextEditingController _skillsController = TextEditingController();
-  // Other controllers...
 
   List<Map<String, dynamic>> _results = [];
   List<String> _selectedGenders = [];
   String _selectedAgeRange = '';
+
   void _search() async {
     if (_selectedGenders.isEmpty &&
         _selectedAgeRange.isEmpty &&
         _nameController.text.trim().isEmpty &&
-        _jobPreferencesController.text.trim().isEmpty &&
+        _workingexperienceController.text.trim().isEmpty &&
         _skillsController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Please enter at least one search criteria')),
@@ -30,17 +32,10 @@ class _EmployeeSearchPageState extends State<EmployeeSearchPage> {
       return;
     }
 
-    print('Search criteria:');
-    print('Name: ${_nameController.text.trim()}');
-    print('Gender: $_selectedGenders');
-    print('Job Preferences: ${_jobPreferencesController.text.trim()}');
-    print('Skills: ${_skillsController.text.trim()}');
-    print('Age Range: $_selectedAgeRange');
-
     var results = await _searchService.searchEmployees(
       name: _nameController.text.trim(),
       gender: _selectedGenders,
-      jobPreferences: _jobPreferencesController.text.trim(),
+      workingexperience: _workingexperienceController.text.trim(),
       skills: _skillsController.text.trim().split(','),
       ageRange: _selectedAgeRange,
     );
@@ -48,6 +43,38 @@ class _EmployeeSearchPageState extends State<EmployeeSearchPage> {
     setState(() {
       _results = results;
     });
+  }
+
+  Future<void> _initiateChat(Map<String, dynamic> profile) async {
+    final currentUser = FirebaseAuth.instance.currentUser;
+
+    if (currentUser == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('You must be logged in to initiate a chat')),
+      );
+      return;
+    }
+
+    if (currentUser.uid == profile['uid']) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('You cannot chat with yourself')),
+      );
+      return;
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChatScreen(
+          senderId: currentUser.uid,
+          receiverId: profile['uid'],
+          jobTitle: profile['job_title'] ??
+              'No job title', // Default value if job_title is missing
+          employeeName:
+              profile['name'] ?? 'No name', // Default value if name is missing
+        ),
+      ),
+    );
   }
 
   void _selectAgeRange() async {
@@ -84,45 +111,53 @@ class _EmployeeSearchPageState extends State<EmployeeSearchPage> {
       context: context,
       builder: (BuildContext context) {
         List<String> selected = List.from(_selectedGenders);
-        return AlertDialog(
-          title: Text('Select Gender(s)'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CheckboxListTile(
-                title: Text('Male'),
-                value: selected.contains('Male'),
-                onChanged: (bool? value) {
-                  setState(() {
-                    if (value == true) {
-                      selected.add('Male');
-                    } else {
-                      selected.remove('Male');
-                    }
-                  });
-                },
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text('Select Gender(s)'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CheckboxListTile(
+                    title: Text('Male'),
+                    value: selected.contains('Male'),
+                    onChanged: (bool? value) {
+                      setState(() {
+                        if (value == true) {
+                          if (!selected.contains('Male')) {
+                            selected.add('Male');
+                          }
+                        } else {
+                          selected.remove('Male');
+                        }
+                      });
+                    },
+                  ),
+                  CheckboxListTile(
+                    title: Text('Female'),
+                    value: selected.contains('Female'),
+                    onChanged: (bool? value) {
+                      setState(() {
+                        if (value == true) {
+                          if (!selected.contains('Female')) {
+                            selected.add('Female');
+                          }
+                        } else {
+                          selected.remove('Female');
+                        }
+                      });
+                    },
+                  ),
+                ],
               ),
-              CheckboxListTile(
-                title: Text('Female'),
-                value: selected.contains('Female'),
-                onChanged: (bool? value) {
-                  setState(() {
-                    if (value == true) {
-                      selected.add('Female');
-                    } else {
-                      selected.remove('Female');
-                    }
-                  });
-                },
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context, selected),
-              child: Text('OK'),
-            ),
-          ],
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context, selected),
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
         );
       },
     );
@@ -149,8 +184,8 @@ class _EmployeeSearchPageState extends State<EmployeeSearchPage> {
               decoration: InputDecoration(labelText: 'Name'),
             ),
             TextField(
-              controller: _jobPreferencesController,
-              decoration: InputDecoration(labelText: 'Job Preferences'),
+              controller: _workingexperienceController,
+              decoration: InputDecoration(labelText: 'Work Experience'),
             ),
             TextField(
               controller: _skillsController,
@@ -185,13 +220,11 @@ class _EmployeeSearchPageState extends State<EmployeeSearchPage> {
                         : CircleAvatar(child: Icon(Icons.person)),
                     title: Text(profile['name'] ?? 'No name'),
                     subtitle: Text(profile['email'] ?? 'No email'),
-                    onTap: () {
-                      // Handle tap event if needed
-                    },
+                    onTap: () => _initiateChat(profile),
                   );
                 },
               ),
-            )
+            ),
           ],
         ),
       ),

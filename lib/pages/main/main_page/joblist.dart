@@ -1,4 +1,6 @@
-import 'package:cjb/pages/main/home/home_page.dart';
+//import 'package:cjb/pages/main/home/home_page.dart';
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, avoid_unnecessary_containers
+
 import 'package:cjb/pages/main/main_page/jobcard.dart';
 import 'package:cjb/pages/main/main_page/main_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

@@ -1,19 +1,20 @@
+// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors, prefer_const_constructors, avoid_unnecessary_containers, use_super_parameters
+
 import 'package:cjb/pages/auth/identity.dart';
 import 'package:cjb/pages/main/home/home_page.dart';
-import 'package:cjb/pages/main/user_profile/model/user.dart';
-import 'package:cjb/pages/main/user_profile/prof.dart';
-import 'package:cjb/pages/main/user_profile/utils/user_preferences.dart';
+import 'package:cjb/pages/main/user_profile/edit_profile_page.dart';
+
 import 'package:cjb/pages/main/user_profile/widget/appbar_widget.dart';
 import 'package:cjb/pages/main/user_profile/widget/button_widget.dart';
-import 'package:cjb/pages/main/user_profile/widget/profile_widget.dart';
+//import 'package:cjb/pages/main/user_profile/widget/profile_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:path/path.dart' as path;
+// import 'package:image_picker/image_picker.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_core/firebase_core.dart';
+// import 'package:path/path.dart' as path;
 
-import '../../auth/user_pref.dart';
+// import '../../auth/user_pref.dart';
 
 class ProfilePage extends StatefulWidget {
   @override

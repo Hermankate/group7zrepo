@@ -1,7 +1,9 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:cjb/pages/main/main_page/job_results.dart';
 import 'package:cjb/pages/main/main_page/joblist.dart';
-import 'package:cjb/pages/main/main_page/jobs.dart';
-import 'package:cjb/pages/main/notifications/no_notty.dart';
+//import 'package:cjb/pages/main/main_page/jobs.dart';
+//import 'package:cjb/pages/main/notifications/no_notty.dart';
 import 'package:cjb/pages/main/notifications/notification.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -113,7 +115,7 @@ class _MainPageState extends State<MainPage> {
           },
         );
       case 2:
-        return Notification_Page();
+        return const Notification_Page();
       default:
         return const HomePage(); // Fallback to HomePage or a default page
     }

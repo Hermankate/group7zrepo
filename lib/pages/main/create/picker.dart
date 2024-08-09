@@ -1,5 +1,7 @@
+// ignore_for_file: unused_element, no_leading_underscores_for_local_identifiers, unnecessary_nullable_for_final_variable_declarations, avoid_print
+
 import 'package:cjb/pages/main/create/create_page.dart';
-import 'package:cjb/pages/main/create/picker.dart';
+//import 'package:cjb/pages/main/create/picker.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
@@ -40,7 +42,6 @@ class _CreatePageState extends State<AddPostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     throw UnimplementedError();
   }
 

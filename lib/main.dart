@@ -1,9 +1,9 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, avoid_print, use_super_parameters
 
-import 'dart:convert';
-import 'package:cjb/Imagepicking.dart';
+//import 'dart:convert';
+
 import 'package:cjb/firebase_options.dart';
-import 'package:cjb/pages/auth/user_pref.dart';
+//import 'package:cjb/pages/auth/user_pref.dart';
 import 'package:cjb/pages/main/main_page/joblist.dart';
 import 'package:cjb/pages/main/main_page/main_page.dart'; // Added import for Notification_Page
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,13 +14,13 @@ import 'package:flutter/material.dart';
 import 'package:cjb/pages/splash/splash_page.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'pages/onboarding/on_boarding_screen.dart';
-import 'package:googleapis/pubsub/v1.dart' as pubsub;
-import 'package:googleapis_auth/auth_io.dart' as auth;
-import 'dart:io';
-import 'package:googleapis/pubsub/v1.dart';
-import 'package:googleapis_auth/auth_io.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:hive/hive.dart';
+// import 'package:googleapis/pubsub/v1.dart' as pubsub;
+// import 'package:googleapis_auth/auth_io.dart' as auth;
+// import 'dart:io';
+// import 'package:googleapis/pubsub/v1.dart';
+// import 'package:googleapis_auth/auth_io.dart';
+// import 'package:flutter/services.dart' show rootBundle;
+//import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 // Import the JobsList widget

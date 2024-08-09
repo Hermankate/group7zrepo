@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:cjb/data/post_entity.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SinglePostCardWidget extends StatefulWidget {
   final PostEntity post;
@@ -25,6 +26,15 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
       print('Error fetching post images: $e');
     }
     return imageUrls;
+  }
+
+  void _launchURL(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      print('Could not launch $url');
+    }
   }
 
   @override
@@ -83,12 +93,17 @@ class _SinglePostCardWidgetState extends State<SinglePostCardWidget> {
                         const SizedBox(height: 2),
                         Row(
                           children: [
-                            Text(
-                              '# campus Job board',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                  fontSize: 12, color: Colors.blue),
+                            GestureDetector(
+                              onTap: () {
+                                _launchURL('https://samuelms46.github.io/');
+                              },
+                              child: Text(
+                                '# campus Job board',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    fontSize: 12, color: Colors.blue),
+                              ),
                             ),
                             const Icon(
                               Icons.public,
