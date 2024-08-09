@@ -1,9 +1,11 @@
+// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, unnecessary_null_comparison, prefer_const_constructors, unnecessary_string_interpolations, unnecessary_brace_in_string_interps, use_build_context_synchronously, avoid_unnecessary_containers
+
 import 'package:cjb/pages/auth/identity.dart';
 import 'package:cjb/pages/main/notifications/notification_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+//import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AddAjob extends StatefulWidget {
