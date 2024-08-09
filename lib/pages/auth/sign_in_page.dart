@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, use_key_in_widget_constructors, library_private_types_in_public_api, avoid_print, use_build_context_synchronously, unused_element, sized_box_for_whitespace
 import 'package:cjb/pages/auth/firebase_auth_services.dart';
 import 'package:cjb/pages/auth/forgot_password.dart';
 import 'package:cjb/pages/auth/sign_up_page.dart';
