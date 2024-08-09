@@ -6,6 +6,7 @@ import 'package:cjb/pages/main/main_page/employer/s.dart';
 import 'package:cjb/pages/main/main_page/savedjobs.dart';
 import 'package:cjb/pages/main/settings.dart';
 import 'package:cjb/pages/main/user_profile/profile_page.dart';
+import 'package:cjb/pages/main/user_profile/user_surport.dart';
 //import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cjb/theme/styles.dart';
@@ -131,6 +132,39 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           },
                           child: Text(
                             "Saved jobs",
+                            style: TextStyle(
+                                color: cjbMediumGrey86888A,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 20.0),
+                    child: Row(
+                      children: [
+                        Icon(Icons.question_answer_sharp,
+                            color: Colors.blueGrey),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            // Example navigation from a button or menu
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => SupportPage(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            "surport",
                             style: TextStyle(
                                 color: cjbMediumGrey86888A,
                                 fontSize: 25,
