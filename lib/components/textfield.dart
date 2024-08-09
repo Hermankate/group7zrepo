@@ -1,34 +1,9 @@
 // // ignore_for_file: prefer_const_constructors, use_super_parameters
 
-// import 'package:flutter/material.dart';
-// import 'package:flutter/widgets.dart';
+// ignore_for_file: use_super_parameters, prefer_const_constructors
 
-// class MytextApp extends StatelessWidget {
-//   MytextApp({Key? key}) : super(key: key );
-
-// ignore_for_file: prefer_const_constructors
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 25.0),
-//       child: const TextField(
-//         decoration: InputDecoration(
-//           enabledBorder: OutlineInputBorder(
-//             borderSide: BorderSide(color: Colors.grey),
-//           ),
-//           focusedBorder: OutlineInputBorder(
-//             borderSide: BorderSide(color: Colors.black),
-//           ),
-//           fillColor: Colors.grey,
-//           filled: false,
-//         ),
-//       ),
-//     );
-//   }
-// }
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+//import 'package:flutter/widgets.dart';
 
 class MytextApp extends StatelessWidget {
   final TextEditingController controller;
