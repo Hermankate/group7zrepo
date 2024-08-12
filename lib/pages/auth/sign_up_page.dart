@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:cjb/pages/auth/auth_service.dart';
+import 'package:cjb/pages/auth/identity.dart';
 import 'package:cjb/pages/auth/preferences.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -241,7 +242,7 @@ class _SignUpState extends State<SignUp> {
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => SubscriptionScreen(),
+                          builder: (_) => RoleSelectionPage(),
                         ),
                         (route) => false,
                       );
