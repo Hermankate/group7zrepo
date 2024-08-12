@@ -1,7 +1,12 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+import 'package:cjb/pages/auth/preferences.dart';
+import 'package:cjb/pages/main/main_page/main_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:cjb/pages/main/home/home_page.dart';
+//import 'package:cjb/pages/auth/subscription_screen.dart';
 
 class GlobalVariables {
   static final GlobalVariables _instance = GlobalVariables._internal();
@@ -46,64 +51,45 @@ class GlobalVariables {
   }
 }
 
-class Identity_page extends StatelessWidget {
-  final String firstName;
-  const Identity_page({required this.firstName, Key? key}) : super(key: key);
-
+class RoleSelectionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
-      body: SafeArea(
-        child: Expanded(
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Are you looking for a job?',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    Radio(
-                      value: 1,
-                      groupValue: 0,
-                      activeColor: Color.fromRGBO(0, 96, 243, 1),
-                      onChanged: null,
+      appBar: AppBar(title: Text('Select Your Role')),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                // Navigate to HomePage if the user selects Employee
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => MainPage(
+                      firstName: '',
+                      first_Name: '',
                     ),
-                    Text(
-                      "Yes, I'm looking for one",
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Radio(
-                      value: 1,
-                      groupValue: 0,
-                      activeColor: Color.fromRGBO(0, 96, 243, 1),
-                      onChanged: null,
-                    ),
-                    Text("Not really but I'd consider the right opportunity."),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                // Button(onTap: () {
-                //   Navigator.pushAndRemoveUntil(
-                //       context,
-                //       MaterialPageRoute(
-                //           builder: (_) =>
-                //               DropDownWidget(first_Name: firstName)),
-                //       (route) => false);
-                // })
-              ],
+                  ),
+                  (route) => false,
+                );
+              },
+              child: Text('I am an Employee'),
             ),
-          ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Navigate to SubscriptionScreen if the user selects Job Seeker
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (_) => SubscriptionScreen()),
+                  (route) => false,
+                );
+              },
+              child: Text('I am a Job Seeker (Student)'),
+            ),
+          ],
         ),
       ),
     );
